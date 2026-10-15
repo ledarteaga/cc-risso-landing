@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+
+# Editores
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Artefactos de proceso del rediseño (sketches/drawings del proceso de trabajo, no producto)
+drawing-*.png
+screenshot-*.png
+.impeccable/
