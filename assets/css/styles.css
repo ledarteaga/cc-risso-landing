@@ -800,51 +800,54 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 
 .tiendas-page { scroll-padding-top: 130px; }   /* anchor jumps land below header (72) + subnav (58) */
 
-/* ---- DIRECTORY · editorial list replacing the 10 full-bleed color bands ----
-   Each category is a row (num + name + desc + tenant logo-rail) instead of
-   a page-height color wash — row height now follows real tenant density
-   (1 logo vs 7 logos) instead of being forced equal. At lg+ the rows lay
-   out 2-up so the directory uses the extra horizontal space instead of
-   just growing taller — avoids an excessively long vertical scroll on
-   large viewports. */
+/* ---- DIRECTORY · 10 full-bleed brand color bands ----
+   Each category is its own page-width band (num + name + desc + tenant
+   logo-rail) on the brand color that cycles G · B · I · G · B · I · G ·
+   B · I · G. White text + white tenant logos on deep brand colors
+   (AAA contrast on body, perfect on display-4). On lg+ the inside of
+   each band lays out 2-up (head | tenant rail) on the same band — same
+   color for the whole row, never two colors side-by-side. */
 .directory {
-  display: grid; grid-template-columns: 1fr;
-  border-top: 1px solid var(--border);
-  border-left: 1px solid var(--border);
-}
-@media (min-width: 1024px) {
-  .directory { grid-template-columns: 1fr 1fr; }
+  display: grid;
+  grid-template-columns: 1fr;
 }
 .directory-row {
-  padding: clamp(28px, 3vw, 44px) clamp(20px, 3vw, 36px);
-  border-bottom: 1px solid var(--border);
-  border-right: 1px solid var(--border);
+  padding: clamp(36px, 4vw, 56px) clamp(20px, 3vw, 36px);
+  color: var(--fg-on-ink);
 }
-.directory-row-head { border-left: 3px solid var(--accent, var(--brand-green-deep)); padding-left: var(--s-5); margin-bottom: var(--s-6); }
-.directory-row--green .directory-row-head { --accent: var(--brand-green-deep); }
-.directory-row--blue  .directory-row-head { --accent: var(--brand-blue); }
-.directory-row--ink   .directory-row-head { --accent: var(--ink); }
+.directory-row--green { background: var(--brand-green-deep); }
+.directory-row--blue  { background: var(--brand-blue-deep);  }
+.directory-row--ink   { background: var(--ink);             }
+@media (min-width: 1024px) {
+  .directory-row {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--s-7);
+    align-items: start;
+  }
+}
+.directory-row-head { margin-bottom: var(--s-6); }
 .directory-row-head .num {
   font-size: var(--fs-caption); font-weight: 500;
   letter-spacing: var(--track-caps); text-transform: uppercase;
-  color: var(--fg-muted);
+  color: var(--fg-on-ink); opacity: 0.7;
 }
 .directory-row-head h2 {
   font-size: var(--fs-display-4); font-weight: 800;
   letter-spacing: -0.015em; line-height: var(--lh-heading);
+  color: var(--fg-on-ink);
   margin: var(--s-2) 0 0;
 }
-.directory-row-head p { font-size: var(--fs-body); color: var(--fg-muted); margin-top: var(--s-3); max-width: 46ch; }
+.directory-row-head p {
+  font-size: var(--fs-body);
+  color: var(--fg-on-ink); opacity: 0.85;
+  margin-top: var(--s-3); max-width: 46ch;
+}
 .directory-tenants { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 .directory-tenants .tenant-chip {
   display: inline-flex; align-items: center; justify-content: center;
-  padding: 10px 16px; min-height: 44px;
-  border-radius: 2px;
-  background: var(--accent, var(--brand-green-deep));
+  padding: 8px 12px; min-height: 44px;
 }
-.directory-row--green .tenant-chip { background: var(--brand-green-deep); }
-.directory-row--blue  .tenant-chip { background: var(--brand-blue); }
-.directory-row--ink   .tenant-chip { background: var(--ink); }
 .directory-tenants .tenant-chip img { max-width: 120px; max-height: 32px; width: auto; height: auto; }
 
 /* legacy full-bleed category band rules kept for reference / other pages that may still reuse .category — unused on tiendas.html after the directory rebuild */
