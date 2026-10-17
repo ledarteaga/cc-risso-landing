@@ -1279,6 +1279,27 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .field--full { grid-column: 1 / -1; }
 .info-section--tight { padding-block: var(--pad-section-tight); }
 .info-section--tight .info-cell p.cta { margin-top: var(--s-4); }
+
+/* ---- CONTACT MAP (Google Maps embed) ---- */
+.contact-map-section { padding-block: var(--pad-section); }
+.contact-map-head { margin-bottom: var(--s-6); max-width: 60ch; }
+.contact-map-head .kicker { margin-bottom: var(--s-3); }
+.contact-map-head h2 { font-size: var(--fs-display-3); font-weight: 800; letter-spacing: -0.02em; line-height: var(--lh-display); margin: 0; }
+.contact-map-frame {
+  width: 100%;
+  aspect-ratio: 16/9;
+  max-height: 540px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--ink);
+}
+.contact-map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.contact-map-fallback {
+  margin-top: var(--s-4);
+  font-size: var(--fs-caption);
+  color: var(--fg-muted);
+}
 .confirm-card .confirm-urgent { margin-top: var(--s-5); font-size: var(--fs-body); color: var(--fg-muted); }
 .confirm-card #confirm-summary { margin-top: var(--s-7); padding-top: var(--s-5); border-top: 1px solid var(--border); font-size: var(--fs-body-sm); color: var(--fg-muted); }
 
