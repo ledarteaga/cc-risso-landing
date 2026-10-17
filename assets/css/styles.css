@@ -464,53 +464,14 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 /* Gallery removed per client — see index.html (no .gallery markup) */
 
 
-/* ---- PROMO TICKER · Descuentos preview (Inicio) ----
-   Deliberadamente NO es una grilla de cards: es una lista editorial
-   (numeral grande + un logo-swatch pequeño, no una card de imagen) para
-   que el ritmo visual contraste con la grilla de imagenes de la ancla
-   Tiendas inmediatamente despues — dos anclas consecutivas no deben
-   leerse como el mismo patron. Logo blanco+transparente sobre swatch
-   verde oscuro (regla #11/#13: logos blancos solo sobre fondo oscuro). */
-.promo-ticker {
-  display: flex; flex-direction: column;
-  border-top: 1px solid var(--border);
+/* ---- PROMO LIST · home override ----
+   En descuentos.html el grid es 1/2/3 cols (1 col base, 2 ≥640, 3 ≥1024).
+   En el home, el preview muestra 4 promos como teaser: en lg+ van los 4
+   en una sola fila (4 cols), heredando 2 cols en md y 1 col en mobile. */
+.promo-list--home { /* hereda .promo-list */ }
+@media (min-width: 1024px) {
+  .promo-list--home { grid-template-columns: repeat(4, 1fr); gap: var(--s-5); }
 }
-.promo-ticker-row {
-  display: grid;
-  grid-template-columns: 40px 56px 1fr;
-  gap: var(--s-4);
-  align-items: center;
-  padding-block: var(--s-5);
-  border-bottom: 1px solid var(--border);
-}
-@media (min-width: 768px) {
-  .promo-ticker-row { grid-template-columns: 48px 96px 1fr 160px; gap: var(--s-6); }
-}
-.promo-ticker-row .pt-logo {
-  display: flex; align-items: center; justify-content: center;
-  width: 40px; height: 40px; padding: 7px;
-  background: var(--brand-green-deep);
-  border-radius: 2px;
-}
-@media (min-width: 768px) { .promo-ticker-row .pt-logo { width: 48px; height: 48px; padding: 9px; } }
-.promo-ticker-row .pt-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
-.promo-ticker-row .pt-discount {
-  font-size: clamp(28px, 3vw, 40px);
-  font-weight: 900; letter-spacing: -0.02em; line-height: 1;
-  color: var(--brand-green-deep);
-}
-.promo-ticker-row .pt-title {
-  font-size: var(--fs-body-lg); font-weight: 700;
-  letter-spacing: -0.01em; line-height: 1.3;
-}
-.promo-ticker-row .pt-store {
-  font-size: var(--fs-caption); letter-spacing: var(--track-caps);
-  text-transform: uppercase; color: var(--fg-muted);
-}
-@media (min-width: 768px) {
-  .promo-ticker-row .pt-store { text-align: right; }
-}
-
 /* ---- CATEGORY PREVIEW · Tiendas preview ---- */
 .category-preview-grid {
   display: grid; gap: var(--s-5);
