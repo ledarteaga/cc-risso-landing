@@ -970,11 +970,14 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 @media (min-width: 1280px) {
   .info-grid { grid-template-columns: repeat(4, 1fr); }
 }
+.info-cell {
+  text-align: center;
+}
 .info-cell .info-cell-label {
   font-size: var(--fs-caption); font-weight: 500;
   letter-spacing: var(--track-caps); text-transform: uppercase;
   color: var(--fg-muted); margin-bottom: var(--s-3);
-  display: flex; align-items: center; gap: var(--s-3);
+  display: flex; align-items: center; justify-content: center; gap: var(--s-3);
 }
 .info-cell .info-cell-label svg { width: 16px; height: 16px; opacity: 0.6; }
 .info-cell p, .info-cell address { font-style: normal; font-size: var(--fs-body-lg); line-height: 1.45; margin: 0; }
