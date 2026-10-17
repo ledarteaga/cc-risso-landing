@@ -780,15 +780,21 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 }
 .promo-marcas-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--s-3);
+  overflow: clip;            /* contiene el scroll interno de los <img> sin
+                                crear un nuevo containing block (overflow:hidden
+                                sí lo haría y rompería position:sticky si
+                                algún hijo lo necesitara en el futuro) */
 }
-@media (min-width: 640px) { .promo-marcas-grid { grid-template-columns: repeat(4, 1fr); } }
-@media (min-width: 1024px) { .promo-marcas-grid { grid-template-columns: repeat(6, 1fr); } }
+@media (min-width: 640px) { .promo-marcas-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .promo-marcas-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
 .promo-marca-chip {
   display: flex; align-items: center; justify-content: center;
   padding: var(--s-4) var(--s-3);
   min-height: 72px;
+  min-width: 0;              /* lets the cell shrink below the logo's intrinsic width
+                                so the grid column can hit its 1fr target exactly */
 }
 .promo-marca-chip img { max-width: 140px; max-height: 36px; width: auto; height: auto; }
 
