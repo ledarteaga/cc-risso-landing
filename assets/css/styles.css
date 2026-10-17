@@ -781,7 +781,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 }
 
 /* ---- PHOTO BAND (single full-bleed shot, max 30vh) ---- */
-.promo-photo-band {
+.photo-band {
   width: 100vw;
   position: relative;
   left: 50%;
