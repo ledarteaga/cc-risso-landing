@@ -723,7 +723,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 }
 
 /* ==========================================================================
-   EDITORIAL PROMOS (Descuentos) · 3-col cards on xl, 2-col on md
+   EDITORIAL PROMOS (Descuentos) · 3-col on lg, 2-col on sm, 1-col base
    ========================================================================== */
 .promo-section { padding-block: var(--s-9); }
 .promo-list {
@@ -731,10 +731,10 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   grid-template-columns: 1fr;
   gap: var(--s-6);
 }
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   .promo-list { grid-template-columns: repeat(2, 1fr); gap: var(--s-6); }
 }
-@media (min-width: 1280px) {
+@media (min-width: 1024px) {
   .promo-list { grid-template-columns: repeat(3, 1fr); gap: var(--s-7); }
 }
 .promo-row {
@@ -780,20 +780,20 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   border-top: 1px solid var(--border);
 }
 
-/* ---- PHOTO STRIP (between hero and promos) ---- */
-.promo-photos { padding-block: var(--s-7) var(--s-9); }
-.promo-photos-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--s-3);
-}
-@media (min-width: 640px) { .promo-photos-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .promo-photos-grid { grid-template-columns: repeat(3, 1fr); } }
-.promo-photo {
-  aspect-ratio: 4/3;
-  background-size: cover; background-position: center;
-  border-radius: 2px;
-  filter: saturate(0.95) contrast(1.02);
+/* ---- PHOTO BAND (single full-bleed shot, max 30vh) ---- */
+.promo-photo-band {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  height: 30vh;
+  min-height: 220px;
+  max-height: 360px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--ink);
 }
 
 /* ---- MARCAS PARTICIPANTES (full-bleed band) ---- */
