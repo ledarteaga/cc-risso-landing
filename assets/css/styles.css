@@ -709,9 +709,10 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .promo-card-band {
   display: flex; align-items: center; justify-content: center;
   padding: var(--s-5);
-  min-height: 80px;
+  height: 80px;             /* fijo, no min — mismo alto en todas las cards */
+  overflow: hidden;
 }
-.promo-card-band img { max-width: 180px; max-height: 44px; width: auto; height: auto; }
+.promo-card-band img { max-width: 180px; max-height: 32px; width: auto; height: auto; }
 .promo-list .promo-row:nth-child(3n+1) .promo-card-band { background: var(--brand-green-deep); }
 .promo-list .promo-row:nth-child(3n+2) .promo-card-band { background: var(--brand-blue-deep); }
 .promo-list .promo-row:nth-child(3n+3) .promo-card-band { background: var(--ink); }
