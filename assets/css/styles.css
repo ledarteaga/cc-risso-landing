@@ -843,12 +843,12 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   background: rgba(255,255,255,0.96); backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
   padding: var(--s-3) var(--gutter);
-  overflow-x: auto;
 }
 .tiendas-subnav ul {
-  display: flex; gap: var(--s-5); max-width: var(--maxw-content);
-  margin-inline: auto; align-items: center;
-  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  display: flex; flex-wrap: wrap;
+  gap: var(--s-3) var(--s-5);
+  max-width: var(--maxw-content);
+  margin-inline: auto; align-items: center; justify-content: center;
 }
 .tiendas-subnav a {
   font-size: 13px; font-weight: 500;
