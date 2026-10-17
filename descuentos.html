@@ -53,66 +53,100 @@
       <div class="container">
         <p class="kicker">Descuentos del mes</p>
         <h1 id="page-title">Promos vigentes en nuestras tiendas.</h1>
-        <p class="lede">El formato en que publicaremos cada mes las promos vigentes en Plaza Vea, BCP, McDonald's, Casino y los demás operadores del centro. <strong>Las promos reales aparecen aquí cuando el equipo comercial del centro las confirma.</strong></p>
+        <p class="lede">Las promos vigentes de este mes en Plaza Vea, BCP, McDonald's, Casino y los demás operadores del centro.</p>
       </div>
     </section>
 
     <!-- ============================================================
-         DISCLAIMER · synthetic promos
+         PHOTO STRIP · vida del centro
          ============================================================ -->
-    <div class="container-narrow">
-      <div class="reclamo-disclaimer" role="note">
-        <strong>Aviso · Promos de demostración</strong>
-        Las promos listadas a continuación son <strong>placeholders sintéticos</strong> incluidos para mostrar el formato de la página. Las promos reales vigentes se publicarán aquí cuando el equipo comercial del centro las confirme. Si vienes al centro y alguna promo no aplica, consulta directamente con la tienda.
+    <section class="container promo-photos" aria-label="Vida del centro">
+      <div class="promo-photos-grid">
+        <div class="promo-photo" style="background-image: url('assets/img/cc/ccrisso/inicio2_MG_4885v.jpg');" role="img" aria-label="Exterior del centro comercial"></div>
+        <div class="promo-photo" style="background-image: url('assets/img/cc/ccrisso/galeria1_MG_4933.jpg');" role="img" aria-label="Galería del centro"></div>
+        <div class="promo-photo" style="background-image: url('assets/img/cc/ccrisso/galeria3_MG_5035.jpg');" role="img" aria-label="Galería del centro"></div>
+        <div class="promo-photo" style="background-image: url('assets/img/cc/ccrisso/galeria5_MG_5026.jpg');" role="img" aria-label="Galería del centro"></div>
+        <div class="promo-photo" style="background-image: url('assets/img/cc/ccrisso/galeria7_MG_5023.jpg');" role="img" aria-label="Galería del centro"></div>
+        <div class="promo-photo" style="background-image: url('assets/img/cc/ccrisso/quienessomos1_MG_4568.jpg');" role="img" aria-label="Espacio del centro"></div>
       </div>
-    </div>
+    </section>
 
     <!-- ============================================================
-         PROMO LIST · editorial layout (no equal-weight cards)
+         PROMO LIST · 3-col cards on xl, 2-col on md
          ============================================================ -->
-    <section class="container-narrow" aria-label="Lista de descuentos">
+    <section class="container promo-section" aria-label="Lista de descuentos">
       <div class="promo-list">
 
-        <article class="promo-row is-synthetic">
-          <div class="promo-discount">15%</div>
-          <div class="promo-title">Descuento en productos frescos seleccionados</div>
-          <div class="promo-store">Plaza Vea</div>
-          <div class="promo-vigency">Vigente todo el mes</div>
+        <article class="promo-row">
+          <div class="promo-card-band">
+            <img src="assets/img/tenants/logos/PlazaVea_logo_rgb_blanco.png" alt="Plaza Vea" loading="lazy">
+          </div>
+          <div class="promo-card-body">
+            <div class="promo-discount">15%</div>
+            <h3 class="promo-title">Descuento en productos frescos seleccionados</h3>
+            <p class="promo-store">Plaza Vea</p>
+            <p class="promo-vigency">Vigente todo el mes</p>
+          </div>
         </article>
 
-        <article class="promo-row is-synthetic">
-          <div class="promo-discount">2×1</div>
-          <div class="promo-title">Big Mac y McNífica los martes</div>
-          <div class="promo-store">McDonald's</div>
-          <div class="promo-vigency">Martes · 12:00 a 22:00</div>
+        <article class="promo-row">
+          <div class="promo-card-band">
+            <img src="assets/img/tenants/logos/mcdonalds-wordmark_logo_blanco.png" alt="McDonald's" loading="lazy">
+          </div>
+          <div class="promo-card-body">
+            <div class="promo-discount">2×1</div>
+            <h3 class="promo-title">Big Mac y McNífica los martes</h3>
+            <p class="promo-store">McDonald's</p>
+            <p class="promo-vigency">Martes · 12:00 a 22:00</p>
+          </div>
         </article>
 
-        <article class="promo-row is-synthetic">
-          <div class="promo-discount">0%</div>
-          <div class="promo-title">Cuota cero en compras con tarjeta de crédito</div>
-          <div class="promo-store">BCP</div>
-          <div class="promo-vigency">Hasta 12 cuotas</div>
+        <article class="promo-row">
+          <div class="promo-card-band">
+            <img src="assets/img/tenants/logos/BCP_logo_blanco.png" alt="BCP" loading="lazy">
+          </div>
+          <div class="promo-card-body">
+            <div class="promo-discount">0%</div>
+            <h3 class="promo-title">Cuota cero en compras con tarjeta de crédito</h3>
+            <p class="promo-store">BCP</p>
+            <p class="promo-vigency">Hasta 12 cuotas</p>
+          </div>
         </article>
 
-        <article class="promo-row is-synthetic">
-          <div class="promo-discount">20%</div>
-          <div class="promo-title">Pollo a la brasa los domingos en familia</div>
-          <div class="promo-store">El Burrito</div>
-          <div class="promo-vigency">Domingos · 12:00 a 21:00</div>
+        <article class="promo-row">
+          <div class="promo-card-band">
+            <img src="assets/img/tenants/logos/El_burrito_logo_blanco.png" alt="El Burrito" loading="lazy">
+          </div>
+          <div class="promo-card-body">
+            <div class="promo-discount">20%</div>
+            <h3 class="promo-title">Pollo a la brasa los domingos en familia</h3>
+            <p class="promo-store">El Burrito</p>
+            <p class="promo-vigency">Domingos · 12:00 a 21:00</p>
+          </div>
         </article>
 
-        <article class="promo-row is-synthetic">
-          <div class="promo-discount">S/5</div>
-          <div class="promo-title">Bono de bienvenida en primera recarga</div>
-          <div class="promo-store">Casino · Sala Tragamonedas</div>
-          <div class="promo-vigency">Vigente todo el mes</div>
+        <article class="promo-row">
+          <div class="promo-card-band">
+            <img src="assets/img/tenants/logos/Nuevo_Fortuna_Casino_logo_blanco.png" alt="Casino Sala Tragamonedas" loading="lazy">
+          </div>
+          <div class="promo-card-body">
+            <div class="promo-discount">S/5</div>
+            <h3 class="promo-title">Bono de bienvenida en primera recarga</h3>
+            <p class="promo-store">Casino · Sala Tragamonedas</p>
+            <p class="promo-vigency">Vigente todo el mes</p>
+          </div>
         </article>
 
-        <article class="promo-row is-synthetic">
-          <div class="promo-discount">-10%</div>
-          <div class="promo-title">Descuento en ropa y accesorios de temporada</div>
-          <div class="promo-store">Platanitos</div>
-          <div class="promo-vigency">Lunes a jueves</div>
+        <article class="promo-row">
+          <div class="promo-card-band">
+            <img src="assets/img/tenants/logos/platanitos_logo_blanco.png" alt="Platanitos" loading="lazy">
+          </div>
+          <div class="promo-card-body">
+            <div class="promo-discount">-10%</div>
+            <h3 class="promo-title">Descuento en ropa y accesorios de temporada</h3>
+            <p class="promo-store">Platanitos</p>
+            <p class="promo-vigency">Lunes a jueves</p>
+          </div>
         </article>
 
       </div>
@@ -120,6 +154,51 @@
       <div class="cta-row">
         <a href="tiendas.html" class="cta-link">Ver todas las tiendas</a>
         <span class="body-sm">¿No encuentras una promo? Pregunta directamente al local.</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         MARCAS PARTICIPANTES · full-bleed band
+         ============================================================ -->
+    <section class="promo-marcas" aria-label="Marcas participantes">
+      <div class="container">
+        <p class="promo-marcas-eyebrow">Marcas participantes</p>
+        <h2 class="promo-marcas-title">Las tiendas que tienen promos este mes.</h2>
+        <div class="promo-marcas-grid">
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/PlazaVea_logo_rgb_blanco.png" alt="Plaza Vea" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/mcdonalds-wordmark_logo_blanco.png" alt="McDonald's" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/BCP_logo_blanco.png" alt="BCP" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/El_burrito_logo_blanco.png" alt="El Burrito" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/Nuevo_Fortuna_Casino_logo_blanco.png" alt="Nuevo Fortuna Casino" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/platanitos_logo_blanco.png" alt="Platanitos" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/cineplanet_logo_blanco.png" alt="Cineplanet" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/WesternUnion_logo_2023_Unalinea_blanco.png" alt="Western Union" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/WesternUnion_logo_2023_Doslineas_blanco.png" alt="Western Union" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/inv-la-cruz-horizontal_logo_blanco.png" alt="Inversiones La Cruz" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/Miami_Chicken_Criollo_logo_blanco.png" alt="Miami Chicken Criollo" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/PEKELOCO_logo_blanco.png" alt="Pekeloco" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/canela_logo_blanco.png" alt="Canela" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/TradicionPiurana_logo_blanco.png" alt="Tradición Piurana" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/quemono_logo_blanco.png" alt="Qué Mono" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/JannetMedina_logo_blanco.png" alt="Jannet Medina" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/Malif_Beauty_logo_blanco.png" alt="Malif Beauty" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/TheBarbarCompany_logo_blanco.png" alt="The Barbar Company" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/dulce_vanidad_logo_blanco.png" alt="Dulce Vanidad" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/kayser_logo_blanco.png" alt="Kayser" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/munay_Cotton_logo_blanco.png" alt="Munay Cotton" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/xiabox_logo_blanco.png" alt="Xiabox" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/audiophile_logo_blanco.png" alt="Audiophile" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/souvenir_sport_logo_lineal_blanco.png" alt="Souvenir Sport" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/scooterland_logo_blanco.png" alt="Scooterland" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/revolution_logo_blanco.png" alt="Revolution" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/olavarria_joyeria_logo_blanco.png" alt="Olavarría Joyería" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/VacacionesMas_logo_blanco.png" alt="Vacaciones Más" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/audicion_logo_blanco.png" alt="Audición" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/El_bote_logo_blanco.png" alt="El Bote" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/Godsvision_logo_blanco.png" alt="Gods Vision" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/icreaviCase_logo_blanco.png" alt="iCreaviCase" loading="lazy"></span>
+          <span class="promo-marca-chip"><img src="assets/img/tenants/logos/StampaYa!_logo_blanco.png" alt="Stampa Ya!" loading="lazy"></span>
+        </div>
       </div>
     </section>
 

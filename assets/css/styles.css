@@ -723,51 +723,117 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 }
 
 /* ==========================================================================
-   EDITORIAL PROMOS (Descuentos)
+   EDITORIAL PROMOS (Descuentos) · 3-col cards on xl, 2-col on md
    ========================================================================== */
+.promo-section { padding-block: var(--s-9); }
 .promo-list {
-  display: flex; flex-direction: column;
-  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-6);
+}
+@media (min-width: 768px) {
+  .promo-list { grid-template-columns: repeat(2, 1fr); gap: var(--s-6); }
+}
+@media (min-width: 1280px) {
+  .promo-list { grid-template-columns: repeat(3, 1fr); gap: var(--s-7); }
 }
 .promo-row {
-  display: grid; gap: var(--s-4);
-  grid-template-columns: 1fr;
-  padding-block: var(--s-7);
-  border-bottom: 1px solid var(--border);
-  align-items: start;
-  position: relative;   /* anchor ::before inside the row, not the body */
+  display: flex; flex-direction: column;
+  background: var(--ground);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
 }
-@media (min-width: 900px) {
-  .promo-row { grid-template-columns: 160px 1fr 200px 180px; gap: var(--s-7); align-items: baseline; }
+.promo-card-band {
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--s-5);
+  min-height: 80px;
+}
+.promo-card-band img { max-width: 180px; max-height: 44px; width: auto; height: auto; }
+.promo-list .promo-row:nth-child(3n+1) .promo-card-band { background: var(--brand-green-deep); }
+.promo-list .promo-row:nth-child(3n+2) .promo-card-band { background: var(--brand-blue-deep); }
+.promo-list .promo-row:nth-child(3n+3) .promo-card-band { background: var(--ink); }
+.promo-card-body {
+  padding: var(--s-6) var(--s-6) var(--s-5);
+  display: flex; flex-direction: column; gap: var(--s-3);
+  flex: 1;
 }
 .promo-row .promo-discount {
-  font-size: clamp(36px, 4.5vw, 64px);
+  font-size: clamp(48px, 5vw, 72px);
   font-weight: 900; letter-spacing: -0.02em;
   line-height: 1; color: var(--brand-green-deep);
 }
 .promo-row .promo-title {
-  font-size: var(--fs-display-4); font-weight: 700;
+  font-size: var(--fs-display-5); font-weight: 700;
   letter-spacing: -0.01em; line-height: var(--lh-heading);
+  margin: 0;
 }
-.promo-row .promo-store { font-size: var(--fs-body); color: var(--fg-muted); }
-.promo-row .promo-vigency { font-size: var(--fs-caption); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--fg-soft); }
-.promo-row.is-synthetic { background: var(--paper); }
-.promo-row.is-synthetic::before {
-  content: 'sintético';
-  position: absolute;
-  top: var(--s-3);
-  right: var(--s-3);
-  padding: 4px 10px;
-  background: var(--ink);
-  color: var(--fg-on-ink);
-  font-size: var(--fs-caption);
-  font-weight: 700;
-  letter-spacing: var(--track-caps);
-  text-transform: uppercase;
+.promo-row .promo-store {
+  font-size: var(--fs-body); color: var(--fg-muted);
+  margin: 0;
+}
+.promo-row .promo-vigency {
+  font-size: var(--fs-caption); letter-spacing: var(--track-caps);
+  text-transform: uppercase; color: var(--fg-soft);
+  margin-top: auto;
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--border);
+}
+
+/* ---- PHOTO STRIP (between hero and promos) ---- */
+.promo-photos { padding-block: var(--s-7) var(--s-9); }
+.promo-photos-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-3);
+}
+@media (min-width: 640px) { .promo-photos-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .promo-photos-grid { grid-template-columns: repeat(3, 1fr); } }
+.promo-photo {
+  aspect-ratio: 4/3;
+  background-size: cover; background-position: center;
   border-radius: 2px;
-  z-index: 1;
-  pointer-events: none;   /* el badge no debe interferir con interacción */
+  filter: saturate(0.95) contrast(1.02);
 }
+
+/* ---- MARCAS PARTICIPANTES (full-bleed band) ---- */
+.promo-marcas {
+  background: var(--brand-green-deep);
+  color: var(--fg-on-ink);
+  padding-block: var(--s-9);
+}
+.promo-marcas-eyebrow {
+  font-size: var(--fs-caption); font-weight: 500;
+  letter-spacing: var(--track-caps); text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: var(--s-3);
+}
+.promo-marcas-title {
+  font-size: var(--fs-display-3); font-weight: 800;
+  letter-spacing: -0.02em; line-height: var(--lh-display);
+  color: var(--fg-on-ink);
+  margin: 0 0 var(--s-7);
+  max-width: 22ch;
+}
+.promo-marcas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-3);
+}
+@media (min-width: 640px) { .promo-marcas-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1024px) { .promo-marcas-grid { grid-template-columns: repeat(6, 1fr); } }
+.promo-marca-chip {
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 2px;
+  padding: var(--s-4);
+  min-height: 72px;
+  transition: background 0.15s ease;
+}
+.promo-marca-chip:hover { background: rgba(255,255,255,0.16); }
+.promo-marca-chip img { max-width: 140px; max-height: 36px; width: auto; height: auto; }
+
 .empty-state {
   padding: var(--s-9) var(--gutter); text-align: center;
   background: var(--paper); color: var(--fg-muted);
