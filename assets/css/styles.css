@@ -464,14 +464,6 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 /* Gallery removed per client — see index.html (no .gallery markup) */
 
 
-/* ---- PROMO LIST · home override ----
-   En descuentos.html el grid es 1/2/3 cols (1 col base, 2 ≥640, 3 ≥1024).
-   En el home, el preview muestra 4 promos como teaser: en lg+ van los 4
-   en una sola fila (4 cols), heredando 2 cols en md y 1 col en mobile. */
-.promo-list--home { /* hereda .promo-list */ }
-@media (min-width: 1024px) {
-  .promo-list--home { grid-template-columns: repeat(4, 1fr); gap: var(--s-5); }
-}
 /* ---- CATEGORY PREVIEW · Tiendas preview ---- */
 .category-preview-grid {
   display: grid; gap: var(--s-5);
@@ -697,6 +689,15 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 }
 @media (min-width: 1024px) {
   .promo-list { grid-template-columns: repeat(3, 1fr); gap: var(--s-7); }
+}
+
+/* ---- PROMO LIST · home override (tras .promo-list para ganar la cascada) ----
+   En el home, el preview muestra 4 promos como teaser: en lg+ van los 4
+   en una sola fila (4 cols), heredando 2 cols en md y 1 col en mobile
+   de las reglas base de .promo-list de arriba. */
+.promo-list--home { /* hereda .promo-list */ }
+@media (min-width: 1024px) {
+  .promo-list--home { grid-template-columns: repeat(4, 1fr); gap: var(--s-5); }
 }
 .promo-row {
   display: flex; flex-direction: column;
