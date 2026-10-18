@@ -1,0 +1,138 @@
+/* ==========================================================================
+   tokens.css — Risso v2
+   Design tokens committed by the §8 direction contract.
+   Color strategy: COMMITTED.
+     - green #02AF5B  ≈45% of the surface (Inicio, Sobre Risso, Contacto)
+     - blue  #2B58A8  ≈25% (Tiendas bands, Descuentos accents)
+     - black #000000  100% footer
+     - white #FFFFFF  ground
+     - light tints #41C384 / #5F81BD appear ONLY on hover/surface transitions
+   Type stack: Futura exclusively.
+     - Heavy (800) / Extra Black (900) → display
+     - Medium (500) → kickers, small-caps UI (tracking +60)
+     - Book (400)  → body
+   Motion grammar: compuesto — fades ≤200ms ease-out, scroll-behavior smooth.
+   ========================================================================== */
+
+:root {
+  /* --- Color · brand (committed, verified from logo) ------------------- */
+  --brand-green:        #02AF5B;   /* dominant green in mark */
+  --brand-green-light:  #41C384;   /* tint · hover/surface only */
+  --brand-green-deep:   #018547;   /* 8% darker for AAA contrast on white text */
+
+  --brand-blue:         #2B58A8;   /* dominant blue in mark */
+  --brand-blue-light:   #5F81BD;   /* tint · hover/surface only */
+  --brand-blue-deep:    #1F4280;   /* 8% darker for AAA contrast on white text */
+
+  --ink:                #000000;
+  --ink-soft:           #1A1A1A;   /* near-black for soft footer surfaces */
+  --ground:             #FFFFFF;
+  --paper:              #FAF9F6;   /* warm-neutral ground for editorial sections */
+
+  /* --- Color · text ---------------------------------------------------- */
+  --fg:                 #0A0A0A;
+  --fg-muted:           #4A5562;
+  --fg-soft:            #6E7785;
+  --fg-on-green:        #FFFFFF;   /* white on green fills */
+  --fg-on-blue:         #FFFFFF;
+  --fg-on-ink:          #FFFFFF;
+
+  /* --- Color · state ---------------------------------------------------- */
+  --color-error:        #C8482B;   /* form / wizard validation */
+
+  /* --- Color · utility ------------------------------------------------ */
+  --border:             rgba(10, 10, 10, 0.10);
+  --border-strong:      rgba(10, 10, 10, 0.20);
+  --overlay-dark:       rgba(0, 0, 0, 0.42);   /* hero gradient floor */
+  --overlay-light:      rgba(255, 255, 255, 0.06);
+
+  /* --- Typography · Futura (self-hosted WOFF2) ------------------------ */
+  --font-sans:          "Futura", "Trebuchet MS", system-ui, -apple-system, sans-serif;
+
+  /* Display scale (Futura Heavy/Extra Black) */
+  --fs-display-1:       clamp(40px, 7vw, 96px);    /* hero claim */
+  --fs-display-2:       clamp(36px, 5.4vw, 76px);   /* page opening */
+  --fs-display-3:       clamp(28px, 4vw, 56px);    /* section heading */
+  --fs-display-4:       clamp(22px, 2.7vw, 38px);   /* sub-heading */
+
+  --fs-body-lg:         clamp(17px, 1.4vw, 21px);
+  --fs-body:            clamp(15px, 1.15vw, 17px);
+  --fs-body-sm:         13px;
+  --fs-caption:         11px;
+
+  /* Letter-spacing (Futura geometry demands wider tracking for kickers) */
+  --track-kicker:       0.06em;     /* +60 / 1000 ≈ Medium UI / kickers */
+  --track-display:      -0.01em;    /* tight for Heavy display */
+  --track-caps:         0.12em;     /* extra-wide for SMALL CAPS labels */
+
+  /* Line-height */
+  --lh-tight:           1.02;
+  --lh-display:         1.06;
+  --lh-heading:         1.12;
+  --lh-body:            1.55;
+
+  /* --- Spacing · 4px rhythm, generous display spacing --------------- */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+  --s-10: 128px;
+  --s-11: 160px;
+
+  /* Generous editorial padding · "more space above a heading than below it" */
+  --pad-section:        clamp(96px, 12vw, 160px);
+  --pad-section-tight:  clamp(64px, 8vw, 112px);
+  --pad-block:          clamp(48px, 6vw, 80px);
+
+  /* --- Layout ---------------------------------------------------------- */
+  --gutter:             clamp(20px, 2.4vw, 40px);   /* side gutter */
+  --gutter-xl:          clamp(12px, 1.6vw, 28px);   /* xl removes lateral padding */
+  --maxw-prose:         62ch;
+  --maxw-narrow:        880px;
+  --maxw-content:       clamp(1280px, 96vw, 1680px);
+  --maxw-wide:          1440px;
+  --maxw-full:          1680px;
+
+  /* --- Motion · compuesto -------------------------------------------- */
+  --ease-out:           cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out:        cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast:             120ms;
+  --t-base:             180ms;
+  --t-slow:             240ms;
+  --scroll:             smooth;
+
+  /* --- Radius · minimal (geometric mid-century) ---------------------- */
+  --r-none:             0;
+  --r-xs:               2px;
+  --r-sm:               4px;
+  --r-md:               8px;
+
+  /* --- z-index -------------------------------------------------------- */
+  --z-nav:    50;
+  --z-overlay:60;
+  --z-modal:  80;
+
+  /* --- Breakpoints (for reference; CSS uses raw values) ---------------- */
+  /* sm 640 · md 768 · lg 1024 · xl 1280 · 2xl 1536 */
+}
+
+/* WCAG-aware utility classes for text-on-fill pairs */
+.on-green { color: var(--fg-on-green); }
+.on-blue  { color: var(--fg-on-blue); }
+.on-ink   { color: var(--fg-on-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html { scroll-behavior: smooth; }
