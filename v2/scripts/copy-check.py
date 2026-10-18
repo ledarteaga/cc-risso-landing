@@ -25,14 +25,14 @@ PAGES = [
 ]
 
 # ---------------------------------------------------------------- canonical facts
-EMAIL = "contacto@ccrisso.com"
-PHONE = "(01) 470 1250"  # fuente: ccrisso.com/contacto (confirmar con el cliente)
+EMAIL = "contacto@agremsa.pe"   # confirmado por el cliente 2026-10-18
+PHONE = ""          # el centro NO tiene línea de contacto pública: no publicar teléfono
 HOURS = "10:00 a 22:00"
 ADDRESS = "Av. Arequipa 2201"
 OPENING_YEAR = "1968"
 
 # Hechos que el cliente todavía no confirmó: se emiten como WARN, no como FAIL.
-PENDING: set[str] = {"email", "promos", "response_sla"}
+PENDING: set[str] = {"promos", "response_sla"}
 
 MAX_EMDASH = 2  # presupuesto de rayas por página (WARN si se pasa)
 
@@ -181,6 +181,12 @@ def main() -> int:
         for page in ("contacto.html", "index.html"):
             if PHONE not in strip(read(page)):
                 (warn if "phone" in PENDING else fail)(page, f"falta el teléfono {PHONE}")
+    else:
+        # hecho de negocio: el centro no publica línea telefónica de contacto
+        for page in PAGES:
+            raw = read(page)
+            if re.search(r'href="tel:', raw) or "(01)" in raw:
+                fail(page, "teléfono publicado, pero el centro no tiene línea de contacto")
 
     # 6 · el conteo de tiendas del home debe cuadrar con el directorio
     counts, n_cats = directory_counts()
