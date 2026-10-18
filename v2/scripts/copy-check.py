@@ -26,13 +26,13 @@ PAGES = [
 
 # ---------------------------------------------------------------- canonical facts
 EMAIL = "contacto@ccrisso.com"
-PHONE = ""          # vacío = no se exige teléfono todavía
+PHONE = "(01) 470 1250"  # fuente: ccrisso.com/contacto (confirmar con el cliente)
 HOURS = "10:00 a 22:00"
 ADDRESS = "Av. Arequipa 2201"
 OPENING_YEAR = "1968"
 
 # Hechos que el cliente todavía no confirmó: se emiten como WARN, no como FAIL.
-PENDING: set[str] = {"email", "phone", "promos", "response_sla"}
+PENDING: set[str] = {"email", "promos", "response_sla"}
 
 MAX_EMDASH = 2  # presupuesto de rayas por página (WARN si se pasa)
 
