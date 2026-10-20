@@ -73,7 +73,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   position: fixed; top: 0; left: 0; right: 0;
   z-index: var(--z-nav);
   display: flex; align-items: center; justify-content: space-between;
-  padding: var(--s-3) var(--gutter);   /* tighter so logo can occupy ~80% of navbar height */
+  padding: var(--s-1) var(--gutter);   /* 4px block padding keeps the 72px navbar height with the larger logo */
   transition: background var(--t-base) var(--ease-out);
 }
 .site-header.is-on-dark { color: var(--fg-on-ink); }
@@ -91,7 +91,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .site-header.is-scrolled { background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); color: var(--fg); border-bottom: 1px solid var(--border); }
 .site-header.is-scrolled.is-on-dark { background: rgba(0,0,0,0.86); color: var(--fg-on-ink); border-bottom: 1px solid rgba(255,255,255,0.06); }
 .brand { display: inline-flex; align-items: center; gap: var(--s-3); }
-.brand img { height: 48px; width: auto; }   /* logo: 48px / 72px navbar ≈ 67% (≈80% with s-3 padding) */
+.brand img { height: 64px; width: auto; }   /* logo: 64px / 72px navbar ≈ 89% — larger mark, header height unchanged */
 .brand-name { display: none; }   /* "Risso" text removed per brief */
 .nav { display: none; }
 @media (min-width: 1024px) {
@@ -305,7 +305,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   display: flex; flex-direction: column;
 }
 .hero-claim-wrap {
-  max-width: clamp(360px, 64vw, 980px);   /* wide enough for "Un centro comercial" at display size, tight enough for 3 lines */
+  max-width: clamp(360px, 72vw, 1100px);   /* wide enough for "Un centro comercial" at Extra Black, tight enough for 2 líneas en desktop */
 }
 .hero-claim {
   font-size: var(--fs-display-1);
@@ -317,12 +317,12 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   text-shadow: 0 1px 2px rgba(0,0,0,0.45), 0 2px 14px rgba(0,0,0,0.25);   /* subtle legibility shadow over the video */
 }
 .hero-claim .word.is-remate > span {
-  font-style: normal;   /* remate "historia": upright, slightly lighter — the green outline carries the emphasis */
-  font-weight: 700;
+  font-style: normal;   /* remate "historia": upright, siempre en Extra Black; el contorno verde solo refuerza */
+  font-weight: 900;
   -webkit-text-stroke: 3px var(--brand-green);   /* internal-style green outline of the brand */
   text-stroke: 3px var(--brand-green);
 }
-.hero-claim .word:not(.is-remate) > span { font-style: normal; font-weight: 700; }   /* upright throughout — italic removed */
+.hero-claim .word:not(.is-remate) > span { font-style: normal; font-weight: 900; }   /* upright throughout — siempre bold, sin arranque liviano */
 .hero-claim .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
 .hero-claim .word > span {
   display: inline-block;
@@ -332,14 +332,20 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .hero-claim .word:nth-child(1) > span { animation-delay: 80ms; }
 .hero-claim .word:nth-child(2) > span { animation-delay: 200ms; }
 .hero-claim .word:nth-child(3) > span { animation-delay: 320ms; }
-.hero-claim .word:nth-child(4) > span { animation-delay: 440ms; }
-.hero-claim .word:nth-child(5) > span { animation-delay: 560ms; }
+.hero-claim .word:nth-child(5) > span { animation-delay: 440ms; }
+.hero-claim .word:nth-child(6) > span { animation-delay: 560ms; }
+.hero-claim .word:nth-child(7) > span { animation-delay: 680ms; }
+.hero-claim-dash > span { margin-right: 0.12em; }
+@media (max-width: 700px) {
+  .hero-claim { font-size: clamp(26px, 7.6vw, 40px); }   /* keeps "Un centro comercial" on one line on phones */
+}
 @keyframes wordUp { to { transform: translateY(0); } }
 .hero-sub {
   margin-top: var(--s-5);
-  max-width: 30ch;
-  font-size: 14px; line-height: 1.5;
-  color: rgba(255,255,255,0.78);
+  max-width: 38ch;
+  font-size: clamp(17px, 1.35vw, 20px); line-height: 1.5;
+  text-wrap: balance;
+  color: rgba(255,255,255,0.82);
 }
 .hero-cta { margin-top: var(--s-7); display: flex; gap: var(--s-5); flex-wrap: wrap; opacity: 1; transform: none; }
 .hero-progress {
@@ -359,10 +365,10 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   transition: width 80ms linear;
 }
 .hero-progress .progress-label {
-  font-size: var(--fs-caption); font-weight: 500;
+  font-size: clamp(13px, 1vw, 14px); font-weight: 600;
   letter-spacing: var(--track-caps); text-transform: uppercase;
 }
-.hero-claim-period { color: #fff; font-weight: 800; -webkit-text-stroke: 3px var(--brand-green); text-stroke: 3px var(--brand-green); }   /* accent period: white fill, 3px green outline matching "historia" remate */
+.hero-claim-period { color: #fff; font-weight: 900; -webkit-text-stroke: 3px var(--brand-green); text-stroke: 3px var(--brand-green); }   /* accent period: white fill, 3px green outline matching "historia" remate */
 
 /* RRSS overlay fixed bottom-right of hero (only Inicio) */
 .hero-socials {
@@ -384,9 +390,12 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 /* ==========================================================================
    STORYTELLING ANCHORS (Inicio · 4 anchors)
    ========================================================================== */
+/* Ritmo vertical único para todas las bandas de ancla (Inicio y subpáginas).
+   Sustituye el antiguo --pad-section (hasta 160px) por 48–72px. */
 .anchor {
-  padding-block: var(--pad-section);
+  padding-block: clamp(48px, 4.5vw, 72px);
 }
+.anchor .photo-row { margin-top: clamp(28px, 3.5vw, 48px); }
 .anchor--green { background: var(--brand-green-deep); color: var(--fg-on-green); }
 .anchor--blue  { background: var(--brand-blue);  color: var(--fg-on-blue); }
 .anchor--white { background: var(--ground); color: var(--fg); }
@@ -397,7 +406,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   display: grid; gap: var(--s-7);
   grid-template-columns: 1fr;
   align-items: end;
-  margin-bottom: var(--s-9);
+  margin-bottom: clamp(28px, 3.5vw, 48px);
 }
 @media (min-width: 900px) {
   .anchor-head { grid-template-columns: 1.1fr 1fr; gap: var(--s-9); }
@@ -436,7 +445,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 @media (min-width: 1100px) {
   .anchor-head p { font-size: 22px; line-height: 1.45; max-width: 44ch; padding-left: var(--s-6); }
 }
-.anchor-foot { margin-top: var(--s-9); display: flex; gap: var(--s-7); flex-wrap: wrap; align-items: center; }
+.anchor-foot { margin-top: clamp(28px, 3vw, 40px); display: flex; gap: var(--s-7); flex-wrap: wrap; align-items: center; }
 .anchor--green .anchor-eyebrow .num,
 .anchor--green .anchor-eyebrow .label { color: var(--fg-on-green); opacity: 1; }
 .anchor--blue .anchor-eyebrow .num,
@@ -455,7 +464,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 }
 @media (min-width: 640px) { .timeline { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 768px) {
-  .timeline { grid-template-columns: repeat(4, auto); justify-content: space-between; }
+  .timeline { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(40px, 5vw, 72px); }
 }
 .timeline-item { display: flex; flex-direction: column; gap: var(--s-2); }
 .timeline-item .year {
@@ -705,7 +714,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
    ========================================================================== */
 .cta-link {
   display: inline-flex; align-items: center; gap: 0.5em;
-  font-size: 16px; font-weight: 500;
+  font-size: clamp(17px, 1.25vw, 19px); font-weight: 600;   /* matches the hero text link sitewide */
   letter-spacing: 0.01em;
   color: inherit;
   border-bottom: 1px solid currentColor;
@@ -721,6 +730,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .cta-link:hover { border-color: transparent; }
 .cta-link:hover::after { transform: translateX(6px); }
 .cta-link.is-on-dark { color: var(--fg-on-ink); }
+p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the paragraph's scale */
 
 .social-cta-row {
   display: flex; flex-wrap: wrap; align-items: center;
@@ -734,7 +744,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
    PAGE OPENING (Sobre Risso, Descuentos, Tiendas, Contacto, Libro Recl.)
    ========================================================================== */
 .page-open {
-  padding-top: clamp(120px, 18vh, 200px);
+  padding-top: clamp(104px, 14vh, 150px);
   padding-bottom: clamp(24px, 3vw, 40px);
   background: var(--brand-green-deep); color: var(--fg-on-green);
 }
@@ -767,11 +777,12 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .beat {
   display: grid; gap: var(--s-7);
   grid-template-columns: 1fr;
-  padding-block: var(--pad-block);
+  padding-block: clamp(32px, 3.5vw, 48px);
   border-top: 1px solid var(--border);
   scroll-margin-top: 120px;   /* clear the sticky site-header when anchor-jumping */
 }
-.beat:first-of-type { border-top: 0; }
+.beat:first-of-type { border-top: 0; padding-top: 0; }
+.beat:last-of-type { padding-bottom: 0; }
 .beat-year {
   font-size: clamp(64px, 9vw, 120px);
   font-weight: 900; letter-spacing: -0.04em; line-height: 0.85;
@@ -828,7 +839,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   .beat {
     grid-template-columns: minmax(160px, 0.75fr) minmax(0, 1.25fr) minmax(0, 1fr);
     column-gap: clamp(40px, 4vw, 72px);
-    padding-block: clamp(40px, 4.5vw, 64px);
+    padding-block: clamp(32px, 3.5vw, 48px);
     align-items: stretch;
   }
   .beat-year { grid-column: 1; grid-row: auto; }
@@ -895,10 +906,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 }
 
 /* ---------- Section spacing + CTA (Sobre Risso) ---------- */
-.beats-section { padding-block: var(--pad-section); }
-@media (min-width: 1200px) {
-  .beats-section { padding-block: var(--s-9); }
-}
+.beats-section { padding-block: clamp(48px, 4.5vw, 72px); }
 .beat-cta { margin-top: var(--s-7); }
 
 /* ---------- CTA row (used after list sections to pair link + helper text) ---------- */
@@ -913,7 +921,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 /* ==========================================================================
    EDITORIAL PROMOS (Descuentos) · 3-col on lg, 2-col on sm, 1-col base
    ========================================================================== */
-.promo-section { padding-block: var(--s-9); }
+.promo-section { padding-block: clamp(48px, 4.5vw, 72px); }
 .promo-list {
   display: grid;
   grid-template-columns: 1fr;
@@ -998,7 +1006,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .promo-marcas {
   background: var(--brand-green-deep);
   color: var(--fg-on-ink);
-  padding-block: var(--s-9);
+  padding-block: clamp(48px, 4.5vw, 72px);
 }
 .promo-marcas-eyebrow {
   font-size: var(--fs-caption); font-weight: 500;
@@ -1056,11 +1064,11 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   margin-inline: auto; align-items: center; justify-content: center;
 }
 .tiendas-subnav a {
-  font-size: 13px; font-weight: 500;
+  font-size: clamp(14.5px, 1.1vw, 16px); font-weight: 600;
   white-space: nowrap;
   color: var(--fg-muted);
   border-bottom: 2px solid transparent;
-  padding: 4px 0;
+  padding: 5px 0;
   transition: color .2s ease;
 }
 .tiendas-subnav a:hover, .tiendas-subnav a.is-active { color: var(--fg); border-bottom-color: var(--brand-green); }
@@ -1213,7 +1221,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .info-cell a { border-bottom: 1px solid currentColor; }
 
 /* ---------- Wizard ---------- */
-.wizard { padding-block: var(--pad-block); }
+.wizard { padding-block: clamp(48px, 4.5vw, 72px); }
 .wizard-steps {
   display: flex; gap: var(--s-3); margin-bottom: var(--s-7);
   border-bottom: 1px solid var(--border); padding-bottom: var(--s-5);
@@ -1279,13 +1287,16 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .form-actions { display: flex; justify-content: space-between; gap: var(--s-5); margin-top: var(--s-7); flex-wrap: wrap; }
 .btn-text {
   display: inline-flex; align-items: center; gap: 0.5em;
-  font-size: 16px; font-weight: 500; font-family: var(--font-sans);
+  font-size: clamp(17px, 1.25vw, 19px); font-weight: 600; font-family: var(--font-sans);
+  letter-spacing: 0.01em;
   color: var(--fg);
-  padding: 0;
-  background: none; border: 0; cursor: pointer;
+  padding: 0 0 4px;
+  background: none; border: 0; border-bottom: 1px solid currentColor; cursor: pointer;
+  transition: border-color var(--t-base) var(--ease-out);
 }
 .btn-text::after { content: '→'; transition: transform var(--t-base) var(--ease-out); display: inline-block; }
-.btn-text:hover::after { transform: translateX(4px); }
+.btn-text:hover { border-color: transparent; }
+.btn-text:hover::after { transform: translateX(6px); }
 .btn-text[disabled] { color: var(--fg-soft); cursor: not-allowed; }
 .btn-text[disabled]::after { display: none; }
 
@@ -1478,8 +1489,11 @@ em, i { font-style: italic; font-family: var(--font-sans); }
    POLISH · sobre-risso.html (v2) — galería "Hoy"
    Editorial 2×2 photo strip using the new ccrisso.com/galeria/ assets.
    ========================================================================== */
-.gallery-section { padding-block: var(--pad-section); }
-.gallery-section .gallery-head { margin-bottom: var(--s-7); max-width: 64ch; }
+.gallery-section { padding-block: clamp(48px, 4.5vw, 72px); }
+/* Bloques contiguos en una misma página comparten un solo ritmo (48–72px)
+   en vez de sumar el padding de ambos. */
+.beats-section + .gallery-section { padding-top: 0; }
+.gallery-section .gallery-head { margin-bottom: clamp(28px, 3.5vw, 48px); max-width: 64ch; }
 .gallery-section .gallery-head .lede { color: var(--fg-muted); margin-top: var(--s-3); max-width: 56ch; }
 .photo-grid {
   display: grid;
@@ -1488,7 +1502,6 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 }
 @media (min-width: 1200px) {
   .photo-grid { grid-template-columns: repeat(4, 1fr); gap: var(--s-5); }
-  .gallery-section { padding-block: var(--s-9); }
 }
 @media (max-width: 720px) {
   .photo-grid { grid-template-columns: 1fr; gap: var(--s-6); }
@@ -1512,11 +1525,15 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .wizard-error { margin-top: var(--s-5); color: var(--color-error); font-size: var(--fs-body-sm); }
 .wizard-error:empty { display: none; }
 .field--full { grid-column: 1 / -1; }
-.info-section--tight { padding-block: var(--pad-section-tight); }
+.reclamo-section { padding-block: clamp(48px, 4.5vw, 72px); }
+.reclamo-section + .reclamo-section { padding-top: 0; }
+.info-section--tight { padding-block: clamp(48px, 4.5vw, 72px); }
+.wizard + .info-section--tight,
+.info-section--tight + .contact-map-section { padding-top: 0; }
 .info-section--tight .info-cell p.cta { margin-top: var(--s-4); }
 
 /* ---- CONTACT MAP (Google Maps embed) ---- */
-.contact-map-section { padding-block: var(--pad-section); }
+.contact-map-section { padding-block: clamp(48px, 4.5vw, 72px); }
 .contact-map-head { margin-bottom: var(--s-6); max-width: 60ch; }
 .contact-map-head .kicker { margin-bottom: var(--s-3); }
 .contact-map-head h2 { font-size: var(--fs-display-3); font-weight: 800; letter-spacing: -0.02em; line-height: var(--lh-display); margin: 0; }
