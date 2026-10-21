@@ -131,40 +131,62 @@ if MARK in css:
     css = css[:css.index(MARK)].rstrip() + "\n"
 
 block = MARK + """
-   Todas las categorías comparten el azul de marca: la separación es espacial,
-   no cromática (TI-01, TD-02, TD-05). El fondo de la página es un tinte suave.
+   Variante B (aprobada): mosaico de 2 columnas sobre fondo blando. Cada
+   categoría es una tarjeta con altura según contenido; el azul de marca se
+   mantiene como superficie y la separación es espacial, no cromática.
+   El conteo aparece UNA vez, en línea con el título (sin badge ni segunda
+   numeración).
    ========================================================================== */
 .tiendas-page body { background: #F4F7FC; }
 
-.directory { display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
-.directory-row {
-  padding: clamp(28px, 3vw, 44px) clamp(20px, 3vw, 36px);
-  color: var(--fg-on-ink);
-  background: var(--brand-blue);
+.directory {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-3);
+  align-items: stretch;
 }
-.directory-row-head { margin-bottom: var(--s-5); }
-.directory-row-head h2 { font-size: var(--fs-display-3); font-weight: 800; letter-spacing: -0.015em; line-height: var(--lh-heading); color: var(--fg-on-ink); margin: 0; }
+@media (min-width: 900px) {
+  .directory { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4); }
+}
+
+.directory-row {
+  background: var(--brand-blue);
+  color: var(--fg-on-ink);
+  padding: clamp(22px, 2.2vw, 30px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+.directory-row[hidden] { display: none; }
+
+.directory-row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+.directory-row-head h2 {
+  font-size: var(--fs-display-3); font-weight: 800;
+  letter-spacing: -0.015em; line-height: var(--lh-heading);
+  color: var(--fg-on-ink);
+  margin: 0;
+}
 .directory-count {
-  margin-top: var(--s-2);
+  margin: 0;
+  flex: none;
   font-size: var(--fs-caption);
   letter-spacing: var(--track-caps);
   text-transform: uppercase;
   color: rgba(255,255,255,0.72);
 }
-.directory-tenants { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); }
-.tenant-chip {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-height: 64px;
-  padding: var(--s-3) var(--s-4);
-  background: rgba(255,255,255,0.06);
-}
-.tenant-chip img { width: auto; max-width: 100%; object-fit: contain; }
-.directory-row[hidden] { display: none; }
 
-@media (min-width: 1024px) {
-  .directory-row { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr); gap: var(--s-7); align-items: center; }
-  .directory-row-head { margin-bottom: 0; }
+.directory-tenants {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--s-3) var(--s-5);
+  margin-top: auto;
 }
+.tenant-chip { display: inline-flex; align-items: center; justify-content: center; }
+.tenant-chip img { width: auto; max-width: 100%; object-fit: contain; }
 
 /* ---- TD-01 · filtro desplegable ---- */
 .directory-filter {
