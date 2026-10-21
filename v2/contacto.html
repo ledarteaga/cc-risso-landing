@@ -27,7 +27,8 @@
       <a href="sobre-risso.html">Sobre Risso</a>
       <a href="descuentos.html">Descuentos</a>
       <a href="tiendas.html">Tiendas</a>
-      <a href="contacto.html" class="is-active nav-cta" aria-current="page">Contacto</a>
+      <a href="como-llegar.html">Cómo llegar</a>
+      <a href="contacto.html" class="is-active nav-cta" aria-current="page">Contáctanos</a>
     </nav>
     <button class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
@@ -40,7 +41,7 @@
       <a href="sobre-risso.html">Sobre Risso</a>
       <a href="descuentos.html">Descuentos</a>
       <a href="tiendas.html">Tiendas</a>
-      <a href="contacto.html" aria-current="page">Contacto</a>
+      <a href="contacto.html" aria-current="page">Contáctanos</a>
     </div>
   </header>
 
@@ -49,209 +50,29 @@
     <!-- ============================================================
          PAGE OPEN
          ============================================================ -->
-    <section class="page-open page-open--green" aria-labelledby="page-title">
-      <div class="container">
-        <p class="kicker">Contacto · Cómo llegar</p>
-        <h1 id="page-title">Estamos en Av. Arequipa 2201, Lince.</h1>
-        <p class="lede">Abrimos de lunes a domingo, de 10:00 a 22:00. Si quieres alquilar un local, agendar un evento o dejarnos una sugerencia, abajo hay un formulario de tres pasos.</p>
+    <section class="page-open page-open--green page-open--split" aria-labelledby="page-title">
+      <div class="container page-open-grid">
+        <div class="page-open-copy">
+          <p class="kicker">Contáctanos</p>
+          <h1 id="page-title">Estamos en Av. Arequipa 2201, Lince.</h1>
+          <p class="lede">Abrimos de lunes a domingo, de 10:00 a 22:00. Escríbenos si quieres alquilar un local, agendar un evento o dejarnos una sugerencia.</p>
+          <p class="page-open-actions">
+            <a href="como-llegar.html" class="cta-link is-on-dark">Cómo llegar</a>
+            <a href="mailto:contacto@agremsa.pe" class="cta-link is-on-dark">contacto@agremsa.pe</a>
+          </p>
+        </div>
+
+        <!-- CT-03 · el mapa sube a la portada (antes estaba a 2.300 px de scroll) -->
+        <figure class="page-open-map">
+          <iframe
+            src="https://maps.google.com/maps?q=Av.+Arequipa+2201,+Lince,+Lima+15073&t=m&z=16&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mapa del Centro Comercial Risso, Av. Arequipa 2201, Lince"></iframe>
+        </figure>
       </div>
     </section>
 
-    <!-- ============================================================
-         PHOTO BAND · corredor central
-         ============================================================ -->
-    <section class="photo-band" style="background-image: url('assets/img/cc/ccrisso/galeria2_MG_4944.jpg');" role="img" aria-label="Corredor central del centro comercial"></section>
-
-    <!-- ============================================================
-         WIZARD · Multistep form (3 steps)
-         ============================================================ -->
-    <section class="container-narrow wizard" data-wizard aria-labelledby="wizard-title">
-      <header>
-        <p class="kicker">Escríbenos</p>
-        <h2 id="wizard-title" class="wizard-title">¿Sobre qué quieres hablar?</h2>
-      </header>
-
-      <!-- Stepper -->
-      <ol class="wizard-steps" aria-label="Pasos del formulario">
-        <li class="wizard-step is-active" data-step="1"><span class="step-num">Paso 1 de 3</span>Motivo</li>
-        <li class="wizard-step" data-step="2"><span class="step-num">Paso 2 de 3</span>Datos</li>
-        <li class="wizard-step" data-step="3"><span class="step-num">Paso 3 de 3</span>Confirmación</li>
-      </ol>
-
-      <!-- STEP 1 · Elegir frente -->
-      <div class="wizard-pane is-active" data-pane="1">
-        <p class="lede u-mb-7 pane-lede">Elige el motivo de tu mensaje. Cada uno tiene sus propios campos.</p>
-        <input type="hidden" id="frente-input" name="frente" value="">
-
-        <div class="frente-grid">
-          <button type="button" class="frente-card" data-frente="alquilar" aria-label="Alquilar un local">
-            <span class="frente-body">
-              <span class="frente-name">Alquilar un local</span>
-              <span class="frente-desc">Para abrir tu tienda, restaurante o negocio dentro del centro. Te pedimos datos del negocio y los m² que necesitas.</span>
-            </span>
-          </button>
-          <button type="button" class="frente-card" data-frente="evento" aria-label="Agendar un evento">
-            <span class="frente-body">
-              <span class="frente-name">Agendar un evento</span>
-              <span class="frente-desc">Para activaciones de marca, lanzamientos, ferias o eventos puntuales en el centro comercial.</span>
-            </span>
-          </button>
-          <button type="button" class="frente-card" data-frente="buzon" aria-label="Buzón de sugerencias">
-            <span class="frente-body">
-              <span class="frente-name">Buzón de sugerencias</span>
-              <span class="frente-desc">Comentarios, ideas o mejoras. Solo necesitamos tu nombre y el mensaje.</span>
-            </span>
-          </button>
-        </div>
-
-        <p id="step1-error" role="alert" class="wizard-error"></p>
-
-        <div class="form-actions">
-          <span></span>
-          <button type="button" class="btn-text" data-action="next-1">Continuar</button>
-        </div>
-      </div>
-
-      <!-- STEP 2 · Datos -->
-      <div class="wizard-pane" data-pane="2">
-
-        <!-- Panel: ALQUILAR -->
-        <div data-frente-panel="alquilar">
-          <p class="kicker u-mb-5">Alquilar un local</p>
-          <div class="form-grid form-grid--2">
-            <div class="field">
-              <label for="al-nombre">Nombre completo</label>
-              <input type="text" id="al-nombre" name="nombre" required>
-              <span class="error-msg">Completa este campo.</span>
-            </div>
-            <div class="field">
-              <label for="al-empresa">Empresa / Razón social</label>
-              <input type="text" id="al-empresa" name="empresa" required>
-              <span class="error-msg">Completa este campo.</span>
-            </div>
-            <div class="field">
-              <label for="al-rubro">Rubro</label>
-              <select id="al-rubro" name="rubro" required>
-                <option value="">— elegir —</option>
-                <option>Moda y accesorios</option>
-                <option>Gastronomía</option>
-                <option>Tecnología</option>
-                <option>Servicios</option>
-                <option>Entretenimiento</option>
-                <option>Salud y belleza</option>
-                <option>Otro</option>
-              </select>
-              <span class="error-msg">Elige una opción.</span>
-            </div>
-            <div class="field">
-              <label for="al-m2">m² aproximados</label>
-              <input type="text" id="al-m2" name="m2" placeholder="ej. 30" required>
-              <span class="error-msg">Completa este campo.</span>
-            </div>
-            <div class="field">
-              <label for="al-telefono">Teléfono</label>
-              <input type="tel" id="al-telefono" name="telefono" required>
-              <span class="error-msg">Ingresa un teléfono de contacto.</span>
-            </div>
-            <div class="field">
-              <label for="al-email">Email</label>
-              <input type="email" id="al-email" name="email" required>
-              <span class="error-msg">Ingresa un correo válido.</span>
-            </div>
-            <div class="field field--full">
-              <label for="al-mensaje">Mensaje</label>
-              <textarea id="al-mensaje" name="mensaje" placeholder="Cuéntanos brevemente tu propuesta"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- Panel: EVENTO -->
-        <div data-frente-panel="evento" style="display: none;">
-          <p class="kicker u-mb-5">Agendar un evento</p>
-          <div class="form-grid form-grid--2">
-            <div class="field">
-              <label for="ev-nombre">Nombre completo</label>
-              <input type="text" id="ev-nombre" name="nombre" required>
-              <span class="error-msg">Completa este campo.</span>
-            </div>
-            <div class="field">
-              <label for="ev-fecha">Fecha tentativa</label>
-              <input type="date" id="ev-fecha" name="fecha" required>
-              <span class="error-msg">Elige una fecha.</span>
-            </div>
-            <div class="field">
-              <label for="ev-tipo">Tipo de evento</label>
-              <select id="ev-tipo" name="tipo" required>
-                <option value="">— elegir —</option>
-                <option>Activación de marca</option>
-                <option>Lanzamiento de producto</option>
-                <option>Feria / Market</option>
-                <option>Show / Presentación</option>
-                <option>Otro</option>
-              </select>
-              <span class="error-msg">Elige una opción.</span>
-            </div>
-            <div class="field">
-              <label for="ev-contacto">Contacto (teléfono)</label>
-              <input type="tel" id="ev-contacto" name="contacto" required>
-              <span class="error-msg">Ingresa un teléfono de contacto.</span>
-            </div>
-            <div class="field field--full">
-              <label for="ev-descripcion">Descripción</label>
-              <textarea id="ev-descripcion" name="descripcion" placeholder="Cuéntanos qué tienes en mente, público objetivo, requerimientos" required></textarea>
-              <span class="error-msg">Completa este campo.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Panel: BUZÓN -->
-        <div data-frente-panel="buzon" style="display: none;">
-          <p class="kicker u-mb-5">Buzón de sugerencias</p>
-          <div class="form-grid">
-            <div class="field">
-              <label for="bz-nombre">Nombre</label>
-              <input type="text" id="bz-nombre" name="nombre" required>
-              <span class="error-msg">Completa este campo.</span>
-            </div>
-            <div class="field">
-              <label for="bz-email">Email <span class="field-hint">(opcional)</span></label>
-              <input type="email" id="bz-email" name="email">
-            </div>
-            <div class="field">
-              <label for="bz-mensaje">Mensaje</label>
-              <textarea id="bz-mensaje" name="mensaje" placeholder="Tu comentario, idea o sugerencia" required></textarea>
-              <span class="error-msg">Completa este campo.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button type="button" class="btn-text" data-action="back-2">← Volver</button>
-          <button type="button" class="btn-text" data-action="next-2">Enviar</button>
-        </div>
-      </div>
-
-      <!-- STEP 3 · Confirmación -->
-      <div class="wizard-pane" data-pane="3">
-        <article class="confirm-card">
-          <h3>Gracias por escribirnos.</h3>
-          <p>Hemos recibido tu mensaje. Te respondemos en un plazo máximo de 3 días hábiles a través del medio que indicaste.</p>
-          <p class="confirm-urgent">Si es urgente, escríbenos directamente a <a href="mailto:contacto@agremsa.pe" class="cta-link">contacto@agremsa.pe</a>.</p>
-
-          <div id="confirm-summary"></div>
-        </article>
-
-        <div class="form-actions">
-          <span></span>
-          <button type="button" class="btn-text" data-action="reset">Enviar otra consulta</button>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ============================================================
-         INFO GRID · 4 cells (address, hours, transport, channels)
-         ============================================================ -->
     <section class="container info-section--tight">
       <div class="info-grid">
         <article class="info-cell">
@@ -305,37 +126,206 @@
     </section>
 
     <!-- ============================================================
-         MAP · Google Maps embed (Av. Arequipa 2201, Lince)
+         WIZARD · Multistep form (3 steps)
          ============================================================ -->
-    <section class="container contact-map-section" aria-label="Ubicación en el mapa">
-      <header class="contact-map-head">
-        <p class="kicker">Ubicación</p>
-        <h2>Av. Arequipa 2201, Lince.</h2>
+    <section class="container-narrow wizard" data-wizard aria-labelledby="wizard-title">
+      <header>
+        <p class="kicker">Escríbenos</p>
+        <h2 id="wizard-title" class="wizard-title">¿Sobre qué quieres hablar?</h2>
       </header>
-      <div class="contact-map-frame">
-        <iframe
-          src="https://maps.google.com/maps?q=Av.+Arequipa+2201,+Lince,+Lima+15073&t=m&z=16&output=embed"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="Mapa del Centro Comercial Risso, Av. Arequipa 2201, Lince">
-        </iframe>
+
+      <!-- Stepper -->
+      <ol class="wizard-steps" aria-label="Pasos del formulario">
+        <li class="wizard-step is-active" data-step="1"><span class="step-num">Paso 1 de 3</span>Motivo</li>
+        <li class="wizard-step" data-step="2"><span class="step-num">Paso 2 de 3</span>Datos</li>
+        <li class="wizard-step" data-step="3"><span class="step-num">Paso 3 de 3</span>Confirmación</li>
+      </ol>
+
+      <!-- STEP 1 · Elegir frente -->
+      <div class="wizard-pane is-active" data-pane="1">
+        <p class="lede u-mb-7 pane-lede">Elige el motivo de tu mensaje. Cada uno tiene sus propios campos.</p>
+        <input type="hidden" id="frente-input" name="frente" value="">
+
+        <div class="frente-grid">
+          <button type="button" class="frente-card" data-frente="alquilar" aria-label="Alquilar un local">
+            <span class="frente-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg></span>
+            <span class="frente-body">
+              <span class="frente-name">Alquilar un local</span>
+              <span class="frente-desc">Espacio para tu negocio, con los m² que necesitas.</span>
+            </span>
+          </button>
+          <button type="button" class="frente-card" data-frente="evento" aria-label="Agendar un evento">
+            <span class="frente-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M8 3.5v4M16 3.5v4M3.5 10.5h17"/></svg></span>
+            <span class="frente-body">
+              <span class="frente-name">Agendar un evento</span>
+              <span class="frente-desc">Activaciones, lanzamientos y ferias.</span>
+            </span>
+          </button>
+          <button type="button" class="frente-card" data-frente="buzon" aria-label="Buzón de sugerencias">
+            <span class="frente-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12z"/><circle cx="8.5" cy="12" r="0.9" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="0.9" fill="currentColor" stroke="none"/><circle cx="15.5" cy="12" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+            <span class="frente-body">
+              <span class="frente-name">Buzón de sugerencias</span>
+              <span class="frente-desc">Ideas, comentarios y mejoras.</span>
+            </span>
+          </button>
+        </div>
+
+        <p id="step1-error" role="alert" class="wizard-error"></p>
+
+        <div class="form-actions">
+          <span></span>
+          <button type="button" class="btn-text" data-action="next-1">Continuar</button>
+        </div>
       </div>
-      <p class="contact-map-fallback">
-        ¿No carga el mapa? <a href="https://www.google.com/maps/search/?api=1&query=Av.+Arequipa+2201,+Lince,+Lima" target="_blank" rel="noopener" class="cta-link">Abrir en Google Maps</a>.
-      </p>
+
+      <!-- STEP 2 · Datos -->
+      <div class="wizard-pane" data-pane="2">
+
+        <!-- Panel: ALQUILAR -->
+        <div data-frente-panel="alquilar">
+          <div class="form-grid form-grid--2">
+            <div class="field">
+              <label for="al-nombre">Nombre completo</label>
+              <input type="text" id="al-nombre" name="nombre" required>
+              <span class="error-msg">Completa este campo.</span>
+            </div>
+            <div class="field">
+              <label for="al-empresa">Empresa / Razón social</label>
+              <input type="text" id="al-empresa" name="empresa" required>
+              <span class="error-msg">Completa este campo.</span>
+            </div>
+            <div class="field">
+              <label for="al-rubro">Rubro</label>
+              <select id="al-rubro" name="rubro" required>
+                <option value="">— elegir —</option>
+                <option>Moda y accesorios</option>
+                <option>Gastronomía</option>
+                <option>Tecnología</option>
+                <option>Servicios</option>
+                <option>Entretenimiento</option>
+                <option>Salud y belleza</option>
+                <option>Otro</option>
+              </select>
+              <span class="error-msg">Elige una opción.</span>
+            </div>
+            <div class="field">
+              <label for="al-m2">m² aproximados</label>
+              <input type="text" id="al-m2" name="m2" placeholder="ej. 30" required>
+              <span class="error-msg">Completa este campo.</span>
+            </div>
+            <div class="field">
+              <label for="al-telefono">Teléfono</label>
+              <input type="tel" id="al-telefono" name="telefono" required>
+              <span class="error-msg">Ingresa un teléfono de contacto.</span>
+            </div>
+            <div class="field">
+              <label for="al-email">Email</label>
+              <input type="email" id="al-email" name="email" required>
+              <span class="error-msg">Ingresa un correo válido.</span>
+            </div>
+            <div class="field field--full">
+              <label for="al-mensaje">Mensaje</label>
+              <textarea id="al-mensaje" name="mensaje" placeholder="Cuéntanos brevemente tu propuesta"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel: EVENTO -->
+        <div data-frente-panel="evento" style="display: none;">
+          <div class="form-grid form-grid--2">
+            <div class="field">
+              <label for="ev-nombre">Nombre completo</label>
+              <input type="text" id="ev-nombre" name="nombre" required>
+              <span class="error-msg">Completa este campo.</span>
+            </div>
+            <div class="field">
+              <label for="ev-fecha">Fecha tentativa</label>
+              <input type="date" id="ev-fecha" name="fecha" required>
+              <span class="error-msg">Elige una fecha.</span>
+            </div>
+            <div class="field">
+              <label for="ev-tipo">Tipo de evento</label>
+              <select id="ev-tipo" name="tipo" required>
+                <option value="">— elegir —</option>
+                <option>Activación de marca</option>
+                <option>Lanzamiento de producto</option>
+                <option>Feria / Market</option>
+                <option>Show / Presentación</option>
+                <option>Otro</option>
+              </select>
+              <span class="error-msg">Elige una opción.</span>
+            </div>
+            <div class="field">
+              <label for="ev-contacto">Contacto (teléfono)</label>
+              <input type="tel" id="ev-contacto" name="contacto" required>
+              <span class="error-msg">Ingresa un teléfono de contacto.</span>
+            </div>
+            <div class="field field--full">
+              <label for="ev-descripcion">Descripción</label>
+              <textarea id="ev-descripcion" name="descripcion" placeholder="Cuéntanos qué tienes en mente, público objetivo, requerimientos" required></textarea>
+              <span class="error-msg">Completa este campo.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel: BUZÓN -->
+        <div data-frente-panel="buzon" style="display: none;">
+          <div class="form-grid">
+            <div class="field">
+              <label for="bz-nombre">Nombre</label>
+              <input type="text" id="bz-nombre" name="nombre" required>
+              <span class="error-msg">Completa este campo.</span>
+            </div>
+            <div class="field">
+              <label for="bz-email">Email <span class="field-hint">(opcional)</span></label>
+              <input type="email" id="bz-email" name="email">
+            </div>
+            <div class="field">
+              <label for="bz-mensaje">Mensaje</label>
+              <textarea id="bz-mensaje" name="mensaje" placeholder="Tu comentario, idea o sugerencia" required></textarea>
+              <span class="error-msg">Completa este campo.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-text" data-action="back-2">← Volver</button>
+          <button type="button" class="btn-text" data-action="next-2">Enviar</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 · Confirmación -->
+      <div class="wizard-pane" data-pane="3">
+        <article class="confirm-card">
+          <h3>Gracias por escribirnos.</h3>
+          <p>Hemos recibido tu mensaje. Te respondemos en un plazo máximo de 3 días hábiles a través del medio que indicaste.</p>
+          <p class="confirm-urgent">Si es urgente, escríbenos directamente a <a href="mailto:contacto@agremsa.pe" class="cta-link">contacto@agremsa.pe</a>.</p>
+
+          <div id="confirm-summary"></div>
+        </article>
+
+        <div class="form-actions">
+          <span></span>
+          <button type="button" class="btn-text" data-action="reset">Enviar otra consulta</button>
+        </div>
+      </div>
+
     </section>
 
     <!-- ============================================================
+         INFO GRID · 4 cells (address, hours, transport, channels)
+         ============================================================ -->
+    <!-- ============================================================
          BAND · book
          ============================================================ -->
-    <section class="anchor anchor--ink">
+    <section class="anchor anchor--blue">
       <div class="container">
         <div class="anchor-grid">
           <div>
             <div class="anchor-eyebrow"><span class="num">Libro de Reclamaciones</span></div>
             <h2>Si tuviste un problema con algún local.</h2>
             <p>Conforme al Código de Protección y Defensa del Consumidor (Ley N° 29571), ponemos a tu disposición el Libro de Reclamaciones virtual. También puedes descargar el formato INDECOPI en PDF.</p>
-            <a href="libro-reclamaciones.html" class="cta-link is-on-dark">Ir al Libro de Reclamaciones</a>
+            <a href="libro-reclamaciones.html" class="cta-link">Ir al Libro de Reclamaciones</a>
           </div>
         </div>
       </div>
@@ -344,42 +334,54 @@
   </main>
 
   <footer class="site-footer" role="contentinfo" data-od-id="site-footer">
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <img src="assets/img/logo-white.png" alt="Centro Comercial Risso" width="120" height="28">
-          <p>Un centro comercial con historia en el corazón de Lince. Más de 50 años reuniendo a vecinos, familias y visitantes en Av. Arequipa 2201.</p>
-          <ul class="footer-contact">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span>Av. Arequipa 2201, Lince · Lima</span></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span>Lunes a domingo · 10:00 a 22:00</span></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg><a href="mailto:contacto@agremsa.pe">contacto@agremsa.pe</a></li>
-          </ul>
-        </div>
-        <div class="footer-cols">
-          <div class="footer-col"><h4>Explora</h4><ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="sobre-risso.html">Sobre Risso</a></li>
-            <li><a href="descuentos.html">Descuentos</a></li>
-            <li><a href="tiendas.html">Tiendas</a></li>
-            <li><a href="contacto.html">Contacto</a></li>
-          </ul></div>
-          <div class="footer-col"><h4>Síguenos</h4><ul class="footer-socials">
-            <li><a href="https://www.instagram.com/c.c.risso/" target="_blank" rel="noopener" aria-label="Instagram">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/></svg>
-            </a></li>
-            <li><a href="https://www.facebook.com/CentroComercialRisso/" target="_blank" rel="noopener" aria-label="Facebook">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.86.24-1.45 1.47-1.45H16.6V4.43c-.28-.04-1.25-.12-2.38-.12-2.36 0-3.97 1.44-3.97 4.08v2.11H7.75v3h2.5V21h3.25z"/></svg>
-            </a></li>
-          </ul></div>
-          <div class="footer-col"><h4>Legal</h4><ul>
-            <li><a href="libro-reclamaciones.html">Libro de Reclamaciones</a></li>
-              </ul></div>
-        </div>
+  <div class="footer-inner">
+    <div class="footer-top">
+
+      <div class="footer-brand">
+        <img src="assets/img/logo-white.png" alt="Centro Comercial Risso" width="120" height="28">
+        <p>Un centro comercial con historia en el corazón de Lince. Más de 50 años reuniendo a vecinos, familias y visitantes en Av. Arequipa 2201.</p>
+        <ul class="footer-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span>Av. Arequipa 2201, Lince · Lima</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span>Lunes a domingo · 10:00 a 22:00</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg><a href="mailto:contacto@agremsa.pe">contacto@agremsa.pe</a></li>
+        </ul>
       </div>
-      <div class="footer-bottom">
-        <span>© 2026 Centro Comercial Risso · Lince, Lima, Perú</span>
-        </div>
+
+      <nav class="footer-col footer-col--explora" aria-label="Explora">
+        <h4>Explora</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="sobre-risso.html">Sobre Risso</a></li>
+          <li><a href="descuentos.html">Descuentos</a></li>
+          <li><a href="tiendas.html">Tiendas</a></li>
+          <li><a href="como-llegar.html">Cómo llegar</a>
+      <a href="contacto.html">Contáctanos</a></li>
+          <li><a href="como-llegar.html">Cómo llegar</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col footer-col--social">
+        <h4>Síguenos</h4>
+        <ul class="footer-socials">
+          <li><a href="https://www.instagram.com/c.c.risso/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/></svg>
+          </a></li>
+          <li><a href="https://www.facebook.com/CentroComercialRisso/" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.86.24-1.45 1.47-1.45H16.6V4.43c-.28-.04-1.25-.12-2.38-.12-2.36 0-3.97 1.44-3.97 4.08v2.11H7.75v3h2.5V21h3.25z"/></svg>
+          </a></li>
+        </ul>
+      </div>
+
+      <nav class="footer-col footer-col--legal" aria-label="Legal">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="libro-reclamaciones.html">Libro de Reclamaciones</a></li>
+        </ul>
+        <p class="footer-legal-note">© 2026 Centro Comercial Risso<br>Lince, Lima, Perú</p>
+      </nav>
+
     </div>
-  </footer>
+  </div>
+</footer>
 </body>
 </html>

@@ -7,3 +7,6 @@
 *.swo
 *~
 .netlify/
+
+# Notas internas de trabajo (planes, capturas de referencia): no se publican
+.hermes/

@@ -49,14 +49,17 @@
   /* --- Typography · Futura (self-hosted WOFF2) ------------------------ */
   --font-sans:          "Futura", "Trebuchet MS", system-ui, -apple-system, sans-serif;
 
-  /* Display scale (Futura Heavy/Extra Black) */
-  --fs-display-1:       clamp(40px, 7vw, 96px);    /* hero claim */
-  --fs-display-2:       clamp(36px, 5.4vw, 76px);   /* page opening */
-  --fs-display-3:       clamp(28px, 4vw, 56px);    /* section heading */
-  --fs-display-4:       clamp(22px, 2.7vw, 38px);   /* sub-heading */
+  /* Display scale — 4 niveles aprobados en reunion (20 oct 2026).
+     N1 claim 72 · N2 h1/h2 44 · N3 h3 24 · N4 cuerpo 17.
+     Un nivel = un tamano, en las 6 paginas. Prohibido agregar excepciones por pagina. */
+  --fs-display-1:       clamp(38px, 5vw, 72px);     /* N1 · claim del hero */
+  --fs-display-2:       clamp(30px, 3.2vw, 44px);   /* N2 · h1 de pagina y h2 de seccion */
+  --fs-display-3:       clamp(30px, 3.2vw, 44px);   /* N2 · alias historico, mismo valor */
+  --fs-display-4:       clamp(19px, 1.7vw, 24px);   /* N3 · h3 / subtitulo de ficha */
+  --fs-display-5:       clamp(19px, 1.7vw, 24px);   /* N3 · alias (antes indefinido) */
 
-  --fs-body-lg:         clamp(17px, 1.4vw, 21px);
-  --fs-body:            clamp(15px, 1.15vw, 17px);
+  --fs-body-lg:         clamp(16px, 1.18vw, 17px);   /* N4 · cuerpo y entradillas */
+  --fs-body:            clamp(16px, 1.18vw, 17px);  /* N4 · cuerpo */
   --fs-body-sm:         13px;
   --fs-caption:         11px;
 
@@ -70,6 +73,12 @@
   --lh-display:         1.06;
   --lh-heading:         1.12;
   --lh-body:            1.55;
+
+  /* Ritmo vertical — un solo valor para secciones y footer (GL-03).
+     El footer NO tiene valores propios: si algo no mide 72, es un bug. */
+  --pad-band:           72px;
+  --pad-footer:         72px;
+  --header-h:           72px;
 
   /* --- Spacing · 4px rhythm, generous display spacing --------------- */
   --s-1:  4px;

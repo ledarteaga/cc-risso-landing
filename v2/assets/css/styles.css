@@ -39,10 +39,18 @@ html {
   html { scroll-behavior: auto; }
 }
 body { min-height: 100vh; overflow-x: hidden; }
+/* GL-02 · N4: el texto corrido siempre es 17px. Sin esta regla, un <p> sin
+   clase heredaba los 16px del body y aparecía un quinto tamaño. */
+p { font-size: var(--fs-body); }
 ::selection { background: var(--brand-green); color: var(--fg-on-green); }
 
 /* ---------- Typography scale ---------- */
 h1, h2, h3, h4, h5, h6 { margin: 0; font-family: var(--font-sans); font-weight: 800; line-height: var(--lh-display); letter-spacing: var(--track-display); color: inherit; }
+/* GL-02: un nivel = un tamaño. Sin estas dos reglas, el h2 sin regla propia
+   caía al default del navegador (1.5em = 24 px), que era justo la anomalía
+   de "El mismo lugar, ahora." */
+h2 { font-size: var(--fs-display-3); }   /* N2 · 44 */
+h3 { font-size: var(--fs-display-4); }   /* N3 · 24 */
 .display-1 { font-size: var(--fs-display-1); font-weight: 800; line-height: var(--lh-tight); letter-spacing: -0.025em; }
 .display-2 { font-size: var(--fs-display-2); font-weight: 800; line-height: var(--lh-display); }
 .display-3 { font-size: var(--fs-display-3); font-weight: 800; line-height: var(--lh-heading); }
@@ -58,6 +66,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 /* ---------- Layout primitives ---------- */
 .container { width: 100%; max-width: var(--maxw-content); margin-inline: auto; padding-inline: var(--gutter); }
 .container-narrow { width: 100%; max-width: var(--maxw-narrow); margin-inline: auto; padding-inline: var(--gutter); }
+section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var(--pad-band); }
 .container-wide   { width: 100%; max-width: var(--maxw-wide); margin-inline: auto; padding-inline: var(--gutter); }
 .container-full   { width: 100%; max-width: var(--maxw-full); margin-inline: auto; padding-inline: var(--gutter); }
 .section { padding-block: var(--pad-section); }
@@ -199,7 +208,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 /* ---------- Footer (black, editorial close) ---------- */
 .site-footer {
   background: var(--ink); color: var(--fg-on-ink);
-  padding: var(--s-9) 0 0;
+  padding: var(--pad-footer) 0 var(--pad-footer);   /* GL-03: 72/72, igual que una sección */
   border-top: 3px solid var(--brand-green);
   overflow: hidden;
 }
@@ -208,11 +217,23 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
+/* FO-01 · rejilla de 12 columnas: marca 5 · explora 3 · síguenos 2 · legal 2.
+   Antes eran 2 columnas (514 + 671 px) con gap de 128 px y una Legal de un ítem. */
 .footer-top {
-  display: grid; gap: var(--s-8); grid-template-columns: 1fr;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-7);
 }
 @media (min-width: 900px) {
-  .footer-top { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.5fr); gap: var(--s-10); }
+  .footer-top {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--s-7);
+    align-items: start;
+  }
+  .footer-brand        { grid-column: span 5; }
+  .footer-col--explora { grid-column: span 3; }
+  .footer-col--social  { grid-column: span 2; }
+  .footer-col--legal   { grid-column: span 2; }
 }
 .footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-5); }
 .footer-brand img { height: 68px; width: auto; filter: brightness(0) invert(1); }
@@ -226,7 +247,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .footer-contact a { color: rgba(255,255,255,0.9); transition: color var(--t-base) var(--ease-out); }
 .footer-contact a:hover { color: var(--fg-on-ink); text-decoration: underline; text-underline-offset: 3px; }
 
-.footer-cols {
+.footer-cols { /* legacy: sin uso tras FO-01 */
   display: grid; gap: var(--s-6) var(--s-5);
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-content: start;
@@ -258,7 +279,21 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .footer-col a:hover { color: var(--fg-on-ink); }
 .footer-col a:hover::after { transform: scaleX(1); }
 
-.footer-socials { flex-direction: row; gap: var(--s-3); }
+/* FO-01 · RRSS en fila. Se necesita .footer-col para vencer a `.footer-col ul`,
+   que fuerza column; los iconos suben a 20px (medían 17 y eran casi invisibles). */
+.footer-col .footer-socials { flex-direction: row; gap: var(--s-3); }
+.footer-col .footer-socials a { width: 44px; height: 44px; }
+.footer-col .footer-socials svg { width: 20px; height: 20px; }
+
+/* FO-01 · Legal absorbe el copyright para no quedar como columna de un solo ítem */
+.footer-col--legal { display: flex; flex-direction: column; }
+.footer-legal-note {
+  margin-top: var(--s-6);
+  font-size: var(--fs-caption);
+  line-height: 1.6;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.02em;
+}
 .footer-socials a {
   display: inline-flex; align-items: center; justify-content: center;
   width: 44px; height: 44px;
@@ -271,8 +306,8 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .footer-socials svg { width: 17px; height: 17px; }
 
 .footer-bottom {
-  margin-top: var(--s-8);
-  padding-top: var(--s-5);
+  margin-top: var(--s-7);
+  padding-block: var(--s-5) var(--s-5);
   border-top: 1px solid rgba(255,255,255,0.12);
   display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-5); justify-content: space-between;
   font-size: var(--fs-caption); letter-spacing: 0.02em; color: rgba(255,255,255,0.55);
@@ -285,7 +320,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   min-height: 100vh; min-height: 100svh;
   display: flex; align-items: flex-end;
   overflow: hidden;
-  background: var(--ink); color: var(--fg-on-ink);
+  background: var(--brand-green-deep); color: var(--fg-on-ink);
   isolation: isolate;
 }
 .hero-media, .hero-video, .hero-poster {
@@ -305,7 +340,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   display: flex; flex-direction: column;
 }
 .hero-claim-wrap {
-  max-width: clamp(360px, 72vw, 1100px);   /* wide enough for "Un centro comercial" at Extra Black, tight enough for 2 líneas en desktop */
+  max-width: min(50vw, 720px);   /* IN-02: el claim nunca supera la mitad del ancho */
 }
 .hero-claim {
   font-size: var(--fs-display-1);
@@ -336,17 +371,12 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .hero-claim .word:nth-child(6) > span { animation-delay: 560ms; }
 .hero-claim .word:nth-child(7) > span { animation-delay: 680ms; }
 .hero-claim-dash > span { margin-right: 0.12em; }
+.hero-claim.is-upper { text-transform: uppercase; }   /* IN-01: todo el claim en caja alta */
 @media (max-width: 700px) {
-  .hero-claim { font-size: clamp(26px, 7.6vw, 40px); }   /* keeps "Un centro comercial" on one line on phones */
+  .hero-claim { font-size: clamp(32px, 8.4vw, 46px); }   /* keeps "Un centro comercial" on one line on phones */
 }
 @keyframes wordUp { to { transform: translateY(0); } }
-.hero-sub {
-  margin-top: var(--s-5);
-  max-width: 38ch;
-  font-size: clamp(17px, 1.35vw, 20px); line-height: 1.5;
-  text-wrap: balance;
-  color: rgba(255,255,255,0.82);
-}
+/* IN-10: .hero-sub eliminado — el claim del hero queda solo con el titular */
 .hero-cta { margin-top: var(--s-7); display: flex; gap: var(--s-5); flex-wrap: wrap; opacity: 1; transform: none; }
 .hero-progress {
   margin-top: var(--s-7);
@@ -373,19 +403,19 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 /* RRSS overlay fixed bottom-right of hero (only Inicio) */
 .hero-socials {
   position: absolute; right: var(--gutter); bottom: 120px; z-index: 2;   /* lifted above hero-progress / cta row */
-  display: flex; flex-direction: column; gap: var(--s-3);
-  background: rgba(0,0,0,0.18); backdrop-filter: blur(6px);
-  padding: var(--s-3); border-radius: 999px;
+  display: flex; flex-direction: column; gap: var(--s-2);
+  background: rgba(0,0,0,0.22); backdrop-filter: blur(6px);
+  padding: var(--s-2); border-radius: 999px;
 }
 .hero-socials a {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px;
+  width: 52px; height: 52px;   /* IN-03 bis: el icono crece a 30, el área táctil lo acompaña */
   color: var(--fg-on-ink);
   opacity: 0.85;
   transition: opacity var(--t-base) var(--ease-out);
 }
 .hero-socials a:hover { opacity: 1; }
-.hero-socials svg { width: 18px; height: 18px; }
+.hero-socials svg { width: 30px; height: 30px; }   /* IN-03 bis: iconos más grandes en el hero */
 
 /* ==========================================================================
    STORYTELLING ANCHORS (Inicio · 4 anchors)
@@ -393,23 +423,58 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 /* Ritmo vertical único para todas las bandas de ancla (Inicio y subpáginas).
    Sustituye el antiguo --pad-section (hasta 160px) por 48–72px. */
 .anchor {
-  padding-block: clamp(48px, 4.5vw, 72px);
+  padding-block: var(--pad-band);
 }
 .anchor .photo-row { margin-top: clamp(28px, 3.5vw, 48px); }
+.anchor-head-cta { display: inline-block; margin-top: var(--s-5); }   /* HI-04 */
+.anchor .photo-row + .container .timeline { margin-top: var(--s-7); }   /* IN-08: separación fotos → timeline */
 .anchor--green { background: var(--brand-green-deep); color: var(--fg-on-green); }
 .anchor--blue  { background: var(--brand-blue);  color: var(--fg-on-blue); }
 .anchor--white { background: var(--ground); color: var(--fg); }
 .anchor--paper { background: var(--paper); color: var(--fg); }
-.anchor--ink   { background: var(--ink); color: var(--fg-on-ink); }
+.anchor--ink   { background: var(--brand-blue-deep); color: var(--fg-on-ink); }
 
+/* Encabezado de banda.
+   Desktop: dos columnas EXACTAMENTE iguales y sin column-gap, así el divisor
+   del texto cae en el 50% del contenedor. La separación se resuelve con
+   padding dentro de cada columna, no con gap (un gap desplazaría el divisor).
+   El cuerpo comparte la fila 2 con el h2: quedan alineados por la primera
+   línea, no por el borde inferior del bloque. */
 .anchor-head {
-  display: grid; gap: var(--s-7);
+  display: grid;
   grid-template-columns: 1fr;
-  align-items: end;
+  gap: var(--s-5);
+  align-items: start;
   margin-bottom: clamp(28px, 3.5vw, 48px);
 }
+.anchor-head > .anchor-eyebrow { order: 1; }
+.anchor-head > h2 { order: 2; }
+.anchor-head > .anchor-head-cta { order: 3; }
+.anchor-head > p { order: 4; }
+
 @media (min-width: 900px) {
-  .anchor-head { grid-template-columns: 1.1fr 1fr; gap: var(--s-9); }
+  .anchor-head {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 0;
+    row-gap: 0;
+    align-items: start;
+  }
+  .anchor-head > .anchor-eyebrow { grid-column: 1; grid-row: 1; margin-bottom: var(--s-5); }
+  .anchor-head > h2 {
+    grid-column: 1; grid-row: 2;
+    padding-right: var(--s-7);
+    margin-bottom: 0;
+  }
+  .anchor-head > .anchor-head-cta {
+    grid-column: 1; grid-row: 3;
+    justify-self: start;
+    margin-top: var(--s-5);
+  }
+  .anchor-head > p {
+    grid-column: 2; grid-row: 2;
+    margin: 0;
+    padding-left: var(--s-7);
+  }
 }
 .anchor-eyebrow { display: flex; align-items: center; gap: var(--s-3); margin-bottom: var(--s-5); }
 .anchor-eyebrow .num {
@@ -432,7 +497,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   max-width: 52ch;
   margin: 0;
   border-left: 2px solid currentColor;
-  padding-left: var(--s-5);
+  padding-left: var(--s-5);   /* móvil: el divisor queda pegado al texto */
   opacity: 0.85;
   font-style: normal;
   font-weight: 400;
@@ -443,7 +508,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
 .anchor--white .anchor-head p,
 .anchor--paper .anchor-head p { border-left-color: rgba(0,0,0,0.18); opacity: 0.78; }
 @media (min-width: 1100px) {
-  .anchor-head p { font-size: 22px; line-height: 1.45; max-width: 44ch; padding-left: var(--s-6); }
+  .anchor-head p { font-size: var(--fs-body-lg); line-height: 1.45; max-width: 44ch; }
 }
 .anchor-foot { margin-top: clamp(28px, 3vw, 40px); display: flex; gap: var(--s-7); flex-wrap: wrap; align-items: center; }
 .anchor--green .anchor-eyebrow .num,
@@ -569,7 +634,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   margin-top: auto;
 }
 .cat-preview:nth-child(3n+2) .cat-logos { background: var(--brand-blue); }
-.cat-preview:nth-child(3n+3) .cat-logos { background: var(--ink); }
+.cat-preview:nth-child(3n+3) .cat-logos { background: var(--brand-blue-deep); }
 .cat-preview .cat-logos img { max-height: 30px; max-width: 90px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
 
 /* ---- CONTACT VISIT · Inicio 04 · split editorial con imagen ---- */
@@ -673,7 +738,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
   color: var(--fg-muted);
 }
 .visit-plate-hours {
-  font-size: clamp(22px, 2vw, 30px);
+  font-size: var(--fs-display-4);
   font-weight: 800;
   letter-spacing: -0.01em;
   line-height: 1.1;
@@ -714,7 +779,7 @@ em, i { font-style: italic; font-family: var(--font-sans); }
    ========================================================================== */
 .cta-link {
   display: inline-flex; align-items: center; gap: 0.5em;
-  font-size: clamp(17px, 1.25vw, 19px); font-weight: 600;   /* matches the hero text link sitewide */
+  font-size: var(--fs-body-lg); font-weight: 600;   /* matches the hero text link sitewide */
   letter-spacing: 0.01em;
   color: inherit;
   border-bottom: 1px solid currentColor;
@@ -743,12 +808,13 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 /* ==========================================================================
    PAGE OPENING (Sobre Risso, Descuentos, Tiendas, Contacto, Libro Recl.)
    ========================================================================== */
+/* GL-03: apertura simétrica; el hueco del header fijo se resuelve en main */
+main:has(> .page-open) { margin-top: var(--header-h); }
 .page-open {
-  padding-top: clamp(104px, 14vh, 150px);
-  padding-bottom: clamp(24px, 3vw, 40px);
+  padding-block: var(--pad-band);
   background: var(--brand-green-deep); color: var(--fg-on-green);
 }
-.page-open--ink   { background: var(--ink); color: var(--fg-on-ink); }
+.page-open--ink   { background: var(--brand-blue-deep); color: var(--fg-on-ink); }
 .page-open--blue  { background: var(--brand-blue); color: var(--fg-on-blue); }
 .page-open--white { background: var(--ground); color: var(--fg); }
 .page-open--paper { background: var(--paper); color: var(--fg); }
@@ -784,13 +850,13 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 .beat:first-of-type { border-top: 0; padding-top: 0; }
 .beat:last-of-type { padding-bottom: 0; }
 .beat-year {
-  font-size: clamp(64px, 9vw, 120px);
+  font-size: clamp(48px, 5vw, 72px);
   font-weight: 900; letter-spacing: -0.04em; line-height: 0.85;
   color: var(--brand-green-deep);
 }
 .beat:nth-child(even) .beat-year { color: var(--brand-blue); }
 .beat-body h2 {
-  font-size: var(--fs-display-4); font-weight: 700; letter-spacing: -0.015em;
+  font-size: var(--fs-display-3); font-weight: 800; letter-spacing: -0.015em;
   line-height: var(--lh-heading); margin-bottom: var(--s-4);
 }
 .beat-body p { font-size: var(--fs-body-lg); line-height: 1.55; max-width: 56ch; margin-bottom: var(--s-4); }
@@ -800,7 +866,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
   margin-top: var(--s-6);
   padding-top: var(--s-5);
   border-top: 1px solid var(--brand-blue);
-  font-size: clamp(24px, 2.4vw, 34px);
+  font-size: var(--fs-display-4);
   font-weight: 500;
   line-height: 1.18;
   letter-spacing: -0.01em;
@@ -906,7 +972,10 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 }
 
 /* ---------- Section spacing + CTA (Sobre Risso) ---------- */
-.beats-section { padding-block: clamp(48px, 4.5vw, 72px); }
+.beats-intro { margin-bottom: var(--s-8); }
+.beats-intro h2 { max-width: 24ch; margin-top: var(--s-3); }
+.beats-intro .kicker { margin-bottom: 0; }
+.beats-section { padding-block: var(--pad-band); }
 .beat-cta { margin-top: var(--s-7); }
 
 /* ---------- CTA row (used after list sections to pair link + helper text) ---------- */
@@ -921,7 +990,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 /* ==========================================================================
    EDITORIAL PROMOS (Descuentos) · 3-col on lg, 2-col on sm, 1-col base
    ========================================================================== */
-.promo-section { padding-block: clamp(48px, 4.5vw, 72px); }
+.promo-section { padding-block: var(--pad-band); }
 .promo-list {
   display: grid;
   grid-template-columns: 1fr;
@@ -958,14 +1027,14 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 .promo-card-band img { max-width: 180px; max-height: 32px; width: auto; height: auto; }
 .promo-list .promo-row:nth-child(3n+1) .promo-card-band { background: var(--brand-green-deep); }
 .promo-list .promo-row:nth-child(3n+2) .promo-card-band { background: var(--brand-blue-deep); }
-.promo-list .promo-row:nth-child(3n+3) .promo-card-band { background: var(--ink); }
+.promo-list .promo-row:nth-child(3n+3) .promo-card-band { background: var(--brand-blue-deep); }
 .promo-card-body {
   padding: var(--s-6) var(--s-6) var(--s-5);
   display: flex; flex-direction: column; gap: var(--s-3);
   flex: 1;
 }
 .promo-row .promo-discount {
-  font-size: clamp(48px, 5vw, 72px);
+  font-size: var(--fs-display-1);
   font-weight: 900; letter-spacing: -0.02em;
   line-height: 1; color: var(--brand-green-deep);
 }
@@ -987,6 +1056,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 }
 
 /* ---- PHOTO BAND (single full-bleed shot, max 30vh) ---- */
+.directory-section { padding-block: var(--pad-band); }
 .photo-band {
   width: 100vw;
   position: relative;
@@ -999,14 +1069,14 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
   max-height: 360px;
   background-size: cover;
   background-position: center;
-  background-color: var(--ink);
+  background-color: var(--brand-green-deep);   /* GL-01: negro solo en el footer */
 }
 
 /* ---- MARCAS PARTICIPANTES (full-bleed band) ---- */
 .promo-marcas {
   background: var(--brand-green-deep);
   color: var(--fg-on-ink);
-  padding-block: clamp(48px, 4.5vw, 72px);
+  padding-block: var(--pad-band);
 }
 .promo-marcas-eyebrow {
   font-size: var(--fs-caption); font-weight: 500;
@@ -1115,7 +1185,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 }
 .directory-row--green { background: var(--brand-green-deep); }
 .directory-row--blue  { background: var(--brand-blue-deep);  }
-.directory-row--ink   { background: var(--ink);             }
+.directory-row--ink   { background: var(--brand-blue-deep);             }
 @media (min-width: 1024px) {
   .directory-row {
     display: grid;
@@ -1131,7 +1201,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
   color: var(--fg-on-ink); opacity: 0.7;
 }
 .directory-row-head h2 {
-  font-size: var(--fs-display-4); font-weight: 800;
+  font-size: var(--fs-display-3); font-weight: 800;
   letter-spacing: -0.015em; line-height: var(--lh-heading);
   color: var(--fg-on-ink);
   margin: var(--s-2) 0 0;
@@ -1152,7 +1222,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 .category { padding-block: clamp(36px, 4.5vw, 56px); }
 .category--green { background: var(--brand-green-deep); color: var(--fg-on-green); }
 .category--blue  { background: var(--brand-blue);  color: var(--fg-on-blue); }
-.category--ink   { background: var(--ink); color: var(--fg-on-ink); }
+.category--ink   { background: var(--brand-blue-deep); color: var(--fg-on-ink); }
 .category--white { background: var(--ground); }
 .category--paper { background: var(--paper); }
 
@@ -1221,7 +1291,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 .info-cell a { border-bottom: 1px solid currentColor; }
 
 /* ---------- Wizard ---------- */
-.wizard { padding-block: clamp(48px, 4.5vw, 72px); }
+.wizard { padding-block: var(--pad-band); }
 .wizard-steps {
   display: flex; gap: var(--s-3); margin-bottom: var(--s-7);
   border-bottom: 1px solid var(--border); padding-bottom: var(--s-5);
@@ -1287,7 +1357,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 .form-actions { display: flex; justify-content: space-between; gap: var(--s-5); margin-top: var(--s-7); flex-wrap: wrap; }
 .btn-text {
   display: inline-flex; align-items: center; gap: 0.5em;
-  font-size: clamp(17px, 1.25vw, 19px); font-weight: 600; font-family: var(--font-sans);
+  font-size: var(--fs-body-lg); font-weight: 600; font-family: var(--font-sans);
   letter-spacing: 0.01em;
   color: var(--fg);
   padding: 0 0 4px;
@@ -1306,7 +1376,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
   background: var(--paper);
   border-left: 4px solid var(--brand-green);
 }
-.confirm-card h3 { font-size: var(--fs-display-3); font-weight: 800; letter-spacing: -0.02em; margin-bottom: var(--s-4); }
+.confirm-card h3 { font-size: var(--fs-display-4); font-weight: 800; letter-spacing: -0.02em; margin-bottom: var(--s-4); }
 .confirm-card p { font-size: var(--fs-body-lg); line-height: 1.55; margin-bottom: var(--s-4); max-width: 56ch; }
 
 /* ==========================================================================
@@ -1326,7 +1396,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
   padding: var(--s-7);
   border-top: 4px solid var(--brand-green);
 }
-.reclamo-form h2 { font-size: var(--fs-display-4); font-weight: 700; margin-bottom: var(--s-4); }
+.reclamo-form h2 { font-size: var(--fs-display-3); font-weight: 800; margin-bottom: var(--s-4); }
 .reclamo-type { display: flex; gap: var(--s-5); margin-block: var(--s-4); }
 .reclamo-type label {
   display: inline-flex; align-items: center; gap: var(--s-3);
@@ -1379,7 +1449,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 .cat-preview .cat-thumb {
   aspect-ratio: 16/10;
   overflow: hidden;
-  background: var(--ink);
+  background: var(--brand-green-deep);
 }
 .cat-preview .cat-thumb img {
   width: 100%; height: 100%;
@@ -1393,7 +1463,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
   margin-bottom: var(--s-7);
   aspect-ratio: 16/7;
   overflow: hidden;
-  background: var(--ink);
+  background: var(--brand-green-deep);
 }
 .anchor-photo img {
   width: 100%; height: 100%;
@@ -1415,7 +1485,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 }
 .anchor-photo-cap-year {
   font-family: var(--font-sans);
-  font-size: clamp(40px, 4.5vw, 56px);
+  font-size: var(--fs-display-4);
   font-weight: 900;
   font-style: normal;
   line-height: 1;
@@ -1441,7 +1511,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
   gap: 0;
   width: 100%;
   margin-top: var(--s-9);
-  background: var(--ink);
+  background: var(--brand-green-deep);
 }
 .photo-row-item {
   flex: 1 1 auto;
@@ -1453,6 +1523,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 @media (min-width: 768px) {
   .photo-row { flex-direction: row; height: clamp(320px, 55vh, 640px); }
   .photo-row-item { flex: 1 1 33.333%; height: 100%; }
+  .photo-row--4 .photo-row-item { flex: 1 1 25%; }   /* HI-01: 4 fotos */
 }
 .photo-row-item img {
   width: 100%; height: 100%;
@@ -1471,7 +1542,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 }
 .photo-row-cap-year {
   font-family: var(--font-sans);
-  font-size: clamp(28px, 3vw, 40px);
+  font-size: var(--fs-display-4);
   font-weight: 900;
   font-style: normal;
   line-height: 1;
@@ -1489,10 +1560,10 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
    POLISH · sobre-risso.html (v2) — galería "Hoy"
    Editorial 2×2 photo strip using the new ccrisso.com/galeria/ assets.
    ========================================================================== */
-.gallery-section { padding-block: clamp(48px, 4.5vw, 72px); }
+.gallery-section { padding-block: var(--pad-band); }
 /* Bloques contiguos en una misma página comparten un solo ritmo (48–72px)
    en vez de sumar el padding de ambos. */
-.beats-section + .gallery-section { padding-top: 0; }
+/* GL-03: sin colapsos asimétricos */
 .gallery-section .gallery-head { margin-bottom: clamp(28px, 3.5vw, 48px); max-width: 64ch; }
 .gallery-section .gallery-head .lede { color: var(--fg-muted); margin-top: var(--s-3); max-width: 56ch; }
 .photo-grid {
@@ -1525,15 +1596,15 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 .wizard-error { margin-top: var(--s-5); color: var(--color-error); font-size: var(--fs-body-sm); }
 .wizard-error:empty { display: none; }
 .field--full { grid-column: 1 / -1; }
-.reclamo-section { padding-block: clamp(48px, 4.5vw, 72px); }
-.reclamo-section + .reclamo-section { padding-top: 0; }
-.info-section--tight { padding-block: clamp(48px, 4.5vw, 72px); }
+.reclamo-section { padding-block: var(--pad-band); }
+/* GL-03: sin colapsos asimétricos */
+.info-section--tight { padding-block: var(--pad-band); }
 .wizard + .info-section--tight,
-.info-section--tight + .contact-map-section { padding-top: 0; }
+/* GL-03: sin colapsos asimétricos */
 .info-section--tight .info-cell p.cta { margin-top: var(--s-4); }
 
 /* ---- CONTACT MAP (Google Maps embed) ---- */
-.contact-map-section { padding-block: clamp(48px, 4.5vw, 72px); }
+.contact-map-section { padding-block: var(--pad-band); }
 .contact-map-head { margin-bottom: var(--s-6); max-width: 60ch; }
 .contact-map-head .kicker { margin-bottom: var(--s-3); }
 .contact-map-head h2 { font-size: var(--fs-display-3); font-weight: 800; letter-spacing: -0.02em; line-height: var(--lh-display); margin: 0; }
@@ -1544,7 +1615,7 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
   border: 1px solid var(--border);
   border-radius: 2px;
   overflow: hidden;
-  background: var(--ink);
+  background: var(--brand-green-deep);
 }
 .contact-map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
 .contact-map-fallback {
@@ -1577,7 +1648,122 @@ p .cta-link { font-size: inherit; }   /* inline links inside body copy keep the 
 }
 
 /* Optional field helper: "(opcional)" */
+/* Letra chica legal (fuera de la escala de 4 niveles por diseño: no es lectura corrida) */
+.legal-note { font-size: var(--fs-body-sm); color: var(--fg-muted); margin-top: var(--s-5); max-width: 62ch; }
 .field-hint { color: var(--fg-muted); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 11px; margin-left: 6px; opacity: 0.7; }
 
 /* Soft text helper: inline placeholder hint (e.g., "· placeholder") */
 .text-soft { opacity: 0.6; }
+
+/* ==========================================================================
+   FASE 3 · CONTACTO (CT-03 portada con mapa · CT-02 tarjetas del formulario)
+   ========================================================================== */
+/* Portada en dos columnas: texto a la izquierda, mapa a la derecha (D7) */
+.page-open--split { padding-block: var(--pad-band); }
+.page-open-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-7);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .page-open-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: var(--s-9); }
+}
+.page-open-copy h1 { max-width: 20ch; }
+.page-open-actions { display: flex; flex-wrap: wrap; gap: var(--s-5); margin-top: var(--s-7); }
+.page-open-actions .cta-link { margin: 0; }
+
+.page-open-map {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  overflow: hidden;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.28);
+}
+.page-open-map iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; border: 0;
+  filter: saturate(0.85);
+}
+
+/* CT-02 · cada motivo con icono y una línea de texto */
+.frente-card {
+  display: flex; align-items: flex-start; gap: var(--s-4);
+  text-align: left;
+}
+.frente-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; flex: none;
+  border: 1px solid var(--border-strong);
+  color: var(--brand-green-deep);
+}
+.frente-icon svg { width: 22px; height: 22px; }
+.frente-card:hover .frente-icon,
+.frente-card.is-selected .frente-icon { border-color: var(--brand-green-deep); }
+
+/* Los wordmarks de una sola línea (McDonald's, Western Union, La Cruz) ocupan
+   dos celdas: a una sola quedarían con 17-24 px de alto y no se leerían. */
+
+/* ==========================================================================
+   TI-02 · BANDA DE LAS 33 MARCAS (Inicio)
+   Los altos se calculan por logo: mismo peso óptico, no mismo max-height.
+   Generado por scripts/phase2-marcas-band.py — no editar a mano.
+   ========================================================================== */
+.marca-band {
+  background: var(--brand-blue-deep);
+  color: var(--fg-on-ink);
+  padding-block: var(--pad-band);
+}
+.marca-band .kicker { color: rgba(255,255,255,0.72); }
+.marca-band h2 { max-width: 26ch; margin-top: var(--s-3); color: var(--fg-on-ink); }
+/* Flex en vez de grid: así la última fila incompleta queda CENTRADA en vez de
+   dejar un hueco a la derecha. */
+.marca-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-2);
+  margin-top: var(--s-8);
+}
+.marca-chip {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 96px;
+  padding: var(--s-4) var(--s-3);
+  flex: 0 0 calc((100% - var(--s-2)) / 2);          /* 2 por fila */
+}
+.marca-chip img { width: auto; max-width: 100%; object-fit: contain; }
+/* El wordmark de McDonald's es 8:1: en una celda quedaría a 24 px de alto. */
+.marca-chip--wide { flex: 0 0 calc(2 * ((100% - var(--s-2)) / 2) + var(--s-2)); }
+@media (min-width: 640px) {
+  .marca-chip { flex: 0 0 calc((100% - 2 * var(--s-2)) / 3); }   /* 3 por fila */
+  .marca-chip--wide { flex: 0 0 calc(2 * ((100% - 2 * var(--s-2)) / 3) + var(--s-2)); }
+}
+@media (min-width: 1024px) {
+  .marca-chip { flex: 0 0 calc((100% - 4 * var(--s-2)) / 5); }   /* 5 por fila */
+  .marca-chip--wide { flex: 0 0 calc(2 * ((100% - 4 * var(--s-2)) / 5) + var(--s-2)); }
+}
+@media (min-width: 1280px) {
+  .marca-chip { flex: 0 0 calc((100% - 5 * var(--s-2)) / 6); }   /* 6 por fila */
+  .marca-chip--wide { flex: 0 0 calc(2 * ((100% - 5 * var(--s-2)) / 6) + var(--s-2)); }
+}
+/* Los wordmarks de una sola línea (McDonald's, Western Union, La Cruz) ocupan
+   dos celdas: a una sola quedarían con 17-24 px de alto y no se leerían. */
+
+.marca-cta { margin-top: var(--s-8); }
+.marca-cta .cta-link {
+  color: var(--fg-on-ink);
+  border-color: var(--brand-green-light);
+}
+.marca-cta .cta-link:hover { border-color: var(--fg-on-ink); }
+.marca-chip[data-logo="plazavea-logo-rgb-blanco"] img { height: 53.3px; }
+.marca-chip[data-logo="bcp-logo-blanco"] img { height: 36.0px; }
+.marca-chip[data-logo="westernunion-logo-2023-doslineas-blanco"] img { height: 36.8px; }
+.marca-chip[data-logo="mcdonalds-wordmark-logo-blanco"] img { height: 30.0px; }
+.marca-chip[data-logo="el-burrito-logo-blanco"] img { height: 64px; }
+.marca-chip[data-logo="canela-logo-blanco"] img { height: 64px; }
+.marca-chip[data-logo="cineplanet-logo-blanco"] img { height: 45.0px; }
+.marca-chip[data-logo="nuevo-fortuna-casino-logo-blanco"] img { height: 64px; }
+.marca-chip[data-logo="kayser-logo-blanco"] img { height: 34.1px; }
+.marca-chip[data-logo="platanitos-logo-blanco"] img { height: 46.5px; }
+.marca-chip[data-logo="souvenir-sport-logo-lineal-blanco"] img { height: 64px; }
