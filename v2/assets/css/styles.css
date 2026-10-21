@@ -1767,3 +1767,126 @@ main:has(> .page-open) { margin-top: var(--header-h); }
 .marca-chip[data-logo="kayser-logo-blanco"] img { height: 34.1px; }
 .marca-chip[data-logo="platanitos-logo-blanco"] img { height: 46.5px; }
 .marca-chip[data-logo="souvenir-sport-logo-lineal-blanco"] img { height: 64px; }
+
+/* ==========================================================================
+   FASE 2 · DIRECTORIO DE TIENDAS
+   Todas las categorías comparten el azul de marca: la separación es espacial,
+   no cromática (TI-01, TD-02, TD-05). El fondo de la página es un tinte suave.
+   ========================================================================== */
+.tiendas-page body { background: #F4F7FC; }
+
+.directory { display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
+.directory-row {
+  padding: clamp(28px, 3vw, 44px) clamp(20px, 3vw, 36px);
+  color: var(--fg-on-ink);
+  background: var(--brand-blue);
+}
+.directory-row-head { margin-bottom: var(--s-5); }
+.directory-row-head h2 { font-size: var(--fs-display-3); font-weight: 800; letter-spacing: -0.015em; line-height: var(--lh-heading); color: var(--fg-on-ink); margin: 0; }
+.directory-count {
+  margin-top: var(--s-2);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.72);
+}
+.directory-tenants { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); }
+.tenant-chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 64px;
+  padding: var(--s-3) var(--s-4);
+  background: rgba(255,255,255,0.06);
+}
+.tenant-chip img { width: auto; max-width: 100%; object-fit: contain; }
+.directory-row[hidden] { display: none; }
+
+@media (min-width: 1024px) {
+  .directory-row { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr); gap: var(--s-7); align-items: center; }
+  .directory-row-head { margin-bottom: 0; }
+}
+
+/* ---- TD-01 · filtro desplegable ---- */
+.directory-filter {
+  position: sticky; top: 72px; z-index: calc(var(--z-nav) - 1);
+  background: rgba(244,247,252,0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding-block: var(--s-3);
+}
+.directory-filter-inner {
+  max-width: var(--maxw-content);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap;
+}
+.directory-filter .kicker { color: var(--fg-muted); margin: 0; }
+.select-wrap { position: relative; flex: 0 1 320px; }
+.cat-select {
+  width: 100%;
+  appearance: none;
+  font: inherit;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--ground);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  padding: var(--s-3) var(--s-8) var(--s-3) var(--s-4);
+  cursor: pointer;
+}
+.cat-select:focus-visible { outline: 2px solid var(--brand-green-deep); outline-offset: 2px; }
+.select-caret {
+  position: absolute; right: var(--s-3); top: 50%; transform: translateY(-50%);
+  width: 18px; height: 18px; pointer-events: none; color: var(--fg-muted);
+}
+
+/* ---- TD-06 · volver arriba ---- */
+.to-top {
+  position: fixed; right: clamp(16px, 3vw, 32px);
+  bottom: calc(clamp(16px, 3vw, 32px) + env(safe-area-inset-bottom, 0px));
+  z-index: calc(var(--z-nav) + 1);
+  width: 48px; height: 48px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 0; border-radius: 999px;
+  background: var(--brand-green-deep); color: var(--fg-on-ink);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+  opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out), visibility var(--t-base);
+  cursor: pointer;
+}
+.to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
+.to-top svg { width: 22px; height: 22px; }
+@media (prefers-reduced-motion: reduce) { .to-top { transition: none; } }
+.tenant-chip[data-logo="xiabox-logo-blanco"] img { height: 25.8px; }
+.tenant-chip[data-logo="revolution-logo-blanco"] img { height: 27.4px; }
+.tenant-chip[data-logo="souvenir-sport-logo-lineal-blanco"] img { height: 44px; }
+.tenant-chip[data-logo="tradicionpiurana-logo-blanco"] img { height: 40.0px; }
+.tenant-chip[data-logo="el-burrito-logo-blanco"] img { height: 44px; }
+.tenant-chip[data-logo="malif-beauty-logo-blanco"] img { height: 32.5px; }
+.tenant-chip[data-logo="quemono-logo-blanco"] img { height: 44px; }
+.tenant-chip[data-logo="stampaya-logo-blanco"] img { height: 29.8px; }
+.tenant-chip[data-logo="kayser-logo-blanco"] img { height: 22.2px; }
+.tenant-chip[data-logo="munay-cotton-logo-blanco"] img { height: 21.8px; }
+.tenant-chip[data-logo="olavarria-joyeria-logo-blanco"] img { height: 30.9px; }
+.tenant-chip[data-logo="godsvision-logo-blanco"] img { height: 20px; }
+.tenant-chip[data-logo="plazavea-logo-rgb-blanco"] img { height: 35.1px; }
+.tenant-chip[data-logo="westernunion-logo-2023-doslineas-blanco"] img { height: 23.9px; }
+.tenant-chip[data-logo="audiophile-logo-blanco"] img { height: 42.0px; }
+.tenant-chip[data-logo="mcdonalds-wordmark-logo-blanco"] img { height: 20px; }
+.tenant-chip[data-logo="canela-logo-blanco"] img { height: 44px; }
+.tenant-chip[data-logo="jannetmedina-logo-blanco"] img { height: 44px; }
+.tenant-chip[data-logo="westernunion-logo-2023-unalinea-blanco"] img { height: 20px; }
+.tenant-chip[data-logo="pekeloco-logo-blanco"] img { height: 29.9px; }
+.tenant-chip[data-logo="bcp-logo-blanco"] img { height: 24.2px; }
+.tenant-chip[data-logo="audicion-logo-blanco"] img { height: 21.7px; }
+.tenant-chip[data-logo="platanitos-logo-blanco"] img { height: 33.0px; }
+.tenant-chip[data-logo="thebarbarcompany-logo-blanco"] img { height: 23.2px; }
+.tenant-chip[data-logo="nuevo-fortuna-casino-logo-blanco"] img { height: 44px; }
+.tenant-chip[data-logo="cineplanet-logo-blanco"] img { height: 33.5px; }
+.tenant-chip[data-logo="el-bote-logo-blanco"] img { height: 44px; }
+.tenant-chip[data-logo="icreavicase-logo-blanco"] img { height: 26.8px; }
+.tenant-chip[data-logo="vacacionesmas-logo-blanco"] img { height: 44px; }
+.tenant-chip[data-logo="dulce-vanidad-logo-blanco"] img { height: 44px; }
+.tenant-chip[data-logo="inv-la-cruz-horizontal-logo-blanco"] img { height: 19.6px; }
+.tenant-chip[data-logo="scooterland-logo-blanco"] img { height: 24.6px; }
+.tenant-chip[data-logo="miami-chicken-criollo-logo-blanco"] img { height: 40.7px; }

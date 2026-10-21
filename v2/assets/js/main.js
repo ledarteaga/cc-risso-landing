@@ -217,65 +217,64 @@
     });
   });
 
-  /* ---------- Tiendas sub-nav active state on scroll (IntersectionObserver) ---------- */
-  const tiendasSubnav = document.querySelector('.tiendas-subnav');
-  if (tiendasSubnav) {
-    const links = tiendasSubnav.querySelectorAll('a[href^="#"]');
-    const targets = Array.from(links).map(a => ({
-      link: a,
-      el: document.querySelector(a.getAttribute('href'))
-    })).filter(t => t.el);
-
-    /* Sliding underline: one bar glides to whichever category the scroll spy
-       marks active, instead of each link toggling its own border. */
-    const subnavList = tiendasSubnav.querySelector('ul');
-    const indicator = tiendasSubnav.querySelector('.subnav-indicator');
-    const moveIndicator = () => {
-      if (!subnavList || !indicator) return;
-      const active = tiendasSubnav.querySelector('a.is-active');
-      if (!active) { indicator.classList.remove('is-visible'); return; }
-      const listRect = subnavList.getBoundingClientRect();
-      const rect = active.getBoundingClientRect();
-      indicator.style.width = rect.width + 'px';
-      indicator.style.transform = 'translate(' +
-        (rect.left - listRect.left) + 'px, ' +
-        (rect.bottom - listRect.top - 2) + 'px)';
-      indicator.classList.add('is-visible');
-    };
-    const setActive = (link) => {
-      links.forEach(l => l.classList.toggle('is-active', l === link));
-      moveIndicator();
-    };
-
-    if (indicator) {
-      tiendasSubnav.classList.add('is-animated');
-      window.addEventListener('resize', moveIndicator);
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveIndicator);
-    }
-
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        // pick the entry closest to the top of the visible area
-        const visible = entries
-          .filter(e => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        const current = visible[0];
-        setActive(current ? targets.find(t => t.el === current.target)?.link : null);
-      }, {
-        rootMargin: '-130px 0px -55% 0px',   /* trigger band: just below header+subnav, top half of viewport */
-        threshold: 0
+  /* ---------- TD-01 · filtro del directorio de tiendas ---------- */
+  const catFilter = document.getElementById('cat-filter');
+  if (catFilter) {
+    const rows = Array.from(document.querySelectorAll('.directory-row'));
+    const apply = (value, { scroll = false } = {}) => {
+      rows.forEach((row) => {
+        const match = value === 'all' || row.id === value;
+        row.hidden = !match;
       });
-      targets.forEach(t => observer.observe(t.el));
-    } else {
-      // fallback: scroll listener (legacy)
-      const onScroll = () => {
-        const scrollY = window.scrollY + 140;
-        let active = null;
-        targets.forEach(t => { if (t.el.offsetTop <= scrollY) active = t; });
-        setActive(active ? active.link : null);
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    }
+      if (scroll) {
+        const target = value === 'all'
+          ? document.querySelector('.directory')
+          : document.getElementById(value);
+        if (target) {
+          const y = target.getBoundingClientRect().top + window.scrollY - 88;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }
+    };
+
+    catFilter.addEventListener('change', () => apply(catFilter.value, { scroll: true }));
+
+    /* Enlace directo (#bancos, #ropa…): preselecciona la categoría */
+    const fromHash = () => {
+      const id = location.hash.replace('#', '');
+      if (!id) return;
+      if (rows.some((r) => r.id === id)) {
+        catFilter.value = id;
+        apply(id);
+      }
+    };
+    fromHash();
+    window.addEventListener('hashchange', fromHash);
+
+    /* Si el usuario limpia el hash o pulsa "Todas" desde el navegador */
+    window.addEventListener('pageshow', fromHash);
   }
+
+  /* ---------- TD-06 · botón de volver arriba ---------- */
+  (() => {
+    if (document.querySelector('.to-top')) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'to-top';
+    btn.setAttribute('aria-label', 'Volver arriba');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="6"/><polyline points="5 12 12 5 19 12"/></svg>';
+    document.body.appendChild(btn);
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const toggle = () => btn.classList.toggle('is-visible', window.scrollY > 600);
+    window.addEventListener('scroll', toggle, { passive: true });
+    toggle();
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      const first = document.querySelector('.skip-link') || document.body;
+      if (first.focus) first.focus({ preventScroll: true });
+    });
+  })();
+
 })();

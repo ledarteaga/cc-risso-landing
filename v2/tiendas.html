@@ -64,24 +64,28 @@
          ============================================================ -->
     <section class="photo-band" style="background-image: url('assets/img/cc/ccrisso/galeria1_MG_4933.jpg');" role="img" aria-label="Interior del centro comercial"></section>
 
-    <!-- ============================================================
-         SUB-NAV · sticky anchor jump
-         ============================================================ -->
-    <nav class="tiendas-subnav" aria-label="Categorías">
-      <ul>
-        <li><a href="#supermercados">Supermercados</a></li>
-        <li><a href="#bancos">Bancos</a></li>
-        <li><a href="#restaurantes">Restaurantes</a></li>
-        <li><a href="#entretenimiento">Entretenimiento</a></li>
-        <li><a href="#belleza">Belleza</a></li>
-        <li><a href="#ropa">Ropa</a></li>
-        <li><a href="#tecnologia">Tecnología</a></li>
-        <li><a href="#deportes">Deportes</a></li>
-        <li><a href="#regalos">Regalos</a></li>
-        <li><a href="#varios">Varios</a></li>
-        <li class="subnav-indicator" aria-hidden="true"></li>
-      </ul>
-    </nav>
+    <!-- TD-01 · filtro desplegable en lugar de la barra de 11 enlaces -->
+    <div class="directory-filter" role="search">
+      <div class="directory-filter-inner">
+        <label class="kicker" for="cat-filter">Filtrar por categoría</label>
+        <div class="select-wrap">
+          <select id="cat-filter" class="cat-select" aria-label="Filtrar el directorio por categoría">
+          <option value="all">Todas las categorías (33)</option>
+          <option value="supermercados">Supermercados (1)</option>
+          <option value="bancos">Bancos y Financieras (4)</option>
+          <option value="restaurantes">Restaurantes (7)</option>
+          <option value="entretenimiento">Entretenimiento (2)</option>
+          <option value="belleza">Peluquería y Belleza (4)</option>
+          <option value="ropa">Ropa y Accesorios (4)</option>
+          <option value="tecnologia">Tecnología (1)</option>
+          <option value="deportes">Deportes (3)</option>
+          <option value="regalos">Regalos (2)</option>
+          <option value="varios">Varios (5)</option>
+          </select>
+          <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+    </div>
 
     <!-- ============================================================
          DIRECTORY · editorial list (10 categorías), no full-bleed bands.
@@ -89,131 +93,129 @@
          vertical excesivo en pantallas grandes.
          ============================================================ -->
     <section class="directory-section">
-      <div class="directory">
-
-        <div class="directory-row directory-row--green" id="supermercados" aria-labelledby="cat-1">
+            <div class="directory">
+        <div class="directory-row" id="supermercados" aria-labelledby="cat-1">
           <div class="directory-row-head">
             <h2 id="cat-1">Supermercados</h2>
-            <p>El supermercado ancla, para la compra de la semana.</p>
+            <p class="directory-count">1 tienda</p>
           </div>
           <div class="directory-tenants">
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/PlazaVea_logo_rgb_blanco.png" alt="Plaza Vea" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="plazavea-logo-rgb-blanco"><img src="assets/img/tenants/logos/PlazaVea_logo_rgb_blanco.png" alt="Plaza Vea" loading="lazy"></span>
           </div>
         </div>
 
-        <div class="directory-row directory-row--blue" id="bancos" aria-labelledby="cat-2">
+        <div class="directory-row" id="bancos" aria-labelledby="cat-2">
           <div class="directory-row-head">
             <h2 id="cat-2">Bancos y Financieras</h2>
-            <p>Pago de servicios, retiros, transferencias y operaciones financieras sin salir del centro.</p>
+            <p class="directory-count">4 tiendas</p>
           </div>
           <div class="directory-tenants">
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/BCP_logo_blanco.png" alt="BCP" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/WesternUnion_logo_2023_Unalinea_blanco.png" alt="Western Union" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/WesternUnion_logo_2023_Doslineas_blanco.png" alt="Western Union" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/inv-la-cruz-horizontal_logo_blanco.png" alt="La Cruz" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="bcp-logo-blanco"><img src="assets/img/tenants/logos/BCP_logo_blanco.png" alt="BCP" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="westernunion-logo-2023-unalinea-blanco"><img src="assets/img/tenants/logos/WesternUnion_logo_2023_Unalinea_blanco.png" alt="Western Union" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="westernunion-logo-2023-doslineas-blanco"><img src="assets/img/tenants/logos/WesternUnion_logo_2023_Doslineas_blanco.png" alt="Western Union" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="inv-la-cruz-horizontal-logo-blanco"><img src="assets/img/tenants/logos/inv-la-cruz-horizontal_logo_blanco.png" alt="La Cruz" loading="lazy"></span>
           </div>
         </div>
 
-        <div class="directory-row directory-row--ink" id="restaurantes" aria-labelledby="cat-3">
+        <div class="directory-row" id="restaurantes" aria-labelledby="cat-3">
           <div class="directory-row-head">
             <h2 id="cat-3">Restaurantes</h2>
-            <p>Comida rápida, pollos a la brasa, comida criolla y opciones para todos los momentos del día.</p>
+            <p class="directory-count">7 tiendas</p>
           </div>
           <div class="directory-tenants">
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/mcdonalds-wordmark_logo_blanco.png" alt="McDonald's" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/El_burrito_logo_blanco.png" alt="El Burrito" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/Miami_Chicken_Criollo_logo_blanco.png" alt="Miami Chicken Criollo" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/PEKELOCO_logo_blanco.png" alt="Pekeloco" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/canela_logo_blanco.png" alt="Canela" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/TradicionPiurana_logo_blanco.png" alt="Tradición Piurana" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/quemono_logo_blanco.png" alt="Qué Mono" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="mcdonalds-wordmark-logo-blanco"><img src="assets/img/tenants/logos/mcdonalds-wordmark_logo_blanco.png" alt="McDonald's" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="el-burrito-logo-blanco"><img src="assets/img/tenants/logos/El_burrito_logo_blanco.png" alt="El Burrito" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="miami-chicken-criollo-logo-blanco"><img src="assets/img/tenants/logos/Miami_Chicken_Criollo_logo_blanco.png" alt="Miami Chicken Criollo" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="pekeloco-logo-blanco"><img src="assets/img/tenants/logos/PEKELOCO_logo_blanco.png" alt="Pekeloco" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="canela-logo-blanco"><img src="assets/img/tenants/logos/canela_logo_blanco.png" alt="Canela" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="tradicionpiurana-logo-blanco"><img src="assets/img/tenants/logos/TradicionPiurana_logo_blanco.png" alt="Tradición Piurana" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="quemono-logo-blanco"><img src="assets/img/tenants/logos/quemono_logo_blanco.png" alt="Qué Mono" loading="lazy"></span>
           </div>
         </div>
 
-        <div class="directory-row directory-row--green" id="entretenimiento" aria-labelledby="cat-4">
+        <div class="directory-row" id="entretenimiento" aria-labelledby="cat-4">
           <div class="directory-row-head">
             <h2 id="cat-4">Entretenimiento</h2>
-            <p>Cine y sala de juegos para una salida distinta, después del trabajo o el fin de semana.</p>
+            <p class="directory-count">2 tiendas</p>
           </div>
           <div class="directory-tenants">
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/cineplanet_logo_blanco.png" alt="Cineplanet" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/Nuevo_Fortuna_Casino_logo_blanco.png" alt="Nuevo Fortuna Casino" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="cineplanet-logo-blanco"><img src="assets/img/tenants/logos/cineplanet_logo_blanco.png" alt="Cineplanet" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="nuevo-fortuna-casino-logo-blanco"><img src="assets/img/tenants/logos/Nuevo_Fortuna_Casino_logo_blanco.png" alt="Nuevo Fortuna Casino" loading="lazy"></span>
           </div>
         </div>
 
-        <div class="directory-row directory-row--blue" id="belleza" aria-labelledby="cat-5">
+        <div class="directory-row" id="belleza" aria-labelledby="cat-5">
           <div class="directory-row-head">
             <h2 id="cat-5">Peluquería y Belleza</h2>
-            <p>Corte, color, barbería y cuidado personal, con profesionales del barrio.</p>
+            <p class="directory-count">4 tiendas</p>
           </div>
           <div class="directory-tenants">
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/JannetMedina_logo_blanco.png" alt="Jannet Medina" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/Malif_Beauty_logo_blanco.png" alt="Malif Beauty" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/TheBarbarCompany_logo_blanco.png" alt="The Barbar Company" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/dulce_vanidad_logo_blanco.png" alt="Dulce Vanidad" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="jannetmedina-logo-blanco"><img src="assets/img/tenants/logos/JannetMedina_logo_blanco.png" alt="Jannet Medina" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="malif-beauty-logo-blanco"><img src="assets/img/tenants/logos/Malif_Beauty_logo_blanco.png" alt="Malif Beauty" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="thebarbarcompany-logo-blanco"><img src="assets/img/tenants/logos/TheBarbarCompany_logo_blanco.png" alt="The Barbar Company" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="dulce-vanidad-logo-blanco"><img src="assets/img/tenants/logos/dulce_vanidad_logo_blanco.png" alt="Dulce Vanidad" loading="lazy"></span>
           </div>
         </div>
 
-        <div class="directory-row directory-row--ink" id="ropa" aria-labelledby="cat-6">
+        <div class="directory-row" id="ropa" aria-labelledby="cat-6">
           <div class="directory-row-head">
             <h2 id="cat-6">Ropa y Accesorios</h2>
-            <p>Marcas conocidas y tiendas del barrio para todos los estilos, de lo cotidiano a una salida.</p>
+            <p class="directory-count">4 tiendas</p>
           </div>
           <div class="directory-tenants">
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/platanitos_logo_blanco.png" alt="Platanitos" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/kayser_logo_blanco.png" alt="Kayser" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/munay_Cotton_logo_blanco.png" alt="Munay Cotton" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/xiabox_logo_blanco.png" alt="Xiabox" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="platanitos-logo-blanco"><img src="assets/img/tenants/logos/platanitos_logo_blanco.png" alt="Platanitos" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="kayser-logo-blanco"><img src="assets/img/tenants/logos/kayser_logo_blanco.png" alt="Kayser" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="munay-cotton-logo-blanco"><img src="assets/img/tenants/logos/munay_Cotton_logo_blanco.png" alt="Munay Cotton" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="xiabox-logo-blanco"><img src="assets/img/tenants/logos/xiabox_logo_blanco.png" alt="Xiabox" loading="lazy"></span>
           </div>
         </div>
 
-        <div class="directory-row directory-row--green" id="tecnologia" aria-labelledby="cat-7">
+        <div class="directory-row" id="tecnologia" aria-labelledby="cat-7">
           <div class="directory-row-head">
             <h2 id="cat-7">Tecnología</h2>
-            <p>Audio, accesorios y equipos para quien se toma en serio cómo suena su música.</p>
+            <p class="directory-count">1 tienda</p>
           </div>
           <div class="directory-tenants">
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/audiophile_logo_blanco.png" alt="Audiophile" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="audiophile-logo-blanco"><img src="assets/img/tenants/logos/audiophile_logo_blanco.png" alt="Audiophile" loading="lazy"></span>
           </div>
         </div>
 
-        <div class="directory-row directory-row--blue" id="deportes" aria-labelledby="cat-8">
+        <div class="directory-row" id="deportes" aria-labelledby="cat-8">
           <div class="directory-row-head">
             <h2 id="cat-8">Deportes</h2>
-            <p>Ropa deportiva y movilidad urbana para entrenar y para moverte por la ciudad.</p>
+            <p class="directory-count">3 tiendas</p>
           </div>
           <div class="directory-tenants">
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/souvenir_sport_logo_lineal_blanco.png" alt="Souvenir Sport" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/scooterland_logo_blanco.png" alt="Scooterland" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/revolution_logo_blanco.png" alt="Revolution" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="souvenir-sport-logo-lineal-blanco"><img src="assets/img/tenants/logos/souvenir_sport_logo_lineal_blanco.png" alt="Souvenir Sport" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="scooterland-logo-blanco"><img src="assets/img/tenants/logos/scooterland_logo_blanco.png" alt="Scooterland" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="revolution-logo-blanco"><img src="assets/img/tenants/logos/revolution_logo_blanco.png" alt="Revolution" loading="lazy"></span>
           </div>
         </div>
 
-        <div class="directory-row directory-row--ink" id="regalos" aria-labelledby="cat-9">
+        <div class="directory-row" id="regalos" aria-labelledby="cat-9">
           <div class="directory-row-head">
             <h2 id="cat-9">Regalos</h2>
-            <p>Joyería, viajes y detalles para una fecha especial o simplemente para darte un gusto.</p>
+            <p class="directory-count">2 tiendas</p>
           </div>
           <div class="directory-tenants">
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/olavarria_joyeria_logo_blanco.png" alt="Olavarría Joyería" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/VacacionesMas_logo_blanco.png" alt="Vacaciones Más" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="olavarria-joyeria-logo-blanco"><img src="assets/img/tenants/logos/olavarria_joyeria_logo_blanco.png" alt="Olavarría Joyería" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="vacacionesmas-logo-blanco"><img src="assets/img/tenants/logos/VacacionesMas_logo_blanco.png" alt="Vacaciones Más" loading="lazy"></span>
           </div>
         </div>
 
-        <div class="directory-row directory-row--green" id="varios" aria-labelledby="cat-10">
+        <div class="directory-row" id="varios" aria-labelledby="cat-10">
           <div class="directory-row-head">
             <h2 id="cat-10">Varios</h2>
-            <p>Salud, servicios y esas tiendas que siempre terminan haciendo falta.</p>
+            <p class="directory-count">5 tiendas</p>
           </div>
           <div class="directory-tenants">
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/audicion_logo_blanco.png" alt="Audición" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/El_bote_logo_blanco.png" alt="El Bote" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/Godsvision_logo_blanco.png" alt="Gods Vision" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/icreaviCase_logo_blanco.png" alt="iCreaviCase" loading="lazy"></span>
-            <span class="tenant-chip"><img src="assets/img/tenants/logos/StampaYa!_logo_blanco.png" alt="Stampa Ya!" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="audicion-logo-blanco"><img src="assets/img/tenants/logos/audicion_logo_blanco.png" alt="Audición" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="el-bote-logo-blanco"><img src="assets/img/tenants/logos/El_bote_logo_blanco.png" alt="El Bote" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="godsvision-logo-blanco"><img src="assets/img/tenants/logos/Godsvision_logo_blanco.png" alt="Gods Vision" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="icreavicase-logo-blanco"><img src="assets/img/tenants/logos/icreaviCase_logo_blanco.png" alt="iCreaviCase" loading="lazy"></span>
+            <span class="tenant-chip" data-logo="stampaya-logo-blanco"><img src="assets/img/tenants/logos/StampaYa!_logo_blanco.png" alt="Stampa Ya!" loading="lazy"></span>
           </div>
         </div>
-
       </div>
     </section>
 
