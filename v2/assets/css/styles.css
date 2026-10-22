@@ -1718,8 +1718,10 @@ main:has(> .page-open) { margin-top: var(--header-h); }
   background: var(--brand-blue-deep);
   color: var(--fg-on-ink);
   padding-block: var(--pad-band);
+  text-align: center;             /* título, kicker y CTA al eje central */
 }
 .marca-band .kicker { color: rgba(255,255,255,0.72); }
+.marca-band h2 { margin-inline: auto; }   /* centrado real, no solo texto alineado */
 .marca-band h2 { max-width: 26ch; margin-top: var(--s-3); color: var(--fg-on-ink); }
 /* Flex en vez de grid: así la última fila incompleta queda CENTRADA en vez de
    dejar un hueco a la derecha. */
@@ -1754,7 +1756,8 @@ main:has(> .page-open) { margin-top: var(--header-h); }
 /* Los wordmarks de una sola línea (McDonald's, Western Union, La Cruz) ocupan
    dos celdas: a una sola quedarían con 17-24 px de alto y no se leerían. */
 
-.marca-cta { margin-top: var(--s-8); }
+/* Fase 5 · el CTA cierra la banda centrado con los logos */
+.marca-cta { margin-top: var(--s-8); display: flex; justify-content: center; }
 .marca-cta .cta-link {
   color: var(--fg-on-ink);
   border-color: var(--brand-green-light);
