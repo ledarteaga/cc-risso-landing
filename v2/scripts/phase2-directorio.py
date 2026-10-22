@@ -142,11 +142,12 @@ block = MARK + """
 .directory {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--s-3);
-  align-items: stretch;
+  row-gap: var(--s-6);        /* gap-y: más aire entre filas de tarjetas */
+  column-gap: var(--s-4);
+  align-items: start;         /* cada tarjeta mide lo suyo, no lo que mide su vecina */
 }
 @media (min-width: 900px) {
-  .directory { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4); }
+  .directory { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 .directory-row {
@@ -183,7 +184,6 @@ block = MARK + """
 .directory-tenants {
   display: flex; flex-wrap: wrap; align-items: center;
   gap: var(--s-3) var(--s-5);
-  margin-top: auto;
 }
 .tenant-chip { display: inline-flex; align-items: center; justify-content: center; }
 .tenant-chip img { width: auto; max-width: 100%; object-fit: contain; }
