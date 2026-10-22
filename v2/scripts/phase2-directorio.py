@@ -20,9 +20,9 @@ TIENDAS = ROOT / "tiendas.html"
 CSS = ROOT / "assets/css/styles.css"
 LOGOS = ROOT / "assets/img/tenants/logos/band"
 
-TARGET_INK = 34.0     # raíz del área de tinta renderizada, en px
-H_MIN, H_MAX = 20, 44
-W_MAX, W_MAX_STRIP = 150, 224   # los wordmarks de una línea necesitan más ancho
+TARGET_INK = 64.0     # raíz del área de tinta renderizada, en px (subido a pedido)
+H_MIN, H_MAX = 30, 76
+W_MAX, W_MAX_STRIP = 236, 330   # los wordmarks de una línea necesitan más ancho
 
 
 def slug(name: str) -> str:

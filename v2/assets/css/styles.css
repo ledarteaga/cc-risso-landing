@@ -1216,7 +1216,8 @@ main:has(> .page-open) { margin-top: var(--header-h); }
   display: inline-flex; align-items: center; justify-content: center;
   padding: 8px 12px; min-height: 44px;
 }
-.directory-tenants .tenant-chip img { max-width: 120px; max-height: 32px; width: auto; height: auto; }
+/* Legacy retirado: el tamaño de cada logo del directorio lo fija su regla
+   [data-logo] (Fase 2). Un max-height aquí volvía a aplastarlos a 32 px. */
 
 /* legacy full-bleed category band rules kept for reference / other pages that may still reuse .category — unused on tiendas.html after the directory rebuild */
 .category { padding-block: clamp(36px, 4.5vw, 56px); }
@@ -1879,36 +1880,36 @@ main:has(> .page-open) { margin-top: var(--header-h); }
 .to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
 .to-top svg { width: 22px; height: 22px; }
 @media (prefers-reduced-motion: reduce) { .to-top { transition: none; } }
-.tenant-chip[data-logo="xiabox-logo-blanco"] img { height: 25.8px; }
-.tenant-chip[data-logo="revolution-logo-blanco"] img { height: 27.4px; }
-.tenant-chip[data-logo="souvenir-sport-logo-lineal-blanco"] img { height: 44px; }
-.tenant-chip[data-logo="tradicionpiurana-logo-blanco"] img { height: 40.0px; }
-.tenant-chip[data-logo="el-burrito-logo-blanco"] img { height: 44px; }
-.tenant-chip[data-logo="malif-beauty-logo-blanco"] img { height: 32.5px; }
-.tenant-chip[data-logo="quemono-logo-blanco"] img { height: 44px; }
-.tenant-chip[data-logo="stampaya-logo-blanco"] img { height: 29.8px; }
-.tenant-chip[data-logo="kayser-logo-blanco"] img { height: 22.2px; }
-.tenant-chip[data-logo="munay-cotton-logo-blanco"] img { height: 21.8px; }
-.tenant-chip[data-logo="olavarria-joyeria-logo-blanco"] img { height: 30.9px; }
-.tenant-chip[data-logo="godsvision-logo-blanco"] img { height: 20px; }
-.tenant-chip[data-logo="plazavea-logo-rgb-blanco"] img { height: 35.1px; }
-.tenant-chip[data-logo="westernunion-logo-2023-doslineas-blanco"] img { height: 23.9px; }
-.tenant-chip[data-logo="audiophile-logo-blanco"] img { height: 42.0px; }
-.tenant-chip[data-logo="mcdonalds-wordmark-logo-blanco"] img { height: 20px; }
-.tenant-chip[data-logo="canela-logo-blanco"] img { height: 44px; }
-.tenant-chip[data-logo="jannetmedina-logo-blanco"] img { height: 44px; }
-.tenant-chip[data-logo="westernunion-logo-2023-unalinea-blanco"] img { height: 20px; }
-.tenant-chip[data-logo="pekeloco-logo-blanco"] img { height: 29.9px; }
-.tenant-chip[data-logo="bcp-logo-blanco"] img { height: 24.2px; }
-.tenant-chip[data-logo="audicion-logo-blanco"] img { height: 21.7px; }
-.tenant-chip[data-logo="platanitos-logo-blanco"] img { height: 33.0px; }
-.tenant-chip[data-logo="thebarbarcompany-logo-blanco"] img { height: 23.2px; }
-.tenant-chip[data-logo="nuevo-fortuna-casino-logo-blanco"] img { height: 44px; }
-.tenant-chip[data-logo="cineplanet-logo-blanco"] img { height: 33.5px; }
-.tenant-chip[data-logo="el-bote-logo-blanco"] img { height: 44px; }
-.tenant-chip[data-logo="icreavicase-logo-blanco"] img { height: 26.8px; }
-.tenant-chip[data-logo="vacacionesmas-logo-blanco"] img { height: 44px; }
-.tenant-chip[data-logo="dulce-vanidad-logo-blanco"] img { height: 44px; }
-.tenant-chip[data-logo="inv-la-cruz-horizontal-logo-blanco"] img { height: 19.6px; }
-.tenant-chip[data-logo="scooterland-logo-blanco"] img { height: 24.6px; }
-.tenant-chip[data-logo="miami-chicken-criollo-logo-blanco"] img { height: 40.7px; }
+.tenant-chip[data-logo="xiabox-logo-blanco"] img { height: 48.5px; }
+.tenant-chip[data-logo="revolution-logo-blanco"] img { height: 51.6px; }
+.tenant-chip[data-logo="souvenir-sport-logo-lineal-blanco"] img { height: 76px; }
+.tenant-chip[data-logo="tradicionpiurana-logo-blanco"] img { height: 75.3px; }
+.tenant-chip[data-logo="el-burrito-logo-blanco"] img { height: 76px; }
+.tenant-chip[data-logo="malif-beauty-logo-blanco"] img { height: 53.0px; }
+.tenant-chip[data-logo="quemono-logo-blanco"] img { height: 76px; }
+.tenant-chip[data-logo="stampaya-logo-blanco"] img { height: 56.1px; }
+.tenant-chip[data-logo="kayser-logo-blanco"] img { height: 41.8px; }
+.tenant-chip[data-logo="munay-cotton-logo-blanco"] img { height: 34.3px; }
+.tenant-chip[data-logo="olavarria-joyeria-logo-blanco"] img { height: 50.0px; }
+.tenant-chip[data-logo="godsvision-logo-blanco"] img { height: 30px; }
+.tenant-chip[data-logo="plazavea-logo-rgb-blanco"] img { height: 66.0px; }
+.tenant-chip[data-logo="westernunion-logo-2023-doslineas-blanco"] img { height: 45.0px; }
+.tenant-chip[data-logo="audiophile-logo-blanco"] img { height: 76px; }
+.tenant-chip[data-logo="mcdonalds-wordmark-logo-blanco"] img { height: 30px; }
+.tenant-chip[data-logo="canela-logo-blanco"] img { height: 76px; }
+.tenant-chip[data-logo="jannetmedina-logo-blanco"] img { height: 76px; }
+.tenant-chip[data-logo="westernunion-logo-2023-unalinea-blanco"] img { height: 33.4px; }
+.tenant-chip[data-logo="pekeloco-logo-blanco"] img { height: 56.3px; }
+.tenant-chip[data-logo="bcp-logo-blanco"] img { height: 45.5px; }
+.tenant-chip[data-logo="audicion-logo-blanco"] img { height: 40.9px; }
+.tenant-chip[data-logo="platanitos-logo-blanco"] img { height: 57.2px; }
+.tenant-chip[data-logo="thebarbarcompany-logo-blanco"] img { height: 40.9px; }
+.tenant-chip[data-logo="nuevo-fortuna-casino-logo-blanco"] img { height: 76px; }
+.tenant-chip[data-logo="cineplanet-logo-blanco"] img { height: 54.2px; }
+.tenant-chip[data-logo="el-bote-logo-blanco"] img { height: 76px; }
+.tenant-chip[data-logo="icreavicase-logo-blanco"] img { height: 42.1px; }
+.tenant-chip[data-logo="vacacionesmas-logo-blanco"] img { height: 76px; }
+.tenant-chip[data-logo="dulce-vanidad-logo-blanco"] img { height: 76px; }
+.tenant-chip[data-logo="inv-la-cruz-horizontal-logo-blanco"] img { height: 28.9px; }
+.tenant-chip[data-logo="scooterland-logo-blanco"] img { height: 45.8px; }
+.tenant-chip[data-logo="miami-chicken-criollo-logo-blanco"] img { height: 76px; }
