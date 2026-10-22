@@ -183,7 +183,8 @@ block = MARK + """
 .directory-tenants {
   display: flex; flex-wrap: wrap;
   align-items: flex-start;      /* los logos se alinean arriba, no por el centro */
-  row-gap: var(--s-5);          /* gap-y entre filas de logos: 12 -> 24 px */
+  justify-content: space-evenly; /* reparto horizontal parejo dentro de cada fila */
+  row-gap: 40px;                /* gap-y entre filas de logos */
   column-gap: var(--s-5);
 }
 .tenant-chip { display: inline-flex; align-items: center; justify-content: center; }
