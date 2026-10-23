@@ -14,12 +14,16 @@ const ok = (c, m) => { if (!c) fails.push(m); };
   await page.waitForTimeout(400);
 
   const base = await page.evaluate(() => {
+    const groups = [...document.querySelectorAll('.store-group')];
     const cards = [...document.querySelectorAll('.store-card')];
     const bgs = [...new Set(cards.map((c) => getComputedStyle(c).backgroundColor))];
     const logos = [...document.querySelectorAll('.store-logo img')];
     const heights = [...new Set(logos.map((i) => Math.round(i.getBoundingClientRect().height)))].sort((a, b) => a - b);
-    const grid = getComputedStyle(document.querySelector('.directory'));
     return {
+      grupos: groups.length,
+      encabezados: groups.map((g) => g.querySelector('h2')?.textContent.trim()),
+      conteos: groups.map((g) => g.querySelector('.directory-count')?.textContent.trim()),
+      tarjetasPorGrupo: groups.map((g) => g.querySelectorAll('.store-card').length),
       tarjetas: cards.length,
       fondos: bgs,
       subnav: !!document.querySelector('.tiendas-subnav'),
@@ -27,65 +31,67 @@ const ok = (c, m) => { if (!c) fails.push(m); };
       buscador: !!document.querySelector('#store-search'),
       vacio: !!document.querySelector('#directory-empty'),
       opciones: document.querySelectorAll('#cat-filter option').length,
-      parrafos: document.querySelectorAll('.directory-row-head > p:not(.directory-count)').length,
       chips: logos.length,
       alturas: heights,
       cargados: logos.filter((i) => i.naturalWidth > 0).length,
       fondoPagina: getComputedStyle(document.body).backgroundColor,
-      columnas: grid.gridTemplateColumns.split(' ').length,
+      columnas: getComputedStyle(document.querySelector('.store-grid')).gridTemplateColumns.split(' ').length,
       logoFiltro: getComputedStyle(logos[0]).filter,
-      etiquetas: [...new Set(cards.map((c) => c.querySelector('.store-cat')?.textContent.trim()))].length,
-      cats: [...new Set(cards.map((c) => c.dataset.cat))].length,
       toTop: !!document.querySelector('.to-top'),
     };
   });
   console.log('base:', JSON.stringify(base));
-  ok(base.tarjetas === 33, `tarjetas: ${base.tarjetas} (esperado 33, una por marca)`);
+  ok(base.grupos === 10, `grupos de categoria: ${base.grupos} (esperado 10)`);
+  ok(base.tarjetas === 33, `tarjetas de marca: ${base.tarjetas} (esperado 33)`);
+  ok(new Set(base.encabezados).size === 10, 'encabezados de categoria repetidos o ausentes');
+  ok(base.conteos.every(Boolean), 'alguna categoria sin su conteo');
+  ok(base.tarjetasPorGrupo.reduce((a, b) => a + b, 0) === 33,
+     `la suma por grupo no da 33: ${base.tarjetasPorGrupo}`);
   ok(base.fondos.length === 1 && base.fondos[0] === 'rgb(255, 255, 255)',
-     `las tarjetas deberian ser blancas y uniformes: ${base.fondos}`);
+     `las tarjetas deberian ser blancas: ${base.fondos}`);
   ok(!base.subnav, 'sigue el subnav de 11 enlaces');
   ok(base.filtro && base.opciones === 11, `filtro con ${base.opciones} opciones (esperado 11)`);
   ok(base.buscador, 'falta el buscador de tiendas');
   ok(base.vacio, 'falta el estado vacio del directorio');
   ok(base.columnas === 4, `grilla de ${base.columnas} columnas en 1440 (esperado 4)`);
   ok(/invert/.test(base.logoFiltro), `los logos no estan invertidos a tinta: ${base.logoFiltro}`);
-  ok(base.etiquetas === 10 && base.cats === 10, `categorias: ${base.cats} data-cat / ${base.etiquetas} etiquetas`);
   ok(base.alturas.length >= 4, `solo ${base.alturas.length} alturas distintas de logo`);
   ok(base.cargados === 33, `${base.cargados}/33 logos cargados`);
   ok(base.fondoPagina !== 'rgb(255, 255, 255)', 'el fondo de pagina sigue blanco puro');
   ok(base.toTop, 'falta el boton de volver arriba');
 
-  // filtro por categoria: 7 restaurantes
+  // filtro por categoria: queda un solo grupo, con sus 7 tarjetas
   await page.selectOption('#cat-filter', 'restaurantes');
   await page.waitForTimeout(600);
   const filtrado = await page.evaluate(() => {
-    const vis = [...document.querySelectorAll('.store-card')].filter((c) => !c.hidden);
-    return { visibles: vis.length, cats: [...new Set(vis.map((c) => c.dataset.cat))] };
+    const vis = [...document.querySelectorAll('.store-group')].filter((g) => !g.hidden);
+    return { grupos: vis.map((g) => g.id), tarjetas: vis.reduce((n, g) => n + g.querySelectorAll('.store-card:not([hidden])').length, 0) };
   });
   console.log('filtrado:', JSON.stringify(filtrado));
-  ok(filtrado.visibles === 7 && filtrado.cats.length === 1 && filtrado.cats[0] === 'restaurantes',
-     `el filtro dejo ${filtrado.visibles} tarjeta(s): ${JSON.stringify(filtrado.cats)}`);
+  ok(filtrado.grupos.length === 1 && filtrado.grupos[0] === 'restaurantes' && filtrado.tarjetas === 7,
+     `el filtro dejo ${filtrado.grupos.length} grupo(s) y ${filtrado.tarjetas} tarjeta(s)`);
 
-  // buscador: filtra por nombre dentro de la categoría y muestra estado vacío
+  // buscador: conserva el grupo y su encabezado
   await page.selectOption('#cat-filter', 'all');
   await page.fill('#store-search', 'mcdon');
   await page.waitForTimeout(500);
   const buscado = await page.evaluate(() => {
-    const vis = [...document.querySelectorAll('.store-card')].filter((c) => !c.hidden);
-    return { tarjetas: vis.length, alt: vis.map((c) => c.querySelector('img').alt),
+    const vis = [...document.querySelectorAll('.store-group')].filter((g) => !g.hidden);
+    return { grupos: vis.map((g) => g.id), h2: vis.map((g) => g.querySelector('h2').textContent.trim()),
+             tarjetas: vis.reduce((n, g) => n + g.querySelectorAll('.store-card:not([hidden])').length, 0),
              status: document.getElementById('filter-status').textContent };
   });
   console.log('buscador "mcdon":', JSON.stringify(buscado));
-  ok(buscado.tarjetas === 1 && /mcdonald/i.test(buscado.alt[0] || ''),
-     `el buscador dejo ${buscado.tarjetas} tarjeta(s): ${buscado.alt}`);
+  ok(buscado.grupos.length === 1 && buscado.grupos[0] === 'restaurantes' && buscado.tarjetas === 1,
+     `el buscador dejo ${buscado.grupos.length} grupo(s) y ${buscado.tarjetas} tarjeta(s)`);
 
   await page.fill('#store-search', 'zzzz');
   await page.waitForTimeout(500);
   const sinResultados = await page.evaluate(() => ({
-    filas: [...document.querySelectorAll('.store-card')].filter((c) => !c.hidden).length,
+    grupos: [...document.querySelectorAll('.store-group')].filter((g) => !g.hidden).length,
     vacio: !document.getElementById('directory-empty').hidden }));
   console.log('buscador "zzzz":', JSON.stringify(sinResultados));
-  ok(sinResultados.filas === 0 && sinResultados.vacio, 'el estado vacío no aparece sin resultados');
+  ok(sinResultados.grupos === 0 && sinResultados.vacio, 'el estado vacio no aparece sin resultados');
   await page.fill('#store-search', '');
   await page.waitForTimeout(400);
 
@@ -109,12 +115,12 @@ const ok = (c, m) => { if (!c) fails.push(m); };
   await page.waitForTimeout(600);
   await page.waitForTimeout(700);
   const hash = await page.evaluate(() => {
-    const vis = [...document.querySelectorAll('.store-card')].filter((c) => !c.hidden);
-    return { select: document.getElementById('cat-filter').value, visibles: vis.length,
-             cats: [...new Set(vis.map((c) => c.dataset.cat))] };
+    const vis = [...document.querySelectorAll('.store-group')].filter((g) => !g.hidden);
+    return { select: document.getElementById('cat-filter').value, grupos: vis.map((g) => g.id),
+             tarjetas: vis.reduce((n, g) => n + g.querySelectorAll('.store-card:not([hidden])').length, 0) };
   });
   console.log('hash #ropa:', JSON.stringify(hash));
-  ok(hash.select === 'ropa' && hash.visibles === 4 && hash.cats.every((c) => c === 'ropa'),
+  ok(hash.select === 'ropa' && hash.grupos.length === 1 && hash.grupos[0] === 'ropa' && hash.tarjetas === 4,
      `el hash no preselecciono la categoria: ${JSON.stringify(hash)}`);
 
   if (fails.length) { console.log('\n✗ ' + fails.length + ' fallo(s):'); fails.forEach((f) => console.log('  - ' + f)); await browser.close(); process.exit(1); }

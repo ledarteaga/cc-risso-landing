@@ -57,41 +57,83 @@ for f in LOGOS.glob("*.png"):
 # ---------------------------------------------------------------- HTML
 html = TIENDAS.read_text()
 
+# Lee la estructura actual del directorio. En la primera pasada son filas
+# .directory-row; en pasadas siguientes ya son grupos .store-group con
+# tarjetas .store-card. Se normaliza a [(cat_id, label_id, title, [(src, alt)])].
 rows = re.findall(
     r'<div class="directory-row[^"]*" id="([^"]+)"[^>]*>\s*'
     r'<div class="directory-row-head">\s*<h2([^>]*)>(.*?)</h2>\s*(?:<p[^>]*>.*?</p>)?\s*</div>\s*'
     r'<div class="directory-tenants">(.*?)</div>',
     html, re.S)
-print("filas encontradas:", len(rows))
 
-blocks = []
-cat_titles = {cat_id: title for cat_id, _, title, _ in rows}
+if rows:
+    filas = [(cat_id, h2_attrs, title, tenants) for cat_id, h2_attrs, title, tenants in rows]
+else:
+    # Segunda pasada: tarjetas sueltas .store-card con data-cat y la etiqueta
+    # de categoria dentro de cada tarjeta. Se reordena para agrupar.
+    por_cat = {}
+    orden = []
+    for m in re.finditer(r'<li class="store-card" data-cat="([^"]+)">(.*?)</li>', html, re.S):
+        cat_id, cuerpo = m.group(1), m.group(2)
+        img = re.search(r'<img[^>]*src="([^"]+)"[^>]*alt="([^"]*)"', cuerpo)
+        if not img:
+            continue
+        cat_label = re.search(r'<span class="store-cat">(.*?)</span>', cuerpo)
+        if cat_id not in por_cat:
+            por_cat[cat_id] = {"title": cat_label.group(1).strip() if cat_label else cat_id.title(),
+                               "logos": []}
+            orden.append(cat_id)
+        por_cat[cat_id]["logos"].append((img.group(1), img.group(2)))
+    filas = []
+    for i, cat_id in enumerate(orden, start=1):
+        d = por_cat[cat_id]
+        tenants = " ".join(f'<img src="{s}" alt="{a}">' for s, a in d["logos"])
+        filas.append((cat_id, f' id="cat-{i}"', d["title"], tenants))
+
+print("categorias de origen:", len(filas))
+
+groups = []
 total = 0
-for cat_id, h2_attrs, title, tenants in rows:
+for cat_id, h2_attrs, title, tenants in filas:
     logos = re.findall(r'<img[^>]*src="([^"]+)"[^>]*alt="([^"]*)"', tenants)
+    label_id = re.search(r'id="([^"]+)"', h2_attrs)
+    label_id = label_id.group(1) if label_id else f"cat-{cat_id}"
+    cards = []
     for src, alt in logos:
         name = src.rsplit("/", 1)[-1]
         s = slug(name)
         total += 1
-        blocks.append(f'''          <li class="store-card" data-cat="{cat_id}">
-            <span class="store-logo"><img src="{src}" alt="{alt}" data-logo="{s}" loading="lazy"></span>
-            <span class="store-cat">{title}</span>
-          </li>''')
-print("tarjetas de marca:", len(blocks))
+        cards.append(f'''            <li class="store-card" data-cat="{cat_id}">
+              <span class="store-logo"><img src="{src}" alt="{alt}" data-logo="{s}" loading="lazy"></span>
+            </li>''')
+    n = len(logos)
+    groups.append(f'''        <section class="store-group" id="{cat_id}" aria-labelledby="{label_id}">
+          <div class="store-group-head">
+            <h2 id="{label_id}">{title}</h2>
+            <p class="directory-count">{n} {'tienda' if n == 1 else 'tiendas'}</p>
+          </div>
+          <ul class="store-grid">
+{chr(10).join(cards)}
+          </ul>
+        </section>''')
+print("categorias:", len(groups), "· tarjetas:", total)
 
-empty_state = ('\n\n        <p class="directory-empty" id="directory-empty" hidden>'
+empty_state = ('\n        <p class="directory-empty" id="directory-empty" hidden>'
                'No encontramos esa tienda. Prueba con otra palabra o cambia la categoría.</p>')
-directorio = ("      <ul class=\"directory\" id=\"directory\">\n"
-              + "\n".join(blocks) + empty_state + "\n      </ul>")
+directorio = ("      <div class=\"directory\" id=\"directory\">\n"
+              + "\n\n".join(groups) + empty_state + "\n      </div>")
 
 # reemplaza el bloque .directory completo
-start = html.index('<div class="directory"')
+m_dir = re.search(r'<(div|ul) class="directory"', html)
+if not m_dir:
+    raise SystemExit("no encontré el contenedor .directory")
+start = m_dir.start()
 end = html.index("    </section>", start)
 html = html[:start] + directorio + "\n" + html[end:]
 
 # ---------------------------------------------------------------- filtro
-options = ['            <option value="all">Todas las categorías ({})</option>'.format(len(blocks))]
-for cat_id, _, title, tenants in rows:
+options = ['            <option value="all">Todas las categorías ({})</option>'.format(total)]
+for cat_id, _, title, tenants in filas:
     n = len(re.findall(r"<img", tenants))
     options.append(f'          <option value="{cat_id}">{title} ({n})</option>')
 
@@ -146,22 +188,55 @@ block = MARK + """
    ========================================================================== */
 .tiendas-page body { background: #F4F7FC; }
 
-/* Grilla de marcas: una tarjeta por tienda. 2 en móvil, 3 en tablet,
-   4 desde 1100px. La categoria va como meta al pie de la tarjeta. */
+/* Directorio agrupado: un encabezado por categoria y debajo sus tarjetas
+   de marca. Los grupos se apilan; la grilla vive dentro de cada grupo. */
 .directory {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(36px, 4vw, 56px);
+}
+
+.store-group { display: flex; flex-direction: column; gap: var(--s-5); }
+.store-group[hidden] { display: none; }
+
+.store-group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-bottom: var(--s-3);
+  border-bottom: 2px solid var(--brand-blue);
+}
+.store-group-head h2 {
+  margin: 0;
+  font-size: var(--fs-display-3);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: var(--lh-heading);
+  color: var(--brand-blue-deep);
+}
+.directory-count {
+  margin: 0;
+  flex: none;
+  font-size: var(--fs-caption);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--brand-blue);
+  opacity: 0.8;
+}
+
+/* Grilla de marcas dentro de cada categoria. */
+.store-grid {
+  list-style: none; margin: 0; padding: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  align-items: stretch;
-  list-style: none;
-  padding: 0;
-  margin: 0;
 }
 @media (min-width: 720px) {
-  .directory { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .store-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 }
 @media (min-width: 1100px) {
-  .directory { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .store-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 }
 
 .store-card {
@@ -170,10 +245,10 @@ block = MARK + """
   border: 1px solid rgba(43,88,168,0.16);
   box-shadow: 0 1px 2px rgba(10,10,20,0.04);
   display: flex;
-  flex-direction: column;
-  gap: var(--s-4);
-  padding: clamp(18px, 1.6vw, 24px) clamp(14px, 1.4vw, 20px);
-  min-height: 148px;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(18px, 1.6vw, 26px) clamp(14px, 1.4vw, 20px);
+  min-height: 132px;
   transition: border-color var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
 }
 .store-card::before {
@@ -184,27 +259,14 @@ block = MARK + """
 .store-card:hover { border-color: rgba(43,88,168,0.4); transform: translateY(-1px); }
 .store-card[hidden] { display: none; }
 
-.store-logo {
-  flex: 1 1 auto;
-  display: flex; align-items: center; justify-content: center;
-  padding-block: var(--s-2);
-}
+.store-logo { display: flex; align-items: center; justify-content: center; width: 100%; }
 /* Los 33 logos son blancos: sobre tarjeta blanca se invertían a nada.
    filter los lleva a tinta sin tocar los archivos. */
 .store-logo img {
   width: auto; max-width: 100%; object-fit: contain;
   filter: invert(1) brightness(0.18);
 }
-.store-cat {
-  flex: none;
-  font-size: var(--fs-caption);
-  letter-spacing: var(--track-caps);
-  text-transform: uppercase;
-  color: var(--brand-blue);
-  opacity: 0.8;
-  padding-top: var(--s-3);
-  border-top: 1px solid var(--border);
-}
+
 /* ---- TD-01 · filtro desplegable ---- */
 .directory-filter {
   position: sticky; top: 72px; z-index: calc(var(--z-nav) - 1);

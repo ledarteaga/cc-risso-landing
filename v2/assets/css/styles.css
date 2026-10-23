@@ -1708,22 +1708,55 @@ main:has(> .page-open) { margin-top: var(--header-h); }
    ========================================================================== */
 .tiendas-page body { background: #F4F7FC; }
 
-/* Grilla de marcas: una tarjeta por tienda. 2 en móvil, 3 en tablet,
-   4 desde 1100px. La categoria va como meta al pie de la tarjeta. */
+/* Directorio agrupado: un encabezado por categoria y debajo sus tarjetas
+   de marca. Los grupos se apilan; la grilla vive dentro de cada grupo. */
 .directory {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(36px, 4vw, 56px);
+}
+
+.store-group { display: flex; flex-direction: column; gap: var(--s-5); }
+.store-group[hidden] { display: none; }
+
+.store-group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-bottom: var(--s-3);
+  border-bottom: 2px solid var(--brand-blue);
+}
+.store-group-head h2 {
+  margin: 0;
+  font-size: var(--fs-display-3);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: var(--lh-heading);
+  color: var(--brand-blue-deep);
+}
+.directory-count {
+  margin: 0;
+  flex: none;
+  font-size: var(--fs-caption);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--brand-blue);
+  opacity: 0.8;
+}
+
+/* Grilla de marcas dentro de cada categoria. */
+.store-grid {
+  list-style: none; margin: 0; padding: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  align-items: stretch;
-  list-style: none;
-  padding: 0;
-  margin: 0;
 }
 @media (min-width: 720px) {
-  .directory { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .store-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 }
 @media (min-width: 1100px) {
-  .directory { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .store-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 }
 
 .store-card {
@@ -1732,10 +1765,10 @@ main:has(> .page-open) { margin-top: var(--header-h); }
   border: 1px solid rgba(43,88,168,0.16);
   box-shadow: 0 1px 2px rgba(10,10,20,0.04);
   display: flex;
-  flex-direction: column;
-  gap: var(--s-4);
-  padding: clamp(18px, 1.6vw, 24px) clamp(14px, 1.4vw, 20px);
-  min-height: 148px;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(18px, 1.6vw, 26px) clamp(14px, 1.4vw, 20px);
+  min-height: 132px;
   transition: border-color var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
 }
 .store-card::before {
@@ -1746,27 +1779,14 @@ main:has(> .page-open) { margin-top: var(--header-h); }
 .store-card:hover { border-color: rgba(43,88,168,0.4); transform: translateY(-1px); }
 .store-card[hidden] { display: none; }
 
-.store-logo {
-  flex: 1 1 auto;
-  display: flex; align-items: center; justify-content: center;
-  padding-block: var(--s-2);
-}
+.store-logo { display: flex; align-items: center; justify-content: center; width: 100%; }
 /* Los 33 logos son blancos: sobre tarjeta blanca se invertían a nada.
    filter los lleva a tinta sin tocar los archivos. */
 .store-logo img {
   width: auto; max-width: 100%; object-fit: contain;
   filter: invert(1) brightness(0.18);
 }
-.store-cat {
-  flex: none;
-  font-size: var(--fs-caption);
-  letter-spacing: var(--track-caps);
-  text-transform: uppercase;
-  color: var(--brand-blue);
-  opacity: 0.8;
-  padding-top: var(--s-3);
-  border-top: 1px solid var(--border);
-}
+
 /* ---- TD-01 · filtro desplegable ---- */
 .directory-filter {
   position: sticky; top: 72px; z-index: calc(var(--z-nav) - 1);

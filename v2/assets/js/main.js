@@ -220,23 +220,33 @@
   /* ---------- TD-01 · buscador + filtro del directorio de tiendas ---------- */
   const catFilter = document.getElementById('cat-filter');
   if (catFilter) {
+    const groups = Array.from(document.querySelectorAll('.store-group'));
     const cards = Array.from(document.querySelectorAll('.store-card'));
     const search = document.getElementById('store-search');
     const status = document.getElementById('filter-status');
     const empty = document.getElementById('directory-empty');
 
-    /* Cada tarjeta es una marca: se filtra por categoria (data-cat) y por
-       nombre, leyendo el alt del logo. */
+    /* Con las tarjetas agrupadas, filtrar esconder ia una categoria entera
+       si no coincide con el select, y dentro de cada grupo esconder las
+       marcas que no matchean la busqueda. Un grupo sin tarjetas visibles
+       desaparece con su encabezado. */
     const render = ({ scroll = false } = {}) => {
       const cat = catFilter.value;
       const q = (search?.value || '').trim().toLowerCase();
       let visibles = 0;
-      cards.forEach((card) => {
-        const name = (card.querySelector('img')?.alt || '').toLowerCase();
-        const okCat = cat === 'all' || card.dataset.cat === cat;
-        const okQ = !q || name.includes(q);
-        card.hidden = !(okCat && okQ);
-        if (!card.hidden) visibles += 1;
+      groups.forEach((group) => {
+        const inCat = cat === 'all' || group.id === cat;
+        let enGrupo = 0;
+        group.querySelectorAll('.store-card').forEach((card) => {
+          const name = (card.querySelector('img')?.alt || '').toLowerCase();
+          const ok = inCat && (!q || name.includes(q));
+          card.hidden = !ok;
+          if (ok) enGrupo += 1;
+        });
+        const count = group.querySelector('.directory-count');
+        if (count && q) count.textContent = `${enGrupo} ${enGrupo === 1 ? 'tienda' : 'tiendas'}`;
+        group.hidden = !inCat || enGrupo === 0;
+        visibles += enGrupo;
       });
       if (empty) empty.hidden = visibles !== 0;
       if (status) {
