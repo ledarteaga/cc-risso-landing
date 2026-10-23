@@ -529,6 +529,10 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
   line-height: 1;
   color: currentColor;
 }
+.timeline-item .blurb {
+  font-size: var(--fs-body-sm); line-height: 1.45;
+  opacity: 0.9; max-width: 34ch;
+}
 .anchor--green .timeline-item .year { color: var(--fg-on-green); }
 .anchor--green .timeline-item .label,
 .anchor--green .timeline { border-top-color: rgba(255,255,255,0.3); }
