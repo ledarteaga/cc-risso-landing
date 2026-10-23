@@ -14,7 +14,8 @@ const BAND = 72;
   const allHeadings = {};
 
   for (const name of PAGES) {
-    await page.goto(`${BASE}/${name}.html`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/${name}.html`, { waitUntil: 'load' });
+    await page.waitForTimeout(600);
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(150);
 

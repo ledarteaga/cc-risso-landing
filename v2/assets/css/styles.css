@@ -394,10 +394,6 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
   background: var(--fg-on-ink);
   transition: width 80ms linear;
 }
-.hero-progress .progress-label {
-  font-size: clamp(13px, 1vw, 14px); font-weight: 600;
-  letter-spacing: var(--track-caps); text-transform: uppercase;
-}
 .hero-claim-period { color: #fff; font-weight: 900; -webkit-text-stroke: 3px var(--brand-green); text-stroke: 3px var(--brand-green); }   /* accent period: white fill, 3px green outline matching "historia" remate */
 
 /* RRSS overlay fixed bottom-right of hero (only Inicio) */
@@ -482,11 +478,6 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
   letter-spacing: var(--track-caps); text-transform: uppercase;
   opacity: 0.6;
 }
-.anchor-eyebrow .label {
-  font-size: var(--fs-caption); font-weight: 500;
-  letter-spacing: var(--track-caps); text-transform: uppercase;
-  opacity: 0.85;
-}
 .anchor h2 {
   font-size: var(--fs-display-3); font-weight: 800;
   letter-spacing: -0.02em; line-height: var(--lh-display);
@@ -511,8 +502,7 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
   .anchor-head p { font-size: var(--fs-body-lg); line-height: 1.45; max-width: 44ch; }
 }
 .anchor-foot { margin-top: clamp(28px, 3vw, 40px); display: flex; gap: var(--s-7); flex-wrap: wrap; align-items: center; }
-.anchor--green .anchor-eyebrow .num,
-.anchor--green .anchor-eyebrow .label { color: var(--fg-on-green); opacity: 1; }
+.anchor--green .anchor-eyebrow .num { color: var(--fg-on-green); }
 .anchor--blue .anchor-eyebrow .num,
 .anchor--blue .anchor-eyebrow .label { color: var(--fg-on-blue); opacity: 1; }
 .anchor--ink .anchor-eyebrow .num,
@@ -539,18 +529,8 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
   line-height: 1;
   color: currentColor;
 }
-.timeline-item .label {
-  font-size: var(--fs-caption); font-weight: 500;
-  letter-spacing: var(--track-caps); text-transform: uppercase;
-  opacity: 0.75;
-}
-.timeline-item .blurb {
-  font-size: var(--fs-body-sm); line-height: 1.4;
-  opacity: 0.85;
-}
 .anchor--green .timeline-item .year { color: var(--fg-on-green); }
 .anchor--green .timeline-item .label,
-.anchor--green .timeline-item .blurb { opacity: 1; }
 .anchor--green .timeline { border-top-color: rgba(255,255,255,0.3); }
 
 .story-photos {
@@ -620,11 +600,6 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
   font-size: var(--fs-body); font-weight: 700;
   letter-spacing: var(--track-caps); text-transform: uppercase;
   color: var(--fg);
-}
-.cat-preview .cat-num {
-  display: block; font-size: var(--fs-caption); font-weight: 500;
-  color: var(--fg-muted); margin-bottom: var(--s-3);
-  letter-spacing: var(--track-caps);
 }
 /* Franja de color eliminada: los logos van sobre el mismo papel de la tarjeta,
    sin banda verde/azul detras. Se quedan pegados abajo por margin-top: auto
@@ -737,13 +712,6 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
   background: var(--ground);
   color: var(--fg);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
-}
-.visit-plate-label {
-  font-size: var(--fs-caption);
-  font-weight: 500;
-  letter-spacing: var(--track-caps);
-  text-transform: uppercase;
-  color: var(--fg-muted);
 }
 .visit-plate-hours {
   font-size: var(--fs-display-4);
@@ -1086,12 +1054,6 @@ main:has(> .page-open) { margin-top: var(--header-h); }
   color: var(--fg-on-ink);
   padding-block: var(--pad-band);
 }
-.promo-marcas-eyebrow {
-  font-size: var(--fs-caption); font-weight: 500;
-  letter-spacing: var(--track-caps); text-transform: uppercase;
-  opacity: 0.7;
-  margin-bottom: var(--s-3);
-}
 .promo-marcas-title {
   font-size: var(--fs-display-3); font-weight: 800;
   letter-spacing: -0.02em; line-height: var(--lh-display);
@@ -1312,10 +1274,8 @@ main:has(> .page-open) { margin-top: var(--header-h); }
   font-size: var(--fs-body-sm); color: var(--fg-muted);
   transition: all var(--t-base) var(--ease-out);
 }
-.wizard-step .step-num { font-weight: 700; font-size: var(--fs-caption); letter-spacing: var(--track-caps); text-transform: uppercase; }
 .wizard-step.is-active { color: var(--fg); border-top-color: var(--brand-green); }
 .wizard-step.is-done   { color: var(--fg); }
-.wizard-step.is-done .step-num { color: var(--brand-green-deep); }
 
 .wizard-pane { display: none; }
 .wizard-pane.is-active { display: block; animation: fadeIn 240ms var(--ease-out); }
@@ -1341,7 +1301,6 @@ main:has(> .page-open) { margin-top: var(--header-h); }
 .frente-card.is-selected { background: rgba(2,133,71,0.05); }
 .frente-card .frente-body { display: flex; flex-direction: column; gap: var(--s-2); min-width: 0; }
 .frente-card .frente-name { display: block; font-size: var(--fs-display-4); font-weight: 700; letter-spacing: -0.01em; }
-.frente-card .frente-desc { display: block; font-size: var(--fs-body-sm); color: var(--fg-muted); line-height: 1.45; max-width: 52ch; }
 
 /* step 2: form */
 .form-grid { display: grid; gap: var(--s-5); grid-template-columns: 1fr; }
@@ -1728,7 +1687,6 @@ main:has(> .page-open) { margin-top: var(--header-h); }
   padding-block: var(--pad-band);
   text-align: center;             /* título, kicker y CTA al eje central */
 }
-.marca-band .kicker { color: rgba(255,255,255,0.72); }
 .marca-band h2 { margin-inline: auto; }   /* centrado real, no solo texto alineado */
 .marca-band h2 { max-width: 26ch; margin-top: var(--s-3); color: var(--fg-on-ink); }
 /* Flex en vez de grid: así la última fila incompleta queda CENTRADA en vez de

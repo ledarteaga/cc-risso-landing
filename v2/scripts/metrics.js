@@ -10,7 +10,8 @@ const pages = ['index', 'tiendas', 'sobre-risso', 'contacto', 'descuentos'];
   const page = await ctx.newPage();
   const out = {};
   for (const name of pages) {
-    await page.goto(`${BASE}/${name}.html`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/${name}.html`, { waitUntil: 'load' });
+    await page.waitForTimeout(600);
     await page.evaluate(() => document.fonts.ready);
     out[name] = await page.evaluate(() => {
       const cs = (el, p) => el ? getComputedStyle(el)[p] : null;

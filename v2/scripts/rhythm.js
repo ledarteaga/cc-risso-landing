@@ -11,7 +11,8 @@ const PAGES = ['index', 'tiendas', 'descuentos', 'sobre-risso', 'contacto', 'lib
   const report = {};
 
   for (const name of PAGES) {
-    await page.goto(`${BASE}/${name}.html`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/${name}.html`, { waitUntil: 'load' });
+    await page.waitForTimeout(600);
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(200);
 

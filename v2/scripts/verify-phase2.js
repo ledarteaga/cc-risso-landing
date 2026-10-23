@@ -8,7 +8,8 @@ const ok = (c, m) => { if (!c) fails.push(m); };
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
-  await page.goto(`${BASE}/tiendas.html`, { waitUntil: 'networkidle' });
+  await page.goto(`${BASE}/tiendas.html`, { waitUntil: 'load' });
+  await page.waitForTimeout(600);
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(400);
 
@@ -69,7 +70,8 @@ const ok = (c, m) => { if (!c) fails.push(m); };
   ok(yTop < 40, `tras pulsar volver arriba, scrollY = ${yTop}`);
 
   // enlace directo por hash
-  await page.goto(`${BASE}/tiendas.html#ropa`, { waitUntil: 'networkidle' });
+  await page.goto(`${BASE}/tiendas.html#ropa`, { waitUntil: 'load' });
+  await page.waitForTimeout(600);
   await page.waitForTimeout(700);
   const hash = await page.evaluate(() => {
     const vis = [...document.querySelectorAll('.directory-row')].filter((r) => !r.hidden);

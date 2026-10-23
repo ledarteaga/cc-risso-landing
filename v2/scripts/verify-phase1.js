@@ -9,7 +9,8 @@ const ok = (c, msg) => { if (!c) fails.push(msg); };
   for (const [w, h, label] of [[1440, 900, 'desktop'], [390, 844, 'mobile']]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: label === 'mobile', hasTouch: label === 'mobile' });
     const page = await ctx.newPage();
-    await page.goto(`${BASE}/index.html`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/index.html`, { waitUntil: 'load' });
+    await page.waitForTimeout(600);
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(300);
 

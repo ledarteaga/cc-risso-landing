@@ -11,7 +11,8 @@ const ok = (c, m) => { if (!c) fails.push(m); };
   const page = await ctx.newPage();
 
   for (const name of PAGES) {
-    await page.goto(`${BASE}/${name}.html`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/${name}.html`, { waitUntil: 'load' });
+    await page.waitForTimeout(600);
     await page.evaluate(() => document.fonts.ready);
     const r = await page.evaluate(() => {
       const cs = (el, p) => el ? getComputedStyle(el)[p] : null;
@@ -45,7 +46,8 @@ const ok = (c, m) => { if (!c) fails.push(m); };
   }
 
   // Sobre Risso: índice fuera, encabezado nuevo, "Hoy" con peso
-  await page.goto(`${BASE}/sobre-risso.html`, { waitUntil: 'networkidle' });
+  await page.goto(`${BASE}/sobre-risso.html`, { waitUntil: 'load' });
+  await page.waitForTimeout(600);
   const sr = await page.evaluate(() => ({
     toc: !!document.querySelector('.toc'),
     intro: !!document.querySelector('.beats-intro h2'),

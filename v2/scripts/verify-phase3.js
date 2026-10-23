@@ -10,7 +10,8 @@ const ok = (c, m) => { if (!c) fails.push(m); };
   const page = await ctx.newPage();
 
   // ---------- contacto.html ----------
-  await page.goto(`${BASE}/contacto.html`, { waitUntil: 'networkidle' });
+  await page.goto(`${BASE}/contacto.html`, { waitUntil: 'load' });
+  await page.waitForTimeout(600);
   await page.evaluate(() => document.fonts.ready);
   const c = await page.evaluate(() => {
     const px = (v) => Math.round(parseFloat(v) || 0);
@@ -48,7 +49,8 @@ const ok = (c, m) => { if (!c) fails.push(m); };
   ok(iInfo > -1 && iWiz > -1 && iInfo < iWiz, `contacto: orden incorrecto → ${order}`);
 
   // ---------- como-llegar.html ----------
-  await page.goto(`${BASE}/como-llegar.html`, { waitUntil: 'networkidle' });
+  await page.goto(`${BASE}/como-llegar.html`, { waitUntil: 'load' });
+  await page.waitForTimeout(600);
   const l = await page.evaluate(() => ({
     title: document.title,
     h1: document.querySelector('h1')?.textContent.trim(),
@@ -64,7 +66,8 @@ const ok = (c, m) => { if (!c) fails.push(m); };
 
   // ---------- grado global: ninguna banda negra fuera del footer ----------
   for (const name of ['index', 'tiendas', 'descuentos', 'sobre-risso', 'libro-reclamaciones', 'como-llegar']) {
-    await page.goto(`${BASE}/${name}.html`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/${name}.html`, { waitUntil: 'load' });
+    await page.waitForTimeout(600);
     const black = await page.evaluate(() => [...document.querySelectorAll('main > section')]
       .filter((s) => getComputedStyle(s).backgroundColor === 'rgb(0, 0, 0)').length);
     ok(black === 0, `${name}: ${black} banda(s) negra(s) en main`);
