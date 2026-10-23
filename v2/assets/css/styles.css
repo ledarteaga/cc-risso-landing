@@ -1786,11 +1786,12 @@ main:has(> .page-open) { margin-top: var(--header-h); }
   flex: none;
   display: inline-flex; align-items: center; gap: 6px;
   font-size: var(--fs-caption);
+  font-weight: 700;
   letter-spacing: 0.02em;
-  color: var(--fg-muted);
+  color: var(--brand-blue);
   font-variant-numeric: tabular-nums;
 }
-.store-hours svg { width: 12px; height: 12px; flex: none; opacity: 0.8; }
+.store-hours svg { width: 12px; height: 12px; flex: none; color: var(--brand-blue); stroke-width: 2.2; }
 /* Los 33 logos son blancos: sobre tarjeta blanca se invertían a nada.
    filter los lleva a tinta sin tocar los archivos. */
 .store-logo img {
