@@ -1708,78 +1708,65 @@ main:has(> .page-open) { margin-top: var(--header-h); }
    ========================================================================== */
 .tiendas-page body { background: #F4F7FC; }
 
-/* Grilla de 3 columnas: 1 en móvil, 2 en tablet, 3 desde 1100px. */
+/* Grilla de marcas: una tarjeta por tienda. 2 en móvil, 3 en tablet,
+   4 desde 1100px. La categoria va como meta al pie de la tarjeta. */
 .directory {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
   align-items: stretch;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 @media (min-width: 720px) {
-  .directory { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .directory { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 }
 @media (min-width: 1100px) {
-  .directory { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .directory { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 }
 
-/* Variante B · la tarjeta ya no es superficie de color: el azul pasa a
-   remate superior, títulos y conteo; los logos van en tinta. */
-.directory-row {
+.store-card {
   position: relative;
   background: #fff;
-  color: var(--fg);
   border: 1px solid rgba(43,88,168,0.16);
-  padding: clamp(20px, 1.8vw, 26px);
+  box-shadow: 0 1px 2px rgba(10,10,20,0.04);
   display: flex;
   flex-direction: column;
-  gap: var(--s-5);
-  box-shadow: 0 1px 2px rgba(10,10,20,0.04);
+  gap: var(--s-4);
+  padding: clamp(18px, 1.6vw, 24px) clamp(14px, 1.4vw, 20px);
+  min-height: 148px;
+  transition: border-color var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
 }
-.directory-row::before {
+.store-card::before {
   content: "";
   position: absolute; left: 0; top: 0; height: 3px; width: 100%;
   background: var(--brand-blue);
 }
-.directory-row[hidden] { display: none; }
+.store-card:hover { border-color: rgba(43,88,168,0.4); transform: translateY(-1px); }
+.store-card[hidden] { display: none; }
 
-.directory-row-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s-4);
+.store-logo {
+  flex: 1 1 auto;
+  display: flex; align-items: center; justify-content: center;
+  padding-block: var(--s-2);
 }
-.directory-row-head h2 {
-  font-size: var(--fs-display-3); font-weight: 800;
-  letter-spacing: -0.015em; line-height: var(--lh-heading);
-  color: var(--brand-blue-deep);
-  margin: 0;
+/* Los 33 logos son blancos: sobre tarjeta blanca se invertían a nada.
+   filter los lleva a tinta sin tocar los archivos. */
+.store-logo img {
+  width: auto; max-width: 100%; object-fit: contain;
+  filter: invert(1) brightness(0.18);
 }
-.directory-count {
-  margin: 0;
+.store-cat {
   flex: none;
   font-size: var(--fs-caption);
   letter-spacing: var(--track-caps);
   text-transform: uppercase;
   color: var(--brand-blue);
   opacity: 0.8;
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--border);
 }
-
-.directory-tenants {
-  display: flex; flex-wrap: wrap;
-  align-items: flex-start;      /* los logos se alinean arriba, no por el centro */
-  justify-content: space-evenly; /* reparto horizontal parejo dentro de cada fila */
-  row-gap: 24px;                /* gap-y entre filas de logos en la grilla */
-  column-gap: var(--s-4);
-}
-.tenant-chip { display: inline-flex; align-items: center; justify-content: center; }
-/* Los 33 logos son blancos: sobre tarjeta blanca se invertían a nada.
-   filter los lleva a tinta sin tocar los archivos. */
-.tenant-chip img {
-  width: auto; max-width: 100%; object-fit: contain;
-  filter: invert(1) brightness(0.18);
-}
-.tenant-chip[hidden] { display: none; }
-
 /* ---- TD-01 · filtro desplegable ---- */
 .directory-filter {
   position: sticky; top: 72px; z-index: calc(var(--z-nav) - 1);
@@ -1868,36 +1855,36 @@ main:has(> .page-open) { margin-top: var(--header-h); }
 .to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
 .to-top svg { width: 22px; height: 22px; }
 @media (prefers-reduced-motion: reduce) { .to-top { transition: none; } }
-.tenant-chip[data-logo="xiabox-logo-blanco"] img { height: 28.8px; }
-.tenant-chip[data-logo="revolution-logo-blanco"] img { height: 30.7px; }
-.tenant-chip[data-logo="souvenir-sport-logo-lineal-blanco"] img { height: 46px; }
-.tenant-chip[data-logo="tradicionpiurana-logo-blanco"] img { height: 44.7px; }
-.tenant-chip[data-logo="el-burrito-logo-blanco"] img { height: 46px; }
-.tenant-chip[data-logo="malif-beauty-logo-blanco"] img { height: 26.0px; }
-.tenant-chip[data-logo="quemono-logo-blanco"] img { height: 46px; }
-.tenant-chip[data-logo="stampaya-logo-blanco"] img { height: 31.2px; }
-.tenant-chip[data-logo="kayser-logo-blanco"] img { height: 22.6px; }
-.tenant-chip[data-logo="munay-cotton-logo-blanco"] img { height: 18px; }
-.tenant-chip[data-logo="olavarria-joyeria-logo-blanco"] img { height: 24.6px; }
-.tenant-chip[data-logo="godsvision-logo-blanco"] img { height: 18px; }
-.tenant-chip[data-logo="plazavea-logo-rgb-blanco"] img { height: 38.4px; }
-.tenant-chip[data-logo="westernunion-logo-2023-doslineas-blanco"] img { height: 26.7px; }
-.tenant-chip[data-logo="audiophile-logo-blanco"] img { height: 46px; }
-.tenant-chip[data-logo="mcdonalds-wordmark-logo-blanco"] img { height: 18.4px; }
-.tenant-chip[data-logo="canela-logo-blanco"] img { height: 46px; }
-.tenant-chip[data-logo="jannetmedina-logo-blanco"] img { height: 43.2px; }
-.tenant-chip[data-logo="westernunion-logo-2023-unalinea-blanco"] img { height: 18px; }
-.tenant-chip[data-logo="pekeloco-logo-blanco"] img { height: 33.4px; }
-.tenant-chip[data-logo="bcp-logo-blanco"] img { height: 27.0px; }
-.tenant-chip[data-logo="audicion-logo-blanco"] img { height: 21.6px; }
-.tenant-chip[data-logo="platanitos-logo-blanco"] img { height: 28.1px; }
-.tenant-chip[data-logo="thebarbarcompany-logo-blanco"] img { height: 20.1px; }
-.tenant-chip[data-logo="nuevo-fortuna-casino-logo-blanco"] img { height: 46px; }
-.tenant-chip[data-logo="cineplanet-logo-blanco"] img { height: 26.6px; }
-.tenant-chip[data-logo="el-bote-logo-blanco"] img { height: 46px; }
-.tenant-chip[data-logo="icreavicase-logo-blanco"] img { height: 20.7px; }
-.tenant-chip[data-logo="vacacionesmas-logo-blanco"] img { height: 46px; }
-.tenant-chip[data-logo="dulce-vanidad-logo-blanco"] img { height: 46px; }
-.tenant-chip[data-logo="inv-la-cruz-horizontal-logo-blanco"] img { height: 18px; }
-.tenant-chip[data-logo="scooterland-logo-blanco"] img { height: 22.5px; }
-.tenant-chip[data-logo="miami-chicken-criollo-logo-blanco"] img { height: 45.5px; }
+.store-logo img[data-logo="xiabox-logo-blanco"] { height: 34.8px; }
+.store-logo img[data-logo="revolution-logo-blanco"] { height: 37.1px; }
+.store-logo img[data-logo="souvenir-sport-logo-lineal-blanco"] { height: 54px; }
+.store-logo img[data-logo="tradicionpiurana-logo-blanco"] { height: 54px; }
+.store-logo img[data-logo="el-burrito-logo-blanco"] { height: 54px; }
+.store-logo img[data-logo="malif-beauty-logo-blanco"] { height: 31.4px; }
+.store-logo img[data-logo="quemono-logo-blanco"] { height: 54px; }
+.store-logo img[data-logo="stampaya-logo-blanco"] { height: 37.6px; }
+.store-logo img[data-logo="kayser-logo-blanco"] { height: 27.3px; }
+.store-logo img[data-logo="munay-cotton-logo-blanco"] { height: 20.4px; }
+.store-logo img[data-logo="olavarria-joyeria-logo-blanco"] { height: 29.6px; }
+.store-logo img[data-logo="godsvision-logo-blanco"] { height: 21.1px; }
+.store-logo img[data-logo="plazavea-logo-rgb-blanco"] { height: 46.4px; }
+.store-logo img[data-logo="westernunion-logo-2023-doslineas-blanco"] { height: 32.3px; }
+.store-logo img[data-logo="audiophile-logo-blanco"] { height: 54px; }
+.store-logo img[data-logo="mcdonalds-wordmark-logo-blanco"] { height: 22.1px; }
+.store-logo img[data-logo="canela-logo-blanco"] { height: 54px; }
+.store-logo img[data-logo="jannetmedina-logo-blanco"] { height: 52.1px; }
+.store-logo img[data-logo="westernunion-logo-2023-unalinea-blanco"] { height: 20.3px; }
+.store-logo img[data-logo="pekeloco-logo-blanco"] { height: 40.5px; }
+.store-logo img[data-logo="bcp-logo-blanco"] { height: 32.7px; }
+.store-logo img[data-logo="audicion-logo-blanco"] { height: 26.0px; }
+.store-logo img[data-logo="platanitos-logo-blanco"] { height: 33.9px; }
+.store-logo img[data-logo="thebarbarcompany-logo-blanco"] { height: 24.3px; }
+.store-logo img[data-logo="nuevo-fortuna-casino-logo-blanco"] { height: 54px; }
+.store-logo img[data-logo="cineplanet-logo-blanco"] { height: 32.1px; }
+.store-logo img[data-logo="el-bote-logo-blanco"] { height: 54px; }
+.store-logo img[data-logo="icreavicase-logo-blanco"] { height: 25.0px; }
+.store-logo img[data-logo="vacacionesmas-logo-blanco"] { height: 54px; }
+.store-logo img[data-logo="dulce-vanidad-logo-blanco"] { height: 54px; }
+.store-logo img[data-logo="inv-la-cruz-horizontal-logo-blanco"] { height: 18px; }
+.store-logo img[data-logo="scooterland-logo-blanco"] { height: 27.1px; }
+.store-logo img[data-logo="miami-chicken-criollo-logo-blanco"] { height: 54px; }

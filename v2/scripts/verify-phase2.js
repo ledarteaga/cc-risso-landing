@@ -14,13 +14,13 @@ const ok = (c, m) => { if (!c) fails.push(m); };
   await page.waitForTimeout(400);
 
   const base = await page.evaluate(() => {
-    const rows = [...document.querySelectorAll('.directory-row')];
-    const bgs = [...new Set(rows.map((r) => getComputedStyle(r).backgroundColor))];
-    const logos = [...document.querySelectorAll('.tenant-chip img')];
+    const cards = [...document.querySelectorAll('.store-card')];
+    const bgs = [...new Set(cards.map((c) => getComputedStyle(c).backgroundColor))];
+    const logos = [...document.querySelectorAll('.store-logo img')];
     const heights = [...new Set(logos.map((i) => Math.round(i.getBoundingClientRect().height)))].sort((a, b) => a - b);
     const grid = getComputedStyle(document.querySelector('.directory'));
     return {
-      filas: rows.length,
+      tarjetas: cards.length,
       fondos: bgs,
       subnav: !!document.querySelector('.tiendas-subnav'),
       filtro: !!document.querySelector('#cat-filter'),
@@ -33,57 +33,56 @@ const ok = (c, m) => { if (!c) fails.push(m); };
       cargados: logos.filter((i) => i.naturalWidth > 0).length,
       fondoPagina: getComputedStyle(document.body).backgroundColor,
       columnas: grid.gridTemplateColumns.split(' ').length,
-      h2Color: getComputedStyle(rows[0].querySelector('h2')).color,
       logoFiltro: getComputedStyle(logos[0]).filter,
+      etiquetas: [...new Set(cards.map((c) => c.querySelector('.store-cat')?.textContent.trim()))].length,
+      cats: [...new Set(cards.map((c) => c.dataset.cat))].length,
       toTop: !!document.querySelector('.to-top'),
     };
   });
   console.log('base:', JSON.stringify(base));
-  ok(base.filas === 10, `filas: ${base.filas}`);
+  ok(base.tarjetas === 33, `tarjetas: ${base.tarjetas} (esperado 33, una por marca)`);
   ok(base.fondos.length === 1 && base.fondos[0] === 'rgb(255, 255, 255)',
-     `las tarjetas deberían ser blancas y uniformes: ${base.fondos}`);
-  ok(!base.fondos.includes('rgb(0, 0, 0)'), 'hay una tarjeta negra');
+     `las tarjetas deberian ser blancas y uniformes: ${base.fondos}`);
   ok(!base.subnav, 'sigue el subnav de 11 enlaces');
   ok(base.filtro && base.opciones === 11, `filtro con ${base.opciones} opciones (esperado 11)`);
   ok(base.buscador, 'falta el buscador de tiendas');
-  ok(base.vacio, 'falta el estado vacío del directorio');
-  ok(base.columnas === 3, `grilla de ${base.columnas} columnas en 1440 (esperado 3)`);
-  ok(base.h2Color === 'rgb(31, 66, 128)', `título de categoría en ${base.h2Color}, esperado el azul profundo`);
-  ok(/invert/.test(base.logoFiltro), `los logos no están invertidos a tinta: ${base.logoFiltro}`);
-  ok(base.parrafos === 0, `quedan ${base.parrafos} párrafos de parafraseo`);
+  ok(base.vacio, 'falta el estado vacio del directorio');
+  ok(base.columnas === 4, `grilla de ${base.columnas} columnas en 1440 (esperado 4)`);
+  ok(/invert/.test(base.logoFiltro), `los logos no estan invertidos a tinta: ${base.logoFiltro}`);
+  ok(base.etiquetas === 10 && base.cats === 10, `categorias: ${base.cats} data-cat / ${base.etiquetas} etiquetas`);
   ok(base.alturas.length >= 4, `solo ${base.alturas.length} alturas distintas de logo`);
   ok(base.cargados === 33, `${base.cargados}/33 logos cargados`);
-  ok(base.fondoPagina !== 'rgb(255, 255, 255)', `el fondo de página sigue blanco puro`);
-  ok(base.toTop, 'falta el botón de volver arriba');
+  ok(base.fondoPagina !== 'rgb(255, 255, 255)', 'el fondo de pagina sigue blanco puro');
+  ok(base.toTop, 'falta el boton de volver arriba');
 
-  // filtro funcional
+  // filtro por categoria: 7 restaurantes
   await page.selectOption('#cat-filter', 'restaurantes');
   await page.waitForTimeout(600);
   const filtrado = await page.evaluate(() => {
-    const vis = [...document.querySelectorAll('.directory-row')].filter((r) => !r.hidden);
-    return { visibles: vis.length, id: vis[0]?.id };
+    const vis = [...document.querySelectorAll('.store-card')].filter((c) => !c.hidden);
+    return { visibles: vis.length, cats: [...new Set(vis.map((c) => c.dataset.cat))] };
   });
   console.log('filtrado:', JSON.stringify(filtrado));
-  ok(filtrado.visibles === 1 && filtrado.id === 'restaurantes', `el filtro dejó ${filtrado.visibles} fila(s) visibles`);
+  ok(filtrado.visibles === 7 && filtrado.cats.length === 1 && filtrado.cats[0] === 'restaurantes',
+     `el filtro dejo ${filtrado.visibles} tarjeta(s): ${JSON.stringify(filtrado.cats)}`);
 
   // buscador: filtra por nombre dentro de la categoría y muestra estado vacío
   await page.selectOption('#cat-filter', 'all');
   await page.fill('#store-search', 'mcdon');
   await page.waitForTimeout(500);
   const buscado = await page.evaluate(() => {
-    const vis = [...document.querySelectorAll('.directory-row')].filter((r) => !r.hidden);
-    const chips = [...document.querySelectorAll('.tenant-chip')].filter((c) => !c.hidden);
-    return { filas: vis.length, id: vis[0]?.id, chips: chips.length,
+    const vis = [...document.querySelectorAll('.store-card')].filter((c) => !c.hidden);
+    return { tarjetas: vis.length, alt: vis.map((c) => c.querySelector('img').alt),
              status: document.getElementById('filter-status').textContent };
   });
   console.log('buscador "mcdon":', JSON.stringify(buscado));
-  ok(buscado.filas === 1 && buscado.id === 'restaurantes' && buscado.chips === 1,
-     `el buscador dejó ${buscado.filas} fila(s) y ${buscado.chips} logo(s)`);
+  ok(buscado.tarjetas === 1 && /mcdonald/i.test(buscado.alt[0] || ''),
+     `el buscador dejo ${buscado.tarjetas} tarjeta(s): ${buscado.alt}`);
 
   await page.fill('#store-search', 'zzzz');
   await page.waitForTimeout(500);
   const sinResultados = await page.evaluate(() => ({
-    filas: [...document.querySelectorAll('.directory-row')].filter((r) => !r.hidden).length,
+    filas: [...document.querySelectorAll('.store-card')].filter((c) => !c.hidden).length,
     vacio: !document.getElementById('directory-empty').hidden }));
   console.log('buscador "zzzz":', JSON.stringify(sinResultados));
   ok(sinResultados.filas === 0 && sinResultados.vacio, 'el estado vacío no aparece sin resultados');
@@ -110,11 +109,13 @@ const ok = (c, m) => { if (!c) fails.push(m); };
   await page.waitForTimeout(600);
   await page.waitForTimeout(700);
   const hash = await page.evaluate(() => {
-    const vis = [...document.querySelectorAll('.directory-row')].filter((r) => !r.hidden);
-    return { select: document.getElementById('cat-filter').value, visibles: vis.length, id: vis[0]?.id };
+    const vis = [...document.querySelectorAll('.store-card')].filter((c) => !c.hidden);
+    return { select: document.getElementById('cat-filter').value, visibles: vis.length,
+             cats: [...new Set(vis.map((c) => c.dataset.cat))] };
   });
   console.log('hash #ropa:', JSON.stringify(hash));
-  ok(hash.select === 'ropa' && hash.visibles === 1, `el hash no preseleccionó la categoría: ${JSON.stringify(hash)}`);
+  ok(hash.select === 'ropa' && hash.visibles === 4 && hash.cats.every((c) => c === 'ropa'),
+     `el hash no preselecciono la categoria: ${JSON.stringify(hash)}`);
 
   if (fails.length) { console.log('\n✗ ' + fails.length + ' fallo(s):'); fails.forEach((f) => console.log('  - ' + f)); await browser.close(); process.exit(1); }
   console.log('\n✓ Fase 2 (directorio) verificada.');

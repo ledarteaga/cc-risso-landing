@@ -217,82 +217,63 @@
     });
   });
 
-  /* ---------- TD-01 · filtro del directorio de tiendas ---------- */
+  /* ---------- TD-01 · buscador + filtro del directorio de tiendas ---------- */
   const catFilter = document.getElementById('cat-filter');
   if (catFilter) {
-    const rows = Array.from(document.querySelectorAll('.directory-row'));
+    const cards = Array.from(document.querySelectorAll('.store-card'));
     const search = document.getElementById('store-search');
     const status = document.getElementById('filter-status');
     const empty = document.getElementById('directory-empty');
 
-    /* Combina categoría + búsqueda por nombre. La búsqueda mira el alt de
-       cada logo, así que "mcdonalds", "BCP" o "cine" encuentran su tienda. */
-    const applyFind = () => {
+    /* Cada tarjeta es una marca: se filtra por categoria (data-cat) y por
+       nombre, leyendo el alt del logo. */
+    const render = ({ scroll = false } = {}) => {
+      const cat = catFilter.value;
       const q = (search?.value || '').trim().toLowerCase();
-      let total = 0;
-      rows.forEach((row) => {
-        const chips = Array.from(row.querySelectorAll('.tenant-chip'));
-        let visibles = 0;
-        chips.forEach((chip) => {
-          const name = (chip.querySelector('img')?.alt || '').toLowerCase();
-          const match = !q || name.includes(q);
-          chip.hidden = !match;
-          if (match) visibles += 1;
-        });
-        const count = row.querySelector('.directory-count');
-        if (count) count.textContent = `${visibles} ${visibles === 1 ? 'tienda' : 'tiendas'}`;
-        if (q && visibles === 0) row.hidden = true;
-        if (!row.hidden) total += visibles;
+      let visibles = 0;
+      cards.forEach((card) => {
+        const name = (card.querySelector('img')?.alt || '').toLowerCase();
+        const okCat = cat === 'all' || card.dataset.cat === cat;
+        const okQ = !q || name.includes(q);
+        card.hidden = !(okCat && okQ);
+        if (!card.hidden) visibles += 1;
       });
-      if (empty) empty.hidden = total !== 0;
+      if (empty) empty.hidden = visibles !== 0;
       if (status) {
-        status.textContent = q ? (total === 0 ? '' : `${total} ${total === 1 ? 'tienda' : 'tiendas'}`) : '';
+        status.textContent = (q || cat !== 'all')
+          ? `${visibles} ${visibles === 1 ? 'tienda' : 'tiendas'}`
+          : '';
       }
-    };
-
-    const apply = (value, { scroll = false } = {}) => {
-      rows.forEach((row) => {
-        const match = value === 'all' || row.id === value;
-        row.hidden = !match;
-        row.querySelectorAll('.tenant-chip').forEach((chip) => { chip.hidden = false; });
-      });
-      applyFind();
       if (scroll) {
-        const target = value === 'all'
-          ? document.querySelector('.directory')
-          : document.getElementById(value);
-        if (target) {
-          const y = target.getBoundingClientRect().top + window.scrollY - 88;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
+        const y = document.getElementById('directory').getBoundingClientRect().top + window.scrollY - 88;
+        window.scrollTo({ top: y, behavior: 'smooth' });
       }
+      return visibles;
     };
 
-    catFilter.addEventListener('change', () => apply(catFilter.value, { scroll: true }));
+    catFilter.addEventListener('change', () => render({ scroll: true }));
+
     if (search) {
       search.addEventListener('input', () => {
-        /* al buscar se sueltan las categorías para no esconder resultados */
         if (catFilter.value !== 'all') catFilter.value = 'all';
-        apply('all');
+        render();
       });
       search.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') { search.value = ''; apply(catFilter.value); }
+        if (e.key === 'Escape') { search.value = ''; render(); }
       });
     }
 
-    /* Enlace directo (#bancos, #ropa…): preselecciona la categoría */
+    /* Enlace directo (#restaurantes, #ropa…): preselecciona la categoria */
     const fromHash = () => {
       const id = location.hash.replace('#', '');
       if (!id) return;
-      if (rows.some((r) => r.id === id)) {
+      if ([...catFilter.options].some((o) => o.value === id)) {
         catFilter.value = id;
-        apply(id);
+        render({ scroll: true });
       }
     };
     fromHash();
     window.addEventListener('hashchange', fromHash);
-
-    /* Si el usuario limpia el hash o pulsa "Todas" desde el navegador */
     window.addEventListener('pageshow', fromHash);
   }
 

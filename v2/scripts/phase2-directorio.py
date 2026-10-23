@@ -20,9 +20,9 @@ TIENDAS = ROOT / "tiendas.html"
 CSS = ROOT / "assets/css/styles.css"
 LOGOS = ROOT / "assets/img/tenants/logos/band"
 
-TARGET_INK = 38.0     # raíz del área de tinta renderizada, en px (grilla de 3)
-H_MIN, H_MAX = 20, 46
-W_MAX, W_MAX_STRIP = 116, 150   # los wordmarks de una línea necesitan más ancho
+TARGET_INK = 46.0     # raíz del área de tinta renderizada, en px
+H_MIN, H_MAX = 24, 54
+W_MAX, W_MAX_STRIP = 140, 180   # los wordmarks de una línea necesitan más ancho
 
 
 def slug(name: str) -> str:
@@ -52,7 +52,7 @@ for f in LOGOS.glob("*.png"):
     height = round(height, 1)
     s = slug(f.name)
     sizes[s] = height
-    rules.append(f'.tenant-chip[data-logo="{s}"] img {{ height: {height}px; }}')
+    rules.append(f'.store-logo img[data-logo="{s}"] {{ height: {height}px; }}')
 
 # ---------------------------------------------------------------- HTML
 html = TIENDAS.read_text()
@@ -65,31 +65,24 @@ rows = re.findall(
 print("filas encontradas:", len(rows))
 
 blocks = []
+cat_titles = {cat_id: title for cat_id, _, title, _ in rows}
+total = 0
 for cat_id, h2_attrs, title, tenants in rows:
     logos = re.findall(r'<img[^>]*src="([^"]+)"[^>]*alt="([^"]*)"', tenants)
-    chips = []
     for src, alt in logos:
         name = src.rsplit("/", 1)[-1]
         s = slug(name)
-        chips.append(f'            <span class="tenant-chip" data-logo="{s}">'
-                     f'<img src="{src}" alt="{alt}" loading="lazy"></span>')
-    n = len(logos)
-    label_id = re.search(r'id="([^"]+)"', h2_attrs)
-    label_id = label_id.group(1) if label_id else f"cat-{cat_id}"
-    blocks.append(f'''        <div class="directory-row" id="{cat_id}" aria-labelledby="{label_id}">
-          <div class="directory-row-head">
-            <h2{h2_attrs}>{title}</h2>
-            <p class="directory-count">{n} {'tienda' if n == 1 else 'tiendas'}</p>
-          </div>
-          <div class="directory-tenants">
-{chr(10).join(chips)}
-          </div>
-        </div>''')
+        total += 1
+        blocks.append(f'''          <li class="store-card" data-cat="{cat_id}">
+            <span class="store-logo"><img src="{src}" alt="{alt}" data-logo="{s}" loading="lazy"></span>
+            <span class="store-cat">{title}</span>
+          </li>''')
+print("tarjetas de marca:", len(blocks))
 
 empty_state = ('\n\n        <p class="directory-empty" id="directory-empty" hidden>'
                'No encontramos esa tienda. Prueba con otra palabra o cambia la categoría.</p>')
-directorio = ("      <div class=\"directory\" id=\"directory\">\n"
-              + "\n\n".join(blocks) + empty_state + "\n      </div>")
+directorio = ("      <ul class=\"directory\" id=\"directory\">\n"
+              + "\n".join(blocks) + empty_state + "\n      </ul>")
 
 # reemplaza el bloque .directory completo
 start = html.index('<div class="directory"')
@@ -97,8 +90,7 @@ end = html.index("    </section>", start)
 html = html[:start] + directorio + "\n" + html[end:]
 
 # ---------------------------------------------------------------- filtro
-options = ['          <option value="all">Todas las categorías ({})</option>'.format(
-    sum(len(re.findall(r'<img', b)) for b in blocks))]
+options = ['            <option value="all">Todas las categorías ({})</option>'.format(len(blocks))]
 for cat_id, _, title, tenants in rows:
     n = len(re.findall(r"<img", tenants))
     options.append(f'          <option value="{cat_id}">{title} ({n})</option>')
@@ -154,78 +146,65 @@ block = MARK + """
    ========================================================================== */
 .tiendas-page body { background: #F4F7FC; }
 
-/* Grilla de 3 columnas: 1 en móvil, 2 en tablet, 3 desde 1100px. */
+/* Grilla de marcas: una tarjeta por tienda. 2 en móvil, 3 en tablet,
+   4 desde 1100px. La categoria va como meta al pie de la tarjeta. */
 .directory {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
   align-items: stretch;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 @media (min-width: 720px) {
-  .directory { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .directory { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 }
 @media (min-width: 1100px) {
-  .directory { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .directory { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 }
 
-/* Variante B · la tarjeta ya no es superficie de color: el azul pasa a
-   remate superior, títulos y conteo; los logos van en tinta. */
-.directory-row {
+.store-card {
   position: relative;
   background: #fff;
-  color: var(--fg);
   border: 1px solid rgba(43,88,168,0.16);
-  padding: clamp(20px, 1.8vw, 26px);
+  box-shadow: 0 1px 2px rgba(10,10,20,0.04);
   display: flex;
   flex-direction: column;
-  gap: var(--s-5);
-  box-shadow: 0 1px 2px rgba(10,10,20,0.04);
+  gap: var(--s-4);
+  padding: clamp(18px, 1.6vw, 24px) clamp(14px, 1.4vw, 20px);
+  min-height: 148px;
+  transition: border-color var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
 }
-.directory-row::before {
+.store-card::before {
   content: "";
   position: absolute; left: 0; top: 0; height: 3px; width: 100%;
   background: var(--brand-blue);
 }
-.directory-row[hidden] { display: none; }
+.store-card:hover { border-color: rgba(43,88,168,0.4); transform: translateY(-1px); }
+.store-card[hidden] { display: none; }
 
-.directory-row-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s-4);
+.store-logo {
+  flex: 1 1 auto;
+  display: flex; align-items: center; justify-content: center;
+  padding-block: var(--s-2);
 }
-.directory-row-head h2 {
-  font-size: var(--fs-display-3); font-weight: 800;
-  letter-spacing: -0.015em; line-height: var(--lh-heading);
-  color: var(--brand-blue-deep);
-  margin: 0;
+/* Los 33 logos son blancos: sobre tarjeta blanca se invertían a nada.
+   filter los lleva a tinta sin tocar los archivos. */
+.store-logo img {
+  width: auto; max-width: 100%; object-fit: contain;
+  filter: invert(1) brightness(0.18);
 }
-.directory-count {
-  margin: 0;
+.store-cat {
   flex: none;
   font-size: var(--fs-caption);
   letter-spacing: var(--track-caps);
   text-transform: uppercase;
   color: var(--brand-blue);
   opacity: 0.8;
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--border);
 }
-
-.directory-tenants {
-  display: flex; flex-wrap: wrap;
-  align-items: flex-start;      /* los logos se alinean arriba, no por el centro */
-  justify-content: space-evenly; /* reparto horizontal parejo dentro de cada fila */
-  row-gap: 24px;                /* gap-y entre filas de logos en la grilla */
-  column-gap: var(--s-4);
-}
-.tenant-chip { display: inline-flex; align-items: center; justify-content: center; }
-/* Los 33 logos son blancos: sobre tarjeta blanca se invertían a nada.
-   filter los lleva a tinta sin tocar los archivos. */
-.tenant-chip img {
-  width: auto; max-width: 100%; object-fit: contain;
-  filter: invert(1) brightness(0.18);
-}
-.tenant-chip[hidden] { display: none; }
-
 /* ---- TD-01 · filtro desplegable ---- */
 .directory-filter {
   position: sticky; top: 72px; z-index: calc(var(--z-nav) - 1);
