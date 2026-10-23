@@ -69,26 +69,37 @@ rows = re.findall(
 if rows:
     filas = [(cat_id, h2_attrs, title, tenants) for cat_id, h2_attrs, title, tenants in rows]
 else:
-    # Segunda pasada: tarjetas sueltas .store-card con data-cat y la etiqueta
-    # de categoria dentro de cada tarjeta. Se reordena para agrupar.
-    por_cat = {}
-    orden = []
-    for m in re.finditer(r'<li class="store-card" data-cat="([^"]+)">(.*?)</li>', html, re.S):
-        cat_id, cuerpo = m.group(1), m.group(2)
-        img = re.search(r'<img[^>]*src="([^"]+)"[^>]*alt="([^"]*)"', cuerpo)
-        if not img:
-            continue
-        cat_label = re.search(r'<span class="store-cat">(.*?)</span>', cuerpo)
-        if cat_id not in por_cat:
-            por_cat[cat_id] = {"title": cat_label.group(1).strip() if cat_label else cat_id.title(),
-                               "logos": []}
-            orden.append(cat_id)
-        por_cat[cat_id]["logos"].append((img.group(1), img.group(2)))
-    filas = []
-    for i, cat_id in enumerate(orden, start=1):
-        d = por_cat[cat_id]
-        tenants = " ".join(f'<img src="{s}" alt="{a}">' for s, a in d["logos"])
-        filas.append((cat_id, f' id="cat-{i}"', d["title"], tenants))
+    grupos_prev = re.findall(
+        r'<section class="store-group" id="([^"]+)"[^>]*>(.*?)</section>', html, re.S)
+    if grupos_prev:
+        # Tercera pasada: los grupos ya existen. El titulo real vive en el h2,
+        # no en una etiqueta por tarjeta.
+        filas = []
+        for cat_id, cuerpo in grupos_prev:
+            hm = re.search(r'<h2([^>]*)>(.*?)</h2>', cuerpo, re.S)
+            h2_attrs, title = (hm.group(1), hm.group(2)) if hm else ('', cat_id)
+            tenants = " ".join(f'<img src="{s}" alt="{a}">'
+                               for s, a in re.findall(r'<img[^>]*src="([^"]+)"[^>]*alt="([^"]*)"', cuerpo))
+            filas.append((cat_id, h2_attrs, title, tenants))
+    else:
+        # Segunda pasada: tarjetas sueltas con data-cat y la categoria dentro.
+        por_cat, orden = {}, []
+        for m in re.finditer(r'<li class="store-card" data-cat="([^"]+)">(.*?)</li>', html, re.S):
+            cat_id, cuerpo = m.group(1), m.group(2)
+            img = re.search(r'<img[^>]*src="([^"]+)"[^>]*alt="([^"]*)"', cuerpo)
+            if not img:
+                continue
+            cat_label = re.search(r'<span class="store-cat">(.*?)</span>', cuerpo)
+            if cat_id not in por_cat:
+                por_cat[cat_id] = {"title": cat_label.group(1).strip() if cat_label else cat_id.title(),
+                                   "logos": []}
+                orden.append(cat_id)
+            por_cat[cat_id]["logos"].append((img.group(1), img.group(2)))
+        filas = []
+        for i, cat_id in enumerate(orden, start=1):
+            d = por_cat[cat_id]
+            tenants = " ".join(f'<img src="{s}" alt="{a}">' for s, a in d["logos"])
+            filas.append((cat_id, f' id="cat-{i}"', d["title"], tenants))
 
 print("categorias de origen:", len(filas))
 
@@ -124,15 +135,15 @@ directorio = ("      <div class=\"directory\" id=\"directory\">\n"
               + "\n\n".join(groups) + empty_state + "\n      </div>")
 
 # reemplaza el bloque .directory completo
-m_dir = re.search(r'<(div|ul) class="directory"', html)
+# El contenedor se delimita con regex: con grupos dentro, buscar el primer
+# "    </section>" cortaba en el cierre de un grupo y duplicaba contenido.
+m_dir = re.search(r'<(div|ul) class="directory"[^>]*>.*?\n      </(?:div|ul)>', html, re.S)
 if not m_dir:
-    raise SystemExit("no encontré el contenedor .directory")
-start = m_dir.start()
-end = html.index("    </section>", start)
-html = html[:start] + directorio + "\n" + html[end:]
+    raise SystemExit("no encontré el contenedor .directory completo")
+html = html[:m_dir.start()] + directorio + html[m_dir.end():]
 
 # ---------------------------------------------------------------- filtro
-options = ['            <option value="all">Todas las categorías ({})</option>'.format(total)]
+options = ['            <option value="all">Todas las categorías</option>']
 for cat_id, _, title, tenants in filas:
     n = len(re.findall(r"<img", tenants))
     options.append(f'          <option value="{cat_id}">{title} ({n})</option>')
@@ -141,12 +152,12 @@ filtro = '''    <!-- TD-01 · filtro desplegable + buscador -->
     <div class="directory-filter" role="search">
       <div class="directory-filter-inner">
         <div class="filter-field filter-field--search">
-          <label class="sr-only" for="store-search">Buscar tienda por nombre</label>
+          <label class="u-visually-hidden" for="store-search">Buscar tienda por nombre</label>
           <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
           <input type="search" id="store-search" class="store-search" placeholder="Buscar tienda" autocomplete="off" aria-controls="directory">
         </div>
         <div class="filter-field">
-          <label class="sr-only" for="cat-filter">Filtrar por categoría</label>
+          <label class="u-visually-hidden" for="cat-filter">Filtrar por categoría</label>
           <div class="select-wrap">
             <select id="cat-filter" class="cat-select" aria-label="Filtrar el directorio por categoría">
 ''' + "\n".join(options) + '''
@@ -154,7 +165,7 @@ filtro = '''    <!-- TD-01 · filtro desplegable + buscador -->
             <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
         </div>
-        <p class="filter-status" id="filter-status" role="status" aria-live="polite"></p>
+        <p class="u-visually-hidden" id="filter-status" role="status" aria-live="polite"></p>
       </div>
     </div>
 
@@ -302,13 +313,6 @@ block = MARK + """
   position: absolute; left: var(--s-4); top: 50%; transform: translateY(-50%);
   width: 17px; height: 17px; color: var(--fg-muted); pointer-events: none;
 }
-.filter-status {
-  margin: 0; margin-left: auto;
-  font-size: var(--fs-caption);
-  letter-spacing: var(--track-caps); text-transform: uppercase;
-  color: var(--fg-muted);
-}
-.filter-status:empty { display: none; }
 
 /* Estado vacío del directorio */
 .directory-empty {

@@ -68,15 +68,15 @@
     <div class="directory-filter" role="search">
       <div class="directory-filter-inner">
         <div class="filter-field filter-field--search">
-          <label class="sr-only" for="store-search">Buscar tienda por nombre</label>
+          <label class="u-visually-hidden" for="store-search">Buscar tienda por nombre</label>
           <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
           <input type="search" id="store-search" class="store-search" placeholder="Buscar tienda" autocomplete="off" aria-controls="directory">
         </div>
         <div class="filter-field">
-          <label class="sr-only" for="cat-filter">Filtrar por categoría</label>
+          <label class="u-visually-hidden" for="cat-filter">Filtrar por categoría</label>
           <div class="select-wrap">
             <select id="cat-filter" class="cat-select" aria-label="Filtrar el directorio por categoría">
-            <option value="all">Todas las categorías (33)</option>
+            <option value="all">Todas las categorías</option>
           <option value="supermercados">Supermercados (1)</option>
           <option value="bancos">Bancos y Financieras (4)</option>
           <option value="restaurantes">Restaurantes (7)</option>
@@ -91,7 +91,7 @@
             <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
         </div>
-        <p class="filter-status" id="filter-status" role="status" aria-live="polite"></p>
+        <p class="u-visually-hidden" id="filter-status" role="status" aria-live="polite"></p>
       </div>
     </div>
 
@@ -101,7 +101,7 @@
          vertical excesivo en pantallas grandes.
          ============================================================ -->
     <section class="directory-section">
-                                                                                    <div class="directory" id="directory">
+                                                                                          <div class="directory" id="directory">
         <section class="store-group" id="supermercados" aria-labelledby="cat-1">
           <div class="store-group-head">
             <h2 id="cat-1">Supermercados</h2>

@@ -1822,13 +1822,6 @@ main:has(> .page-open) { margin-top: var(--header-h); }
   position: absolute; left: var(--s-4); top: 50%; transform: translateY(-50%);
   width: 17px; height: 17px; color: var(--fg-muted); pointer-events: none;
 }
-.filter-status {
-  margin: 0; margin-left: auto;
-  font-size: var(--fs-caption);
-  letter-spacing: var(--track-caps); text-transform: uppercase;
-  color: var(--fg-muted);
-}
-.filter-status:empty { display: none; }
 
 /* Estado vacío del directorio */
 .directory-empty {
