@@ -20,9 +20,9 @@ TIENDAS = ROOT / "tiendas.html"
 CSS = ROOT / "assets/css/styles.css"
 LOGOS = ROOT / "assets/img/tenants/logos/band"
 
-TARGET_INK = 64.0     # raíz del área de tinta renderizada, en px (subido a pedido)
-H_MIN, H_MAX = 30, 76
-W_MAX, W_MAX_STRIP = 236, 330   # los wordmarks de una línea necesitan más ancho
+TARGET_INK = 38.0     # raíz del área de tinta renderizada, en px (grilla de 3)
+H_MIN, H_MAX = 20, 46
+W_MAX, W_MAX_STRIP = 116, 150   # los wordmarks de una línea necesitan más ancho
 
 
 def slug(name: str) -> str:
@@ -86,10 +86,13 @@ for cat_id, h2_attrs, title, tenants in rows:
           </div>
         </div>''')
 
-directorio = "      <div class=\"directory\">\n" + "\n\n".join(blocks) + "\n      </div>"
+empty_state = ('\n\n        <p class="directory-empty" id="directory-empty" hidden>'
+               'No encontramos esa tienda. Prueba con otra palabra o cambia la categoría.</p>')
+directorio = ("      <div class=\"directory\" id=\"directory\">\n"
+              + "\n\n".join(blocks) + empty_state + "\n      </div>")
 
 # reemplaza el bloque .directory completo
-start = html.index('<div class="directory">')
+start = html.index('<div class="directory"')
 end = html.index("    </section>", start)
 html = html[:start] + directorio + "\n" + html[end:]
 
@@ -100,27 +103,39 @@ for cat_id, _, title, tenants in rows:
     n = len(re.findall(r"<img", tenants))
     options.append(f'          <option value="{cat_id}">{title} ({n})</option>')
 
-filtro = '''    <!-- TD-01 · filtro desplegable en lugar de la barra de 11 enlaces -->
+filtro = '''    <!-- TD-01 · filtro desplegable + buscador -->
     <div class="directory-filter" role="search">
       <div class="directory-filter-inner">
-        <label class="kicker" for="cat-filter">Filtrar por categoría</label>
-        <div class="select-wrap">
-          <select id="cat-filter" class="cat-select" aria-label="Filtrar el directorio por categoría">
-''' + "\n".join(options) + '''
-          </select>
-          <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        <div class="filter-field filter-field--search">
+          <label class="sr-only" for="store-search">Buscar tienda por nombre</label>
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+          <input type="search" id="store-search" class="store-search" placeholder="Buscar tienda" autocomplete="off" aria-controls="directory">
         </div>
+        <div class="filter-field">
+          <label class="sr-only" for="cat-filter">Filtrar por categoría</label>
+          <div class="select-wrap">
+            <select id="cat-filter" class="cat-select" aria-label="Filtrar el directorio por categoría">
+''' + "\n".join(options) + '''
+            </select>
+            <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <p class="filter-status" id="filter-status" role="status" aria-live="polite"></p>
       </div>
     </div>
 
 '''
 
 subnav_re = re.compile(r'    <!-- =+\n         SUB-NAV · sticky anchor jump\n.*?</nav>\n\n', re.S)
+filtro_re = re.compile(r'    <!-- TD-01 · filtro desplegable[^\n]*-->\n    <div class="directory-filter".*?\n    </div>\n\n', re.S)
 if subnav_re.search(html):
     html = subnav_re.sub(filtro, html)
     print("subnav → filtro")
+elif filtro_re.search(html):
+    html = filtro_re.sub(filtro, html)
+    print("filtro existente → filtro con buscador")
 else:
-    print("no encontré el subnav")
+    print("AVISO: no encontré ni subnav ni filtro")
 
 TIENDAS.write_text(html)
 
@@ -139,23 +154,37 @@ block = MARK + """
    ========================================================================== */
 .tiendas-page body { background: #F4F7FC; }
 
+/* Grilla de 3 columnas: 1 en móvil, 2 en tablet, 3 desde 1100px. */
 .directory {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--s-4);
+  gap: 16px;
   align-items: stretch;
 }
-@media (min-width: 900px) {
+@media (min-width: 720px) {
   .directory { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+@media (min-width: 1100px) {
+  .directory { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 
+/* Variante B · la tarjeta ya no es superficie de color: el azul pasa a
+   remate superior, títulos y conteo; los logos van en tinta. */
 .directory-row {
-  background: var(--brand-blue);
-  color: var(--fg-on-ink);
-  padding: clamp(22px, 2.2vw, 30px);
+  position: relative;
+  background: #fff;
+  color: var(--fg);
+  border: 1px solid rgba(43,88,168,0.16);
+  padding: clamp(20px, 1.8vw, 26px);
   display: flex;
   flex-direction: column;
-  gap: var(--s-4);
+  gap: var(--s-5);
+  box-shadow: 0 1px 2px rgba(10,10,20,0.04);
+}
+.directory-row::before {
+  content: "";
+  position: absolute; left: 0; top: 0; height: 3px; width: 100%;
+  background: var(--brand-blue);
 }
 .directory-row[hidden] { display: none; }
 
@@ -168,7 +197,7 @@ block = MARK + """
 .directory-row-head h2 {
   font-size: var(--fs-display-3); font-weight: 800;
   letter-spacing: -0.015em; line-height: var(--lh-heading);
-  color: var(--fg-on-ink);
+  color: var(--brand-blue-deep);
   margin: 0;
 }
 .directory-count {
@@ -177,18 +206,25 @@ block = MARK + """
   font-size: var(--fs-caption);
   letter-spacing: var(--track-caps);
   text-transform: uppercase;
-  color: rgba(255,255,255,0.72);
+  color: var(--brand-blue);
+  opacity: 0.8;
 }
 
 .directory-tenants {
   display: flex; flex-wrap: wrap;
   align-items: flex-start;      /* los logos se alinean arriba, no por el centro */
   justify-content: space-evenly; /* reparto horizontal parejo dentro de cada fila */
-  row-gap: 40px;                /* gap-y entre filas de logos */
-  column-gap: var(--s-5);
+  row-gap: 24px;                /* gap-y entre filas de logos en la grilla */
+  column-gap: var(--s-4);
 }
 .tenant-chip { display: inline-flex; align-items: center; justify-content: center; }
-.tenant-chip img { width: auto; max-width: 100%; object-fit: contain; }
+/* Los 33 logos son blancos: sobre tarjeta blanca se invertían a nada.
+   filter los lleva a tinta sin tocar los archivos. */
+.tenant-chip img {
+  width: auto; max-width: 100%; object-fit: contain;
+  filter: invert(1) brightness(0.18);
+}
+.tenant-chip[hidden] { display: none; }
 
 /* ---- TD-01 · filtro desplegable ---- */
 .directory-filter {
@@ -205,7 +241,43 @@ block = MARK + """
   display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap;
 }
 .directory-filter .kicker { color: var(--fg-muted); margin: 0; }
-.select-wrap { position: relative; flex: 0 1 320px; }
+.filter-field { display: flex; align-items: center; gap: var(--s-3); }
+.filter-field--search { position: relative; flex: 1 1 260px; min-width: 200px; }
+.select-wrap { position: relative; flex: 0 1 280px; min-width: 220px; }
+
+.store-search {
+  width: 100%;
+  font: inherit; font-size: var(--fs-body);
+  color: var(--fg);
+  background: var(--ground);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  padding: var(--s-3) var(--s-4) var(--s-3) var(--s-9);
+  appearance: none;
+}
+.store-search::placeholder { color: var(--fg-muted); }
+.store-search:focus-visible { outline: 2px solid var(--brand-green-deep); outline-offset: 2px; }
+.search-icon {
+  position: absolute; left: var(--s-4); top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; color: var(--fg-muted); pointer-events: none;
+}
+.filter-status {
+  margin: 0; margin-left: auto;
+  font-size: var(--fs-caption);
+  letter-spacing: var(--track-caps); text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.filter-status:empty { display: none; }
+
+/* Estado vacío del directorio */
+.directory-empty {
+  grid-column: 1 / -1;
+  padding: var(--s-7) var(--s-4);
+  text-align: center;
+  font-size: var(--fs-body); color: var(--fg-muted);
+  border: 1px dashed var(--border-strong);
+}
+.directory-empty[hidden] { display: none; }
 .cat-select {
   width: 100%;
   appearance: none;

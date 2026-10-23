@@ -64,12 +64,18 @@
          ============================================================ -->
     <section class="photo-band" style="background-image: url('assets/img/cc/ccrisso/galeria1_MG_4933.jpg');" role="img" aria-label="Interior del centro comercial"></section>
 
-    <!-- TD-01 · filtro desplegable en lugar de la barra de 11 enlaces -->
+    <!-- TD-01 · filtro desplegable + buscador -->
     <div class="directory-filter" role="search">
       <div class="directory-filter-inner">
-        <label class="kicker" for="cat-filter">Filtrar por categoría</label>
-        <div class="select-wrap">
-          <select id="cat-filter" class="cat-select" aria-label="Filtrar el directorio por categoría">
+        <div class="filter-field filter-field--search">
+          <label class="sr-only" for="store-search">Buscar tienda por nombre</label>
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+          <input type="search" id="store-search" class="store-search" placeholder="Buscar tienda" autocomplete="off" aria-controls="directory">
+        </div>
+        <div class="filter-field">
+          <label class="sr-only" for="cat-filter">Filtrar por categoría</label>
+          <div class="select-wrap">
+            <select id="cat-filter" class="cat-select" aria-label="Filtrar el directorio por categoría">
           <option value="all">Todas las categorías (33)</option>
           <option value="supermercados">Supermercados (1)</option>
           <option value="bancos">Bancos y Financieras (4)</option>
@@ -81,9 +87,11 @@
           <option value="deportes">Deportes (3)</option>
           <option value="regalos">Regalos (2)</option>
           <option value="varios">Varios (5)</option>
-          </select>
-          <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </select>
+            <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
         </div>
+        <p class="filter-status" id="filter-status" role="status" aria-live="polite"></p>
       </div>
     </div>
 
@@ -93,7 +101,7 @@
          vertical excesivo en pantallas grandes.
          ============================================================ -->
     <section class="directory-section">
-                                                <div class="directory">
+                                                                        <div class="directory" id="directory">
         <div class="directory-row" id="supermercados" aria-labelledby="cat-1">
           <div class="directory-row-head">
             <h2 id="cat-1">Supermercados</h2>
@@ -216,6 +224,8 @@
             <span class="tenant-chip" data-logo="stampaya-logo-blanco"><img src="assets/img/tenants/logos/StampaYa!_logo_blanco.png" alt="Stampa Ya!" loading="lazy"></span>
           </div>
         </div>
+
+        <p class="directory-empty" id="directory-empty" hidden>No encontramos esa tienda. Prueba con otra palabra o cambia la categoría.</p>
       </div>
     </section>
 

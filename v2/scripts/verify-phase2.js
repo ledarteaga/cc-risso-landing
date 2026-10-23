@@ -18,26 +18,38 @@ const ok = (c, m) => { if (!c) fails.push(m); };
     const bgs = [...new Set(rows.map((r) => getComputedStyle(r).backgroundColor))];
     const logos = [...document.querySelectorAll('.tenant-chip img')];
     const heights = [...new Set(logos.map((i) => Math.round(i.getBoundingClientRect().height)))].sort((a, b) => a - b);
+    const grid = getComputedStyle(document.querySelector('.directory'));
     return {
       filas: rows.length,
       fondos: bgs,
       subnav: !!document.querySelector('.tiendas-subnav'),
       filtro: !!document.querySelector('#cat-filter'),
+      buscador: !!document.querySelector('#store-search'),
+      vacio: !!document.querySelector('#directory-empty'),
       opciones: document.querySelectorAll('#cat-filter option').length,
       parrafos: document.querySelectorAll('.directory-row-head > p:not(.directory-count)').length,
       chips: logos.length,
       alturas: heights,
       cargados: logos.filter((i) => i.naturalWidth > 0).length,
       fondoPagina: getComputedStyle(document.body).backgroundColor,
+      columnas: grid.gridTemplateColumns.split(' ').length,
+      h2Color: getComputedStyle(rows[0].querySelector('h2')).color,
+      logoFiltro: getComputedStyle(logos[0]).filter,
       toTop: !!document.querySelector('.to-top'),
     };
   });
   console.log('base:', JSON.stringify(base));
   ok(base.filas === 10, `filas: ${base.filas}`);
-  ok(base.fondos.length === 1, `las filas tienen ${base.fondos.length} fondos distintos (esperado 1): ${base.fondos}`);
-  ok(!base.fondos.includes('rgb(0, 0, 0)'), 'hay una fila negra');
+  ok(base.fondos.length === 1 && base.fondos[0] === 'rgb(255, 255, 255)',
+     `las tarjetas deberían ser blancas y uniformes: ${base.fondos}`);
+  ok(!base.fondos.includes('rgb(0, 0, 0)'), 'hay una tarjeta negra');
   ok(!base.subnav, 'sigue el subnav de 11 enlaces');
   ok(base.filtro && base.opciones === 11, `filtro con ${base.opciones} opciones (esperado 11)`);
+  ok(base.buscador, 'falta el buscador de tiendas');
+  ok(base.vacio, 'falta el estado vacío del directorio');
+  ok(base.columnas === 3, `grilla de ${base.columnas} columnas en 1440 (esperado 3)`);
+  ok(base.h2Color === 'rgb(31, 66, 128)', `título de categoría en ${base.h2Color}, esperado el azul profundo`);
+  ok(/invert/.test(base.logoFiltro), `los logos no están invertidos a tinta: ${base.logoFiltro}`);
   ok(base.parrafos === 0, `quedan ${base.parrafos} párrafos de parafraseo`);
   ok(base.alturas.length >= 4, `solo ${base.alturas.length} alturas distintas de logo`);
   ok(base.cargados === 33, `${base.cargados}/33 logos cargados`);
@@ -53,6 +65,30 @@ const ok = (c, m) => { if (!c) fails.push(m); };
   });
   console.log('filtrado:', JSON.stringify(filtrado));
   ok(filtrado.visibles === 1 && filtrado.id === 'restaurantes', `el filtro dejó ${filtrado.visibles} fila(s) visibles`);
+
+  // buscador: filtra por nombre dentro de la categoría y muestra estado vacío
+  await page.selectOption('#cat-filter', 'all');
+  await page.fill('#store-search', 'mcdon');
+  await page.waitForTimeout(500);
+  const buscado = await page.evaluate(() => {
+    const vis = [...document.querySelectorAll('.directory-row')].filter((r) => !r.hidden);
+    const chips = [...document.querySelectorAll('.tenant-chip')].filter((c) => !c.hidden);
+    return { filas: vis.length, id: vis[0]?.id, chips: chips.length,
+             status: document.getElementById('filter-status').textContent };
+  });
+  console.log('buscador "mcdon":', JSON.stringify(buscado));
+  ok(buscado.filas === 1 && buscado.id === 'restaurantes' && buscado.chips === 1,
+     `el buscador dejó ${buscado.filas} fila(s) y ${buscado.chips} logo(s)`);
+
+  await page.fill('#store-search', 'zzzz');
+  await page.waitForTimeout(500);
+  const sinResultados = await page.evaluate(() => ({
+    filas: [...document.querySelectorAll('.directory-row')].filter((r) => !r.hidden).length,
+    vacio: !document.getElementById('directory-empty').hidden }));
+  console.log('buscador "zzzz":', JSON.stringify(sinResultados));
+  ok(sinResultados.filas === 0 && sinResultados.vacio, 'el estado vacío no aparece sin resultados');
+  await page.fill('#store-search', '');
+  await page.waitForTimeout(400);
 
   // botón volver arriba
   await page.evaluate(() => window.scrollTo(0, 2000));

@@ -221,11 +221,42 @@
   const catFilter = document.getElementById('cat-filter');
   if (catFilter) {
     const rows = Array.from(document.querySelectorAll('.directory-row'));
+    const search = document.getElementById('store-search');
+    const status = document.getElementById('filter-status');
+    const empty = document.getElementById('directory-empty');
+
+    /* Combina categoría + búsqueda por nombre. La búsqueda mira el alt de
+       cada logo, así que "mcdonalds", "BCP" o "cine" encuentran su tienda. */
+    const applyFind = () => {
+      const q = (search?.value || '').trim().toLowerCase();
+      let total = 0;
+      rows.forEach((row) => {
+        const chips = Array.from(row.querySelectorAll('.tenant-chip'));
+        let visibles = 0;
+        chips.forEach((chip) => {
+          const name = (chip.querySelector('img')?.alt || '').toLowerCase();
+          const match = !q || name.includes(q);
+          chip.hidden = !match;
+          if (match) visibles += 1;
+        });
+        const count = row.querySelector('.directory-count');
+        if (count) count.textContent = `${visibles} ${visibles === 1 ? 'tienda' : 'tiendas'}`;
+        if (q && visibles === 0) row.hidden = true;
+        if (!row.hidden) total += visibles;
+      });
+      if (empty) empty.hidden = total !== 0;
+      if (status) {
+        status.textContent = q ? (total === 0 ? '' : `${total} ${total === 1 ? 'tienda' : 'tiendas'}`) : '';
+      }
+    };
+
     const apply = (value, { scroll = false } = {}) => {
       rows.forEach((row) => {
         const match = value === 'all' || row.id === value;
         row.hidden = !match;
+        row.querySelectorAll('.tenant-chip').forEach((chip) => { chip.hidden = false; });
       });
+      applyFind();
       if (scroll) {
         const target = value === 'all'
           ? document.querySelector('.directory')
@@ -238,6 +269,16 @@
     };
 
     catFilter.addEventListener('change', () => apply(catFilter.value, { scroll: true }));
+    if (search) {
+      search.addEventListener('input', () => {
+        /* al buscar se sueltan las categorías para no esconder resultados */
+        if (catFilter.value !== 'all') catFilter.value = 'all';
+        apply('all');
+      });
+      search.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { search.value = ''; apply(catFilter.value); }
+      });
+    }
 
     /* Enlace directo (#bancos, #ropa…): preselecciona la categoría */
     const fromHash = () => {
