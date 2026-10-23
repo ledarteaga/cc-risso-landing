@@ -24,6 +24,11 @@ TARGET_INK = 46.0     # raíz del área de tinta renderizada, en px
 H_MIN, H_MAX = 24, 54
 W_MAX, W_MAX_STRIP = 140, 180   # los wordmarks de una línea necesitan más ancho
 
+# Horario del centro, tal como está publicado (Lun a Dom 10:00-22:00). Es el
+# valor por defecto de cada tarjeta: las tiendas con horario propio se
+# sobreescriben con su data-hours en el HTML.
+HORARIO = "10:00 – 22:00"
+
 
 def slug(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", name.rsplit(".", 1)[0].lower()).strip("-")
@@ -114,8 +119,12 @@ for cat_id, h2_attrs, title, tenants in filas:
         name = src.rsplit("/", 1)[-1]
         s = slug(name)
         total += 1
-        cards.append(f'''            <li class="store-card" data-cat="{cat_id}">
+        cards.append(f'''            <li class="store-card" data-cat="{cat_id}" data-hours="{HORARIO}">
               <span class="store-logo"><img src="{src}" alt="{alt}" data-logo="{s}" loading="lazy"></span>
+              <span class="store-hours">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                {HORARIO}
+              </span>
             </li>''')
     n = len(logos)
     groups.append(f'''        <section class="store-group" id="{cat_id}" aria-labelledby="{label_id}">
@@ -207,7 +216,7 @@ block = MARK + """
   gap: clamp(36px, 4vw, 56px);
 }
 
-.store-group { display: flex; flex-direction: column; gap: var(--s-5); }
+.store-group { display: flex; flex-direction: column; gap: clamp(32px, 3.4vw, 44px); }
 .store-group[hidden] { display: none; }
 
 .store-group-head {
@@ -256,10 +265,12 @@ block = MARK + """
   border: 1px solid rgba(43,88,168,0.16);
   box-shadow: 0 1px 2px rgba(10,10,20,0.04);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: clamp(18px, 1.6vw, 26px) clamp(14px, 1.4vw, 20px);
-  min-height: 132px;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: clamp(18px, 1.6vw, 26px) clamp(14px, 1.4vw, 20px) clamp(14px, 1.2vw, 18px);
+  min-height: 156px;
   transition: border-color var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
 }
 .store-card::before {
@@ -270,7 +281,16 @@ block = MARK + """
 .store-card:hover { border-color: rgba(43,88,168,0.4); transform: translateY(-1px); }
 .store-card[hidden] { display: none; }
 
-.store-logo { display: flex; align-items: center; justify-content: center; width: 100%; }
+.store-logo { display: flex; align-items: center; justify-content: center; width: 100%; flex: 1 1 auto; }
+.store-hours {
+  flex: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: var(--fs-caption);
+  letter-spacing: 0.02em;
+  color: var(--fg-muted);
+  font-variant-numeric: tabular-nums;
+}
+.store-hours svg { width: 12px; height: 12px; flex: none; opacity: 0.8; }
 /* Los 33 logos son blancos: sobre tarjeta blanca se invertían a nada.
    filter los lleva a tinta sin tocar los archivos. */
 .store-logo img {

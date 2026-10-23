@@ -11,6 +11,10 @@ const ok = (c, m) => { if (!c) fails.push(m); };
   await page.goto(`${BASE}/tiendas.html`, { waitUntil: 'load' });
   await page.waitForTimeout(600);
   await page.evaluate(() => document.fonts.ready);
+  // Las tarjetas bajas usan loading="lazy": sin forzar la carga, contar
+  // naturalWidth mide la posición del scroll, no el estado de la página.
+  await page.evaluate(() => document.querySelectorAll('img').forEach((i) => { i.loading = 'eager'; }));
+  await page.waitForFunction(() => [...document.images].every((i) => i.complete), null, { timeout: 15000 }).catch(() => {});
   await page.waitForTimeout(400);
 
   const base = await page.evaluate(() => {
