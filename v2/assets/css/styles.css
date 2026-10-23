@@ -604,21 +604,10 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
 /* Franja de color eliminada: los logos van sobre el mismo papel de la tarjeta,
    sin banda verde/azul detras. Se quedan pegados abajo por margin-top: auto
    para que la tarjeta conserve su altura y el pie no quede flotando. */
-.cat-preview .cat-logos {
-  display: flex; align-items: center; justify-content: flex-start; gap: var(--s-4); flex-wrap: wrap;
-  padding: var(--s-2) var(--s-5) var(--s-5);
-  margin-top: auto;
-}
 /* Wordmarks anchos: 26px de alto los dejaba en ~10px legibles. Los que superan
    un aspect de 4 se limitan por ancho y suben de alto. */
-.cat-preview .cat-logos img { max-height: 26px; max-width: 120px; height: auto; width: auto; opacity: 1; }
-.cat-preview .cat-logos img[src*="mcdonalds"], 
-.cat-preview .cat-logos img[src*="WesternUnion"],
-.cat-preview .cat-logos img[src*="cineplanet"] { max-width: 132px; max-height: 32px; }
 
 /* Separador fino entre el texto de la categoria y sus logos */
-.cat-preview .cat-body { padding-bottom: var(--s-4); }
-.cat-preview .cat-logos { border-top: 1px solid var(--border); padding-top: var(--s-4); }
 
 /* ---- CONTACT VISIT · Inicio 04 · split editorial con imagen ---- */
 .visit-grid {
