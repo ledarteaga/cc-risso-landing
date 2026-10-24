@@ -1933,22 +1933,23 @@ main:has(> .page-open) { margin-top: var(--header-h); }
    ========================================================================== */
 .promo-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
-@media (min-width: 720px) {
+@media (min-width: 640px) {
   .promo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 }
+.promo-card.is-extra[hidden] { display: none; }
 
 .promo-card {
   position: relative;
   background: #fff;
   border: 1px solid rgba(43,88,168,0.16);
   box-shadow: 0 1px 2px rgba(10,10,20,0.04);
-  padding: clamp(18px, 1.7vw, 26px) clamp(14px, 1.5vw, 22px);
+  padding: clamp(14px, 1.3vw, 20px) clamp(14px, 1.4vw, 18px);
   display: flex;
   flex-direction: column;
-  gap: var(--s-3);
+  gap: 6px;
   transition: border-color var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
 }
 .promo-card::before {
@@ -1958,20 +1959,23 @@ main:has(> .page-open) { margin-top: var(--header-h); }
 }
 .promo-card:hover { border-color: rgba(43,88,168,0.4); transform: translateY(-1px); }
 
-.promo-card-logo {
-  min-height: 58px;
-  display: flex; align-items: center;
+/* En una fila horizontal la tarjeta es baja: el logo deja de ser bloque. */
+.promo-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-4);
+  padding-bottom: var(--s-3);
   margin-bottom: var(--s-2);
+  border-bottom: 1px solid var(--border);
 }
 .promo-card-logo img {
   width: auto; height: auto;
-  max-height: 38px; max-width: 150px;
+  max-height: 24px; max-width: 108px;
   object-fit: contain;
   filter: invert(1) brightness(0.18);
 }
 
 .promo-discount {
-  font-size: clamp(34px, 3.4vw, 46px);
+  font-size: clamp(26px, 2.6vw, 34px);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.03em;
@@ -1989,6 +1993,7 @@ main:has(> .page-open) { margin-top: var(--header-h); }
    17px dentro de la escala de encabezados (72/44/24). */
 .promo-card .promo-store {
   margin: 0;
+  margin-top: 2px;
   font-size: var(--fs-caption);
   letter-spacing: var(--track-caps);
   text-transform: uppercase;
@@ -2032,7 +2037,7 @@ main:has(> .page-open) { margin-top: var(--header-h); }
   .event-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 }
 @media (min-width: 1100px) {
-  .event-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .event-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 }
 
 .event-card {
@@ -2046,11 +2051,16 @@ main:has(> .page-open) { margin-top: var(--header-h); }
   transition: border-color var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
 }
 .event-card:hover { border-color: rgba(43,88,168,0.4); transform: translateY(-1px); }
-.event-card-media { aspect-ratio: 4 / 3; overflow: hidden; background: var(--brand-blue-deep); }
+@media (min-width: 640px) {
+  .event-card { flex-direction: row; align-items: stretch; }
+  .event-card-media { flex: 0 0 37%; aspect-ratio: auto; min-height: 132px; }
+}
+.event-card-media { aspect-ratio: 16 / 9; overflow: hidden; background: var(--brand-blue-deep); }
 .event-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .event-card-body {
-  display: flex; flex-direction: column; gap: var(--s-2);
-  padding: clamp(16px, 1.6vw, 22px);
+  display: flex; flex-direction: column; gap: 6px;
+  flex: 1 1 auto;
+  padding: clamp(14px, 1.4vw, 18px);
 }
 .event-card-body .event-card-title {
   margin: 0;
@@ -2062,7 +2072,7 @@ main:has(> .page-open) { margin-top: var(--header-h); }
 .event-card-body p { margin: 0; font-size: var(--fs-body); line-height: 1.45; color: var(--fg-muted); }
 .event-card-body .event-card-meta {
   margin-top: auto;
-  padding-top: var(--s-3);
+  padding-top: var(--s-2);
   border-top: 1px solid var(--border);
   font-size: var(--fs-caption);
   letter-spacing: var(--track-caps);
