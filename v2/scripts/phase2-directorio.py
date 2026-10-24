@@ -140,7 +140,7 @@ print("categorias:", len(groups), "· tarjetas:", total)
 
 empty_state = ('\n        <p class="directory-empty" id="directory-empty" hidden>'
                'No encontramos esa tienda. Prueba con otra palabra o cambia la categoría.</p>')
-directorio = ("      <div class=\"directory\" id=\"directory\">\n"
+directorio = ("\n      <div class=\"directory\" id=\"directory\">\n"
               + "\n\n".join(groups) + empty_state + "\n      </div>")
 
 # reemplaza el bloque .directory completo
@@ -214,9 +214,21 @@ block = MARK + """
   display: flex;
   flex-direction: column;
   gap: clamp(36px, 4vw, 56px);
+  /* El directorio no vivía dentro de un .container: las tarjetas tocaban el
+     borde de la ventana. Se le da el mismo gutter del resto del sitio. */
+  width: 100%;
+  max-width: var(--maxw-content);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 
-.store-group { display: flex; flex-direction: column; gap: clamp(32px, 3.4vw, 44px); }
+.store-group {
+  display: flex; flex-direction: column;
+  gap: clamp(32px, 3.4vw, 44px);
+  /* Aire lateral propio del directorio: el encabezado y la grilla dejan de
+     tocar el borde del contenedor. */
+  padding-inline: clamp(4px, 1vw, 14px);
+}
 .store-group[hidden] { display: none; }
 
 .store-group-head {
