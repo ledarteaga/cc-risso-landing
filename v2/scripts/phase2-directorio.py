@@ -227,7 +227,7 @@ block = MARK + """
   gap: clamp(32px, 3.4vw, 44px);
   /* Aire lateral propio del directorio: el encabezado y la grilla dejan de
      tocar el borde del contenedor. */
-  padding-inline: clamp(4px, 1vw, 14px);
+  padding-inline: 0;
 }
 .store-group[hidden] { display: none; }
 
