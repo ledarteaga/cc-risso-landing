@@ -29,7 +29,7 @@ const BAND = 72;
         }));
       const body = [...document.querySelectorAll('p')]
         // Metadatos de UI (etiquetas, kickers en <p>, letra chica legal): fuera de la escala por diseño.
-        .filter((e) => !e.closest('.kicker, footer, .promo-vigency, .photo-row-cap, .visit-plate, .wizard-error, .error-msg, .field-hint, .reclamo-disclaimer, .legal-note, .toc, .meta, .hero-progress, .directory-count, .filter-status')
+        .filter((e) => !e.closest('.kicker, footer, .promo-vigency, .photo-row-cap, .visit-plate, .wizard-error, .error-msg, .field-hint, .reclamo-disclaimer, .legal-note, .toc, .meta, .hero-progress, .directory-count, .filter-status, .event-card-meta, .store-hours, .promo-store, .promo-discount')
                         && !e.matches('.info-cell-label, .promo-marcas-eyebrow, .contact-map-fallback, .photo-row-cap-year, .photo-row-cap-text, .marca-note'))
         .map((e) => ({
           fs: px(getComputedStyle(e).fontSize),
