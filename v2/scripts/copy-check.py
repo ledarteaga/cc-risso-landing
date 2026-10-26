@@ -20,6 +20,7 @@ PAGES = [
     "sobre-risso.html",
     "descuentos.html",
     "tiendas.html",
+    "como-llegar.html",
     "contacto.html",
     "libro-reclamaciones.html",
 ]
@@ -68,7 +69,14 @@ BANNED = [
     "las reales aparecen aquí",
 ]
 
-NAV_EXPECTED = ["Inicio", "Sobre Risso", "Descuentos", "Tiendas", "Contacto"]
+NAV_EXPECTED = [
+    "Inicio",
+    "Sobre Risso",
+    "Promociones",
+    "Tiendas",
+    "Cómo llegar",
+    "Contáctanos",
+]
 
 fails: list[str] = []
 warns: list[str] = []
@@ -107,19 +115,26 @@ def anchors_drawer(html: str) -> list[str]:
     return [strip(a) for a in re.findall(r"<a\b[^>]*>([\s\S]*?)</a>", blocks[0])]
 
 
-def directory_counts() -> tuple[dict[str, int], int]:
+def directory_counts() -> tuple[dict[str, int], int, list[tuple[str, str]]]:
+    """Cuenta las tiendas por categoría en el directorio de tiendas.html.
+
+    Estructura (ronda OpenDesign 2026-10-26): una <section class="store-group"
+    id="slug"> por categoría, con <h2> en .store-group-head y una <li
+    class="store-card"> por tienda.
+    """
     html = read("tiendas.html")
-    # cada fila arranca con <div class="directory-row directory-row--x" id="slug">
-    rows = list(
-        re.finditer(
-            r'<div class="directory-row [^"]*"\s+id="([a-z0-9-]+)"', html
-        )
+    secs = list(
+        re.finditer(r'<section class="store-group"\s+id="([a-z0-9-]+)"', html)
     )
     counts: dict[str, int] = {}
-    for i, m in enumerate(rows):
-        end = rows[i + 1].start() if i + 1 < len(rows) else len(html)
-        counts[m.group(1)] = len(re.findall(r'class="tenant-chip"', html[m.end():end]))
-    return counts, len(counts)
+    order: list[tuple[str, str]] = []
+    for i, m in enumerate(secs):
+        end = secs[i + 1].start() if i + 1 < len(secs) else len(html)
+        chunk = html[m.end():end]
+        counts[m.group(1)] = len(re.findall(r'class="store-card"', chunk))
+        nm = re.search(r"<h2[^>]*>([\s\S]*?)</h2>", chunk)
+        order.append((m.group(1), strip(nm.group(1)) if nm else ""))
+    return counts, len(counts), order
 
 
 def main() -> int:
@@ -139,6 +154,26 @@ def main() -> int:
             fail(page, f"nav desktop {nav} != {NAV_EXPECTED}")
         if drawer and drawer != NAV_EXPECTED:
             fail(page, f"nav drawer {drawer} != {NAV_EXPECTED}")
+
+    # 2b · aria-current correcto: si la página está en el nav, exactamente uno y apuntando a ella;
+    # si no está (p. ej. libro-reclamaciones), ninguno.
+    for page in PAGES:
+        html = read(page)
+        nav_block = re.search(r'<nav class="nav"[^>]*>([\s\S]*?)</nav>', html)
+        drawer_block = re.search(r'<div class="mobile-drawer"[\s\S]*?</div>', html)
+        for label, block in (("nav", nav_block), ("drawer", drawer_block)):
+            if not block:
+                continue
+            chunk = block.group(1) if label == "nav" else block.group(0)
+            hrefs = re.findall(r'<a href="([^"]+)"', chunk)
+            cur = re.findall(r'<a href="([^"]+)"[^>]*aria-current="page"[^>]*>', chunk)
+            if page in hrefs:
+                if len(cur) != 1:
+                    fail(page, f"{label}: {len(cur)} aria-current (se espera 1)")
+                elif cur[0] != page:
+                    fail(page, f"{label}: aria-current apunta a {cur[0]}, no a {page}")
+            elif cur:
+                fail(page, f"{label}: {len(cur)} aria-current en una página que no está en el menú")
 
     # 3 · frases prohibidas (en TODO el archivo menos comentarios: incluye metas y alts)
     for page in PAGES:
@@ -189,7 +224,7 @@ def main() -> int:
                 fail(page, "teléfono publicado, pero el centro no tiene línea de contacto")
 
     # 6 · el conteo de tiendas del home debe cuadrar con el directorio
-    counts, n_cats = directory_counts()
+    counts, n_cats, order = directory_counts()
     total = sum(counts.values())
     idx = strip(read("index.html"))
     if f"{total} tiendas" not in idx:
@@ -199,15 +234,44 @@ def main() -> int:
     if "10 categorías" not in strip(read("tiendas.html")):
         warn("tiendas.html", "el lede no menciona las 10 categorías")
 
-    order = ["supermercados", "bancos", "restaurantes", "entretenimiento"]
-    for i, slug in enumerate(order, start=1):
-        m = re.search(rf"0{i} · (\d+) tienda", idx)
-        if not m:
-            fail("index.html", f"falta la tarjeta {i:02d} de categoría")
+    # las tarjetas de categoría del home (href="tiendas.html#cat-N") deben
+    # nombrar la categoría N del directorio, en el mismo orden
+    cards = re.findall(
+        r'<a href="tiendas\.html#cat-(\d+)"[^>]*class="cat-preview"[^>]*>([\s\S]*?)</a>',
+        read("index.html"),
+    )
+    if len(cards) < 4:
+        fail("index.html", f"{len(cards)} tarjetas de categoría, se esperan 4")
+    for num, chunk in cards:
+        nm = re.search(r'class="cat-name">([\s\S]*?)<', chunk)
+        got = strip(nm.group(1)) if nm else ""
+        pos = int(num) - 1
+        want = order[pos][1] if pos < len(order) else None
+        if want is None:
+            fail("index.html", f"tarjeta cat-{num}: no existe esa categoría en el directorio")
+        elif got != want:
+            fail(
+                "index.html",
+                f"tarjeta cat-{num}: dice «{got}», el directorio tiene «{want}»",
+            )
+
+    # los conteos que muestra cada grupo del directorio deben ser reales
+    tiendas_html = read("tiendas.html")
+    for slug, real in counts.items():
+        sec = re.search(
+            rf'<section class="store-group"\s+id="{re.escape(slug)}"[\s\S]*?</section>',
+            tiendas_html,
+        )
+        if not sec:
             continue
-        claimed, real = int(m.group(1)), counts.get(slug, -1)
-        if claimed != real:
-            fail("index.html", f"tarjeta {i:02d} ({slug}): dice {claimed}, el directorio tiene {real}")
+        claimed = re.search(r'class="directory-count">(\d+)\s+tienda', sec.group(0))
+        if not claimed:
+            fail("tiendas.html", f"el grupo «{slug}» no muestra su conteo")
+        elif int(claimed.group(1)) != real:
+            fail(
+                "tiendas.html",
+                f"el grupo «{slug}» dice {claimed.group(1)} tiendas, tiene {real} tarjetas",
+            )
 
     # 7 · <title> únicos y meta description útil
     titles: dict[str, str] = {}
