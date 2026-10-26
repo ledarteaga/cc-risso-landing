@@ -177,11 +177,22 @@
   }
 
   /* ---------- Header on-dark auto-detect ---------- */
-  /* Pages that open on a dark surface start with .is-on-dark in the markup.
-     Keep them in dark mode only while the header still sits over that surface,
-     using the same 32px threshold as .is-scrolled so the two states never
-     overlap (which used to leave a white logo on the white scrolled bar). */
-  if (header && header.classList.contains('is-on-dark')) {
+  /* Inicio opens on the hero video: dark mode lasts only for the first 32px,
+     so the bar never overlaps the white scrolled state. */
+  const pageOpen = document.querySelector('.page-open');
+  if (header && !document.querySelector('.hero') && pageOpen) {
+    /* Non-hero pages: the bar takes the colour of the .page-open band while it
+       still covers the header, then returns to the white scrolled bar. */
+    header.style.setProperty('--header-tone', getComputedStyle(pageOpen).backgroundColor);
+    const syncHeaderMode = () => {
+      const overTone = pageOpen.getBoundingClientRect().bottom > header.offsetHeight;
+      header.classList.toggle('is-page-tone', overTone);
+      header.classList.toggle('is-on-dark', overTone);
+    };
+    syncHeaderMode();
+    window.addEventListener('scroll', syncHeaderMode, { passive: true });
+    window.addEventListener('resize', syncHeaderMode);
+  } else if (header && header.classList.contains('is-on-dark')) {
     const setHeaderMode = () => {
       header.classList.toggle('is-on-dark', window.scrollY <= 32);
     };
@@ -294,7 +305,7 @@
     btn.type = 'button';
     btn.className = 'to-top';
     btn.setAttribute('aria-label', 'Volver arriba');
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="6"/><polyline points="5 12 12 5 19 12"/></svg>';
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 20V9.8l-5.3 5.3-1.4-1.4L12 6l7.7 7.7-1.4 1.4L13 9.8V20Z"/></svg>';
     document.body.appendChild(btn);
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

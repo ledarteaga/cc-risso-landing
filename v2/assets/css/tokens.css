@@ -61,7 +61,7 @@
   --fs-body-lg:         clamp(16px, 1.18vw, 17px);   /* N4 · cuerpo y entradillas */
   --fs-body:            clamp(16px, 1.18vw, 17px);  /* N4 · cuerpo */
   --fs-body-sm:         13px;
-  --fs-caption:         11px;
+  --fs-caption:         12px;
 
   /* Letter-spacing (Futura geometry demands wider tracking for kickers) */
   --track-kicker:       0.06em;     /* +60 / 1000 ≈ Medium UI / kickers */

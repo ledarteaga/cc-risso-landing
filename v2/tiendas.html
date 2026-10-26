@@ -25,21 +25,21 @@
     <nav class="nav" aria-label="Navegación principal">
       <a href="index.html">Inicio</a>
       <a href="sobre-risso.html">Sobre Risso</a>
-      <a href="descuentos.html">Descuentos</a>
+      <a href="descuentos.html">Promociones</a>
       <a href="tiendas.html" class="is-active" aria-current="page">Tiendas</a>
       <a href="como-llegar.html">Cómo llegar</a>
       <a href="contacto.html" class="nav-cta">Contáctanos</a>
     </nav>
     <button class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="5" width="18" height="2.6" rx="1.3"/><rect x="3" y="10.7" width="18" height="2.6" rx="1.3"/><rect x="3" y="16.4" width="18" height="2.6" rx="1.3"/></svg>
     </button>
     <div class="mobile-drawer" id="mobile-drawer" role="dialog" aria-modal="true" aria-labelledby="menu-btn" aria-hidden="true">
       <button class="drawer-close" aria-label="Cerrar menú">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true"><path d="M6.4 4.6 4.6 6.4 10.2 12l-5.6 5.6 1.8 1.8L12 13.8l5.6 5.6 1.8-1.8L13.8 12l5.6-5.6-1.8-1.8L12 10.2Z"/></svg>
       </button>
       <a href="index.html">Inicio</a>
       <a href="sobre-risso.html">Sobre Risso</a>
-      <a href="descuentos.html">Descuentos</a>
+      <a href="descuentos.html">Promociones</a>
       <a href="tiendas.html" aria-current="page">Tiendas</a>
       <a href="como-llegar.html">Cómo llegar</a>
       <a href="contacto.html">Contáctanos</a>
@@ -51,25 +51,24 @@
     <!-- ============================================================
          PAGE OPEN
          ============================================================ -->
-    <section class="page-open page-open--green" aria-labelledby="page-title">
-      <div class="container">
-        <p class="kicker">Directorio de tiendas</p>
-        <h1 id="page-title">33 tiendas en un solo piso.</h1>
-        <p class="lede">10 categorías y un solo piso, para que resuelvas sin cruzar la ciudad. Supermercado, bancos, restaurantes, cine, ropa y tecnología en Av. Arequipa 2201.</p>
+    <section class="page-open page-open--hero" aria-labelledby="page-title">
+      <div class="page-hero">
+        <div class="page-hero-copy">
+          <h1 id="page-title">33 tiendas en un solo piso.</h1>
+          <p class="lede">10 categorías y un solo piso, para que resuelvas sin cruzar la ciudad. Supermercado, bancos, restaurantes, cine, ropa y tecnología en Av. Arequipa 2201.</p>
+        </div>
+        <figure class="page-hero-photo">
+          <img src="assets/img/cc/ccrisso/galeria4_MG_4948.jpg" alt="Pasillo interior del centro comercial con tiendas a ambos lados" width="2000" height="1341">
+        </figure>
       </div>
     </section>
-
-    <!-- ============================================================
-         PHOTO BAND · un piso, 33 tiendas
-         ============================================================ -->
-    <section class="photo-band" style="background-image: url('assets/img/cc/ccrisso/galeria1_MG_4933.jpg');" role="img" aria-label="Interior del centro comercial"></section>
 
     <!-- TD-01 · filtro desplegable + buscador -->
     <div class="directory-filter" role="search">
       <div class="directory-filter-inner">
         <div class="filter-field filter-field--search">
           <label class="u-visually-hidden" for="store-search">Buscar tienda por nombre</label>
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" class="search-icon" aria-hidden="true"><path fill-rule="evenodd" d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15Zm0 2.2a5.3 5.3 0 1 1 0 10.6 5.3 5.3 0 0 1 0-10.6Z"/><path d="m15.9 14.5 5.5 5.5-1.4 1.4-5.5-5.5Z"/></svg>
           <input type="search" id="store-search" class="store-search" placeholder="Buscar tienda" autocomplete="off" aria-controls="directory">
         </div>
         <div class="filter-field">
@@ -88,7 +87,7 @@
           <option value="regalos">Regalos (2)</option>
           <option value="varios">Varios (5)</option>
             </select>
-            <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="select-caret" aria-hidden="true"><path d="M6 9h12l-6 7Z"/></svg>
           </div>
         </div>
         <p class="u-visually-hidden" id="filter-status" role="status" aria-live="polite"></p>
@@ -114,7 +113,7 @@
             <li class="store-card" data-cat="supermercados" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/PlazaVea_logo_rgb_blanco.png" alt="Plaza Vea" data-logo="plazavea-logo-rgb-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
@@ -130,28 +129,28 @@
             <li class="store-card" data-cat="bancos" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/BCP_logo_blanco.png" alt="BCP" data-logo="bcp-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="bancos" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/WesternUnion_logo_2023_Unalinea_blanco.png" alt="Western Union" data-logo="westernunion-logo-2023-unalinea-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="bancos" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/WesternUnion_logo_2023_Doslineas_blanco.png" alt="Western Union" data-logo="westernunion-logo-2023-doslineas-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="bancos" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/inv-la-cruz-horizontal_logo_blanco.png" alt="La Cruz" data-logo="inv-la-cruz-horizontal-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
@@ -167,49 +166,49 @@
             <li class="store-card" data-cat="restaurantes" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/mcdonalds-wordmark_logo_blanco.png" alt="McDonald's" data-logo="mcdonalds-wordmark-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="restaurantes" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/El_burrito_logo_blanco.png" alt="El Burrito" data-logo="el-burrito-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="restaurantes" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/Miami_Chicken_Criollo_logo_blanco.png" alt="Miami Chicken Criollo" data-logo="miami-chicken-criollo-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="restaurantes" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/PEKELOCO_logo_blanco.png" alt="Pekeloco" data-logo="pekeloco-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="restaurantes" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/canela_logo_blanco.png" alt="Canela" data-logo="canela-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="restaurantes" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/TradicionPiurana_logo_blanco.png" alt="Tradición Piurana" data-logo="tradicionpiurana-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="restaurantes" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/quemono_logo_blanco.png" alt="Qué Mono" data-logo="quemono-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
@@ -225,14 +224,14 @@
             <li class="store-card" data-cat="entretenimiento" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/cineplanet_logo_blanco.png" alt="Cineplanet" data-logo="cineplanet-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="entretenimiento" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/Nuevo_Fortuna_Casino_logo_blanco.png" alt="Nuevo Fortuna Casino" data-logo="nuevo-fortuna-casino-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
@@ -248,28 +247,28 @@
             <li class="store-card" data-cat="belleza" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/JannetMedina_logo_blanco.png" alt="Jannet Medina" data-logo="jannetmedina-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="belleza" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/Malif_Beauty_logo_blanco.png" alt="Malif Beauty" data-logo="malif-beauty-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="belleza" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/TheBarbarCompany_logo_blanco.png" alt="The Barbar Company" data-logo="thebarbarcompany-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="belleza" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/dulce_vanidad_logo_blanco.png" alt="Dulce Vanidad" data-logo="dulce-vanidad-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
@@ -285,28 +284,28 @@
             <li class="store-card" data-cat="ropa" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/platanitos_logo_blanco.png" alt="Platanitos" data-logo="platanitos-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="ropa" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/kayser_logo_blanco.png" alt="Kayser" data-logo="kayser-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="ropa" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/munay_Cotton_logo_blanco.png" alt="Munay Cotton" data-logo="munay-cotton-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="ropa" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/xiabox_logo_blanco.png" alt="Xiabox" data-logo="xiabox-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
@@ -322,7 +321,7 @@
             <li class="store-card" data-cat="tecnologia" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/audiophile_logo_blanco.png" alt="Audiophile" data-logo="audiophile-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
@@ -338,21 +337,21 @@
             <li class="store-card" data-cat="deportes" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/souvenir_sport_logo_lineal_blanco.png" alt="Souvenir Sport" data-logo="souvenir-sport-logo-lineal-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="deportes" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/scooterland_logo_blanco.png" alt="Scooterland" data-logo="scooterland-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="deportes" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/revolution_logo_blanco.png" alt="Revolution" data-logo="revolution-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
@@ -368,14 +367,14 @@
             <li class="store-card" data-cat="regalos" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/olavarria_joyeria_logo_blanco.png" alt="Olavarría Joyería" data-logo="olavarria-joyeria-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="regalos" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/VacacionesMas_logo_blanco.png" alt="Vacaciones Más" data-logo="vacacionesmas-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
@@ -391,35 +390,35 @@
             <li class="store-card" data-cat="varios" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/audicion_logo_blanco.png" alt="Audición" data-logo="audicion-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="varios" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/El_bote_logo_blanco.png" alt="El Bote" data-logo="el-bote-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="varios" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/Godsvision_logo_blanco.png" alt="Gods Vision" data-logo="godsvision-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="varios" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/icreaviCase_logo_blanco.png" alt="iCreaviCase" data-logo="icreavicase-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
             <li class="store-card" data-cat="varios" data-hours="10:00 – 22:00">
               <span class="store-logo"><img src="assets/img/tenants/logos/StampaYa!_logo_blanco.png" alt="Stampa Ya!" data-logo="stampaya-logo-blanco" loading="lazy"></span>
               <span class="store-hours">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg>
                 10:00 – 22:00
               </span>
             </li>
@@ -436,7 +435,6 @@
       <div class="container">
         <div class="anchor-grid">
           <div>
-            <div class="anchor-eyebrow"><span class="num">Fuera del directorio</span></div>
             <h2>¿No encuentras una tienda en el directorio?</h2>
             <p>Si buscas algo que no aparece aquí, escríbenos: te decimos dónde encontrarlo dentro del centro.</p>
             <a href="contacto.html" class="cta-link">Escribir al Risso</a>
@@ -453,11 +451,10 @@
 
       <div class="footer-brand">
         <img src="assets/img/logo-white.png" alt="Centro Comercial Risso" width="120" height="28">
-        <p>Un centro comercial con historia en el corazón de Lince. Más de 50 años reuniendo a vecinos, familias y visitantes en Av. Arequipa 2201.</p>
         <ul class="footer-contact">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span>Av. Arequipa 2201, Lince · Lima</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span>Lunes a domingo · 10:00 a 22:00</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg><a href="mailto:contacto@agremsa.pe">contacto@agremsa.pe</a></li>
+          <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"/></svg><span>Av. Arequipa 2201, Lince · Lima</span></li>
+          <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2.2a7.8 7.8 0 1 1 0 15.6 7.8 7.8 0 0 1 0-15.6Z"/><path d="M12.7 7.2h-2.5v6.1l5.5 3.2 1.2-2-4.2-2.5Z"/></svg><span>Lunes a domingo · 10:00 a 22:00</span></li>
+          <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm-1 4.4L12 13 5 8.4V6.5l7 4.6 7-4.6Z"/></svg><a href="mailto:contacto@agremsa.pe">contacto@agremsa.pe</a></li>
         </ul>
       </div>
 
@@ -466,7 +463,7 @@
         <ul>
           <li><a href="index.html">Inicio</a></li>
           <li><a href="sobre-risso.html">Sobre Risso</a></li>
-          <li><a href="descuentos.html">Descuentos</a></li>
+          <li><a href="descuentos.html">Promociones</a></li>
           <li><a href="tiendas.html">Tiendas</a></li>
           <li><a href="contacto.html">Contáctanos</a></li>
           <li><a href="como-llegar.html">Cómo llegar</a></li>
@@ -477,7 +474,7 @@
         <h4>Síguenos</h4>
         <ul class="footer-socials">
           <li><a href="https://www.instagram.com/c.c.risso/" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 2h8a6 6 0 0 1 6 6v8a6 6 0 0 1-6 6H8a6 6 0 0 1-6-6V8a6 6 0 0 1 6-6ZM7 12a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0ZM15.85 7a1.15 1.15 0 1 0 2.3 0a1.15 1.15 0 1 0 -2.3 0Z"/></svg>
           </a></li>
           <li><a href="https://www.facebook.com/CentroComercialRisso/" target="_blank" rel="noopener" aria-label="Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.86.24-1.45 1.47-1.45H16.6V4.43c-.28-.04-1.25-.12-2.38-.12-2.36 0-3.97 1.44-3.97 4.08v2.11H7.75v3h2.5V21h3.25z"/></svg>
