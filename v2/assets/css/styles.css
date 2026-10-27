@@ -518,11 +518,6 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
     justify-self: start;
     margin-top: var(--s-5);
   }
-  .anchor-head > p {
-    grid-column: 2; grid-row: 1;
-    margin: 0;
-    padding-left: var(--s-7);
-  }
 }
 .anchor-eyebrow { display: flex; align-items: center; gap: var(--s-3); margin-bottom: var(--s-5); }
 .anchor-eyebrow .num {
@@ -552,6 +547,15 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
 .anchor--paper .anchor-head p { border-left-color: rgba(0,0,0,0.18); opacity: 0.78; }
 @media (min-width: 1100px) {
   .anchor-head p { font-size: var(--fs-body-lg); line-height: 1.45; max-width: 44ch; }
+}
+/* Columna derecha: el divisor mantiene el mismo margen óptico a ambos lados
+   (≈--s-9 en desktop, igualando el hueco que deja el titular a su izquierda). */
+@media (min-width: 900px) {
+  .anchor-head > p {
+    grid-column: 2; grid-row: 1;
+    margin: 0;
+    padding-left: clamp(var(--s-7), 6.6vw, var(--s-9));
+  }
 }
 .anchor-foot { margin-top: clamp(28px, 3vw, 40px); display: flex; gap: var(--s-7); flex-wrap: wrap; align-items: center; }
 .anchor--green .anchor-eyebrow .num { color: var(--fg-on-green); }
@@ -642,7 +646,8 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
 }
 .timeline-b-node {
   position: absolute;
-  top: 0; left: var(--gutter);
+  top: 0; left: 50%;
+  transform: translateX(-50%);
   display: grid;
   place-items: center;
   width: 44px; height: 44px;
@@ -659,7 +664,9 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
   color: var(--fg-on-green);
   opacity: 0.9;
   padding-inline: var(--gutter);
-  max-width: 50ch;
+  max-width: 38ch;
+  margin-inline: auto;
+  text-align: center;
   text-wrap: balance;
 }
 .timeline-b-item:hover .timeline-b-photo img { transform: scale(1.025); }
@@ -671,18 +678,9 @@ section.container-narrow:not(.reclamo-section):not(.wizard) { padding-block: var
 @media (min-width: 720px) {
   .timeline-b { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
   .timeline-b-photo { aspect-ratio: auto; height: clamp(300px, 44vh, 520px); }
-  /* La primera y la última tarjeta alinean su texto con el contenedor de la banda */
+  /* La primera tarjeta alinea su año con el contenedor de la banda */
   .timeline-b-item:first-child .timeline-b-year {
     left: max(var(--gutter), calc((100vw - var(--maxw-content)) / 2 + var(--gutter)));
-  }
-  .timeline-b-item:first-child .timeline-b-blurb {
-    padding-left: max(var(--gutter), calc((100vw - var(--maxw-content)) / 2 + var(--gutter)));
-  }
-  .timeline-b-item:first-child .timeline-b-node {
-    left: max(var(--gutter), calc((100vw - var(--maxw-content)) / 2 + var(--gutter)));
-  }
-  .timeline-b-item:last-child .timeline-b-blurb {
-    padding-right: max(var(--gutter), calc((100vw - var(--maxw-content)) / 2 + var(--gutter)));
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2292,13 +2290,7 @@ main:has(> .beats-section) .anchor .anchor-grid .cta-link { margin-top: 0; }
   .promo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 }
 .promo-card.is-extra[hidden] { display: none; }
-/* Inicio · preview de 4 promos en una fila, con el mismo alto de tarjeta */
-@media (min-width: 640px) {
-  .promo-grid--home { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (min-width: 1024px) {
-  .promo-grid--home { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
+/* Inicio · preview de 3 promos en una fila (hereda las 3 columnas base). */
 
 /* La promo no es una ficha de directorio: es una oferta. Tarjeta verde llena,
    logo blanco sin filtro y la cifra como único acento en blanco.
